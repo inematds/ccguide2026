@@ -93,6 +93,14 @@ Correcoes aplicadas:
 - modulo-1-7.html: Corrigida navegacao responsiva
 - modulo-1-8.html: Corrigida navegacao responsiva
 
+### Trilha 2 - Revisao (2026-01-31)
+Correcoes aplicadas:
+- index.html: Adicionados 42 topicos expandiveis (modulos 2.2 a 2.8)
+
+### Trilha 3 - Revisao (2026-01-31)
+Correcoes aplicadas:
+- index.html: Adicionados 42 topicos expandiveis (modulos 3.2 a 3.8)
+
 ---
 
 ## PROXIMOS PASSOS
@@ -102,7 +110,7 @@ Correcoes aplicadas:
 3. ✅ Criar Trilha 2 - Comandos e Ferramentas (8 modulos)
 4. ✅ Criar Trilha 3 - Projetos Avancados (8 modulos)
 5. ✅ QA da Trilha 1
-6. ⏳ QA das Trilhas 2 e 3
+6. ✅ QA das Trilhas 2 e 3
 7. ⏳ Configurar GitHub Pages
 8. ⏳ Testar navegacao completa
 

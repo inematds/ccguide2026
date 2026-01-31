@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Modulo 3.6: Orquestracao Multi-Agente | Claude Code 2026</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: '#FACC15',
+            dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' }
+          }
+        }
+      }
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+    html:not(.dark) body { background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 50%, #f1f5f9 100%); }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+  </style>
+</head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen">
+
+  <!-- NAVIGATION -->
+  <nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-14">
+        <div class="flex items-center space-x-4">
+          <a href="../../index.html" class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300">
+            <span class="text-2xl">🤖</span>
+            <span class="font-bold text-lg hidden sm:inline">Claude Code 2026</span>
+          </a>
+          <span class="text-neutral-600">|</span>
+          <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300 text-sm font-medium">INEMA.CLUB</a>
+        </div>
+        <div class="flex items-center space-x-1 sm:space-x-2">
+          <a href="../trilha1/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors">
+            <span class="sm:hidden">T1</span>
+            <span class="hidden sm:inline">Fundamentos</span>
+          </a>
+          <a href="../trilha2/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors">
+            <span class="sm:hidden">T2</span>
+            <span class="hidden sm:inline">Comandos</span>
+          </a>
+          <a href="index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-purple-400 bg-purple-500/10">
+            <span class="sm:hidden">T3</span>
+            <span class="hidden sm:inline">Avancado</span>
+          </a>
+          <button id="theme-toggle" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2">
+            <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+            </svg>
+            <svg id="theme-toggle-light-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- BREADCRUMB -->
+  <nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+    <div class="flex items-center space-x-2 text-sm text-neutral-400">
+      <a href="../../index.html" class="hover:text-purple-400">Inicio</a>
+      <span>/</span>
+      <a href="index.html" class="hover:text-purple-400">Trilha 3</a>
+      <span>/</span>
+      <span class="text-purple-400">Modulo 3.6</span>
+    </div>
+  </nav>
+
+  <!-- HEADER -->
+  <header class="bg-gradient-to-br from-purple-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <span class="inline-block px-3 py-1 bg-purple-500/20 text-purple-400 text-xs font-semibold rounded-full mb-4">
+        MODULO 3.6
+      </span>
+      <h1 class="text-3xl sm:text-4xl font-bold mb-4">🌐 Orquestracao Multi-Agente</h1>
+      <p class="text-lg text-neutral-400 max-w-3xl">
+        Coordene multiplas instancias de Claude trabalhando em paralelo. Divida tarefas complexas,
+        gerencie conflitos e acelere o desenvolvimento com paralelismo inteligente.
+      </p>
+
+      <div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-purple-400">6</div>
+          <div class="text-xs text-neutral-400">Topicos</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-purple-400">50</div>
+          <div class="text-xs text-neutral-400">Minutos</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-purple-400">Expert</div>
+          <div class="text-xs text-neutral-400">Nivel</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-purple-400">Pratico</div>
+          <div class="text-xs text-neutral-400">Tipo</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN CONTENT -->
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+    <!-- TOPICO 1 -->
+    <section id="topico-1" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">1</span>
+        <h2 class="text-2xl font-bold">🎭 Conceito de Multi-Agente</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Orquestracao multi-agente envolve <strong class="text-purple-400">multiplas instancias de Claude</strong>
+        trabalhando simultaneamente em diferentes partes de um problema. Cada agente opera em seu
+        proprio contexto, e um orquestrador coordena o trabalho.
+      </p>
+
+      <div class="bg-gradient-to-br from-purple-900/30 to-dark-800 rounded-xl border border-purple-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-purple-400 mb-4 flex items-center">
+          <span class="mr-2">🔄</span> Arquitetura Multi-Agente
+        </h3>
+        <div class="bg-dark-900 rounded-lg p-4 font-mono text-sm text-neutral-300 mb-4">
+<pre>                    ┌───────────────────┐
+                    │   ORQUESTRADOR    │
+                    │   (Coordenador)   │
+                    └─────────┬─────────┘
+              ┌───────────────┼───────────────┐
+              │               │               │
+        ┌─────▼─────┐  ┌─────▼─────┐  ┌─────▼─────┐
+        │  AGENTE 1 │  │  AGENTE 2 │  │  AGENTE 3 │
+        │  Frontend │  │  Backend  │  │   Tests   │
+        └─────┬─────┘  └─────┬─────┘  └─────┬─────┘
+              │               │               │
+        ┌─────▼─────┐  ┌─────▼─────┐  ┌─────▼─────┐
+        │ /src/ui/  │  │ /src/api/ │  │ /tests/   │
+        └───────────┘  └───────────┘  └───────────┘</pre>
+        </div>
+        <ul class="space-y-2 text-neutral-300">
+          <li class="flex items-start space-x-2">
+            <span class="text-purple-400 mt-1">•</span>
+            <span><strong class="text-white">Paralelismo:</strong> Multiplas tarefas executam simultaneamente</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-purple-400 mt-1">•</span>
+            <span><strong class="text-white">Isolamento:</strong> Cada agente tem seu proprio contexto</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-purple-400 mt-1">•</span>
+            <span><strong class="text-white">Coordenacao:</strong> Orquestrador gerencia conflitos e merge</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6">
+        <h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center">
+          <span class="mr-2">📊</span> Quando Usar Multi-Agente
+        </h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="bg-dark-800 rounded-lg p-4">
+            <h4 class="text-emerald-400 font-semibold mb-2">Ideal para</h4>
+            <ul class="space-y-1 text-neutral-300 text-sm">
+              <li>• Refatoracoes grandes</li>
+              <li>• Implementacao de features independentes</li>
+              <li>• Geracao massiva de testes</li>
+              <li>• Migracao de codebase</li>
+            </ul>
+          </div>
+          <div class="bg-dark-800 rounded-lg p-4">
+            <h4 class="text-red-400 font-semibold mb-2">Evitar quando</h4>
+            <ul class="space-y-1 text-neutral-300 text-sm">
+              <li>• Tarefas muito interdependentes</li>
+              <li>• Codigo altamente acoplado</li>
+              <li>• Mudancas que afetam mesmos arquivos</li>
+              <li>• Contexto compartilhado e critico</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TOPICO 2 -->
+    <section id="topico-2" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">2</span>
+        <h2 class="text-2xl font-bold">🎯 Estrategias de Divisao</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        A chave para multi-agente eficaz e <strong class="text-purple-400">dividir o trabalho corretamente</strong>.
+        Tarefas mal divididas causam conflitos e retrabalho.
+      </p>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+        <div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
+          <div class="text-3xl mb-4">📁</div>
+          <h4 class="font-bold text-white mb-2">Por Diretorio</h4>
+          <p class="text-neutral-400 text-sm mb-3">Cada agente trabalha em pasta separada</p>
+          <div class="bg-dark-900 rounded-lg p-3 font-mono text-xs text-neutral-300">
+            Agente 1: /frontend/<br>
+            Agente 2: /backend/<br>
+            Agente 3: /mobile/
+          </div>
+        </div>
+
+        <div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
+          <div class="text-3xl mb-4">🏷️</div>
+          <h4 class="font-bold text-white mb-2">Por Feature</h4>
+          <p class="text-neutral-400 text-sm mb-3">Cada agente implementa uma feature</p>
+          <div class="bg-dark-900 rounded-lg p-3 font-mono text-xs text-neutral-300">
+            Agente 1: Auth<br>
+            Agente 2: Dashboard<br>
+            Agente 3: Reports
+          </div>
+        </div>
+
+        <div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
+          <div class="text-3xl mb-4">🔧</div>
+          <h4 class="font-bold text-white mb-2">Por Tipo de Tarefa</h4>
+          <p class="text-neutral-400 text-sm mb-3">Especialização por tipo de trabalho</p>
+          <div class="bg-dark-900 rounded-lg p-3 font-mono text-xs text-neutral-300">
+            Agente 1: Codigo<br>
+            Agente 2: Testes<br>
+            Agente 3: Docs
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">💡</span> Regra de Ouro
+        </h3>
+        <p class="text-neutral-300">
+          Se dois agentes precisam editar o <strong>mesmo arquivo</strong>, a divisao esta errada.
+          Reorganize as tarefas para garantir isolamento completo.
+        </p>
+      </div>
+    </section>
+
+    <!-- TOPICO 3 -->
+    <section id="topico-3" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">3</span>
+        <h2 class="text-2xl font-bold">🖥️ Implementacao com Tmux</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        A forma mais simples de rodar multi-agente e usar <strong class="text-purple-400">multiplos terminais</strong>.
+        Tmux permite gerenciar varias sessoes facilmente.
+      </p>
+
+      <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-white mb-4">Script de Setup</h3>
+        <div class="bg-dark-900 rounded-lg p-4 font-mono text-xs text-neutral-300 overflow-x-auto">
+<pre>#!/bin/bash
+<span class="text-purple-400"># multi-agent-setup.sh</span>
+
+SESSION="multi-claude"
+
+<span class="text-purple-400"># Criar sessao tmux</span>
+tmux new-session -d -s $SESSION -n "orchestrator"
+
+<span class="text-purple-400"># Criar paineis para agentes</span>
+tmux split-window -h -t $SESSION
+tmux split-window -v -t $SESSION
+tmux select-pane -t $SESSION:0.0
+tmux split-window -v -t $SESSION
+
+<span class="text-purple-400"># Nomear paineis</span>
+tmux select-pane -t $SESSION:0.0 -T "orchestrator"
+tmux select-pane -t $SESSION:0.1 -T "frontend"
+tmux select-pane -t $SESSION:0.2 -T "backend"
+tmux select-pane -t $SESSION:0.3 -T "tests"
+
+<span class="text-purple-400"># Iniciar Claude em cada painel</span>
+tmux send-keys -t $SESSION:0.1 "cd frontend && claude" Enter
+tmux send-keys -t $SESSION:0.2 "cd backend && claude" Enter
+tmux send-keys -t $SESSION:0.3 "cd tests && claude" Enter
+
+<span class="text-purple-400"># Attach na sessao</span>
+tmux attach -t $SESSION</pre>
+        </div>
+      </div>
+
+      <div class="space-y-4 mb-6">
+        <div class="bg-dark-800 rounded-xl p-6 border border-dark-600">
+          <h4 class="font-semibold text-purple-400 mb-2">Comandos Uteis Tmux</h4>
+          <div class="grid grid-cols-2 gap-4 text-sm">
+            <div>
+              <code class="text-purple-400">Ctrl+b %</code>
+              <p class="text-neutral-400">Split vertical</p>
+            </div>
+            <div>
+              <code class="text-purple-400">Ctrl+b "</code>
+              <p class="text-neutral-400">Split horizontal</p>
+            </div>
+            <div>
+              <code class="text-purple-400">Ctrl+b o</code>
+              <p class="text-neutral-400">Proximo painel</p>
+            </div>
+            <div>
+              <code class="text-purple-400">Ctrl+b z</code>
+              <p class="text-neutral-400">Zoom painel</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-gradient-to-br from-purple-900/30 to-dark-800 rounded-xl border border-purple-500/30 p-6">
+        <h3 class="text-lg font-semibold text-purple-400 mb-4">Layout Recomendado</h3>
+        <div class="bg-dark-900 rounded-lg p-4 font-mono text-sm text-neutral-300">
+<pre>┌────────────────────┬────────────────────┐
+│    ORCHESTRATOR    │      FRONTEND      │
+│  (voce coordena)   │  (claude agente)   │
+├────────────────────┼────────────────────┤
+│      BACKEND       │       TESTS        │
+│  (claude agente)   │  (claude agente)   │
+└────────────────────┴────────────────────┘</pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- TOPICO 4 -->
+    <section id="topico-4" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">4</span>
+        <h2 class="text-2xl font-bold">🔀 Gerenciando Conflitos</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Mesmo com boa divisao, <strong class="text-purple-400">conflitos podem surgir</strong>.
+        Tenha estrategias para detectar e resolver rapidamente.
+      </p>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
+          <h4 class="font-bold text-white mb-4">Conflitos Comuns</h4>
+          <ul class="space-y-3 text-neutral-300">
+            <li class="flex items-start space-x-2">
+              <span class="text-red-400">!</span>
+              <span>Dois agentes editam mesmo arquivo</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-red-400">!</span>
+              <span>Mudancas em interface compartilhada</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-red-400">!</span>
+              <span>Conflitos de dependencias</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-red-400">!</span>
+              <span>Testes quebrados por mudancas paralelas</span>
+            </li>
+          </ul>
+        </div>
+        <div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
+          <h4 class="font-bold text-white mb-4">Estrategias de Resolucao</h4>
+          <ul class="space-y-3 text-neutral-300">
+            <li class="flex items-start space-x-2">
+              <span class="text-emerald-400">✓</span>
+              <span>Commits frequentes e atomicos</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-emerald-400">✓</span>
+              <span>Branches por agente</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-emerald-400">✓</span>
+              <span>Feature flags para integracao</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-emerald-400">✓</span>
+              <span>Interfaces contratuais definidas antes</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-white mb-4">Workflow com Git Branches</h3>
+        <div class="bg-dark-900 rounded-lg p-4 font-mono text-xs text-neutral-300 overflow-x-auto">
+<pre><span class="text-purple-400"># Antes de iniciar - criar branches</span>
+git checkout -b feature/auth-frontend   <span class="text-neutral-500"># Agente 1</span>
+git checkout -b feature/auth-backend    <span class="text-neutral-500"># Agente 2</span>
+git checkout -b feature/auth-tests      <span class="text-neutral-500"># Agente 3</span>
+
+<span class="text-purple-400"># Durante - commits frequentes</span>
+git add . && git commit -m "wip: progresso parcial"
+
+<span class="text-purple-400"># Apos conclusao - merge sequencial</span>
+git checkout main
+git merge feature/auth-backend --no-ff
+git merge feature/auth-frontend --no-ff
+git merge feature/auth-tests --no-ff</pre>
+        </div>
+      </div>
+
+      <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+        <h3 class="text-lg font-semibold text-red-400 mb-3 flex items-center">
+          <span class="mr-2">⚠️</span> Importante
+        </h3>
+        <p class="text-neutral-300">
+          Sempre <strong>defina interfaces antes</strong> de iniciar trabalho paralelo. Se o backend
+          expoe uma API, documente os endpoints antes do frontend comecar a consumir.
+        </p>
+      </div>
+    </section>
+
+    <!-- TOPICO 5 -->
+    <section id="topico-5" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">5</span>
+        <h2 class="text-2xl font-bold">📋 Protocolo de Comunicacao</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Defina um <strong class="text-purple-400">protocolo claro</strong> para comunicacao entre
+        agentes e o orquestrador (voce).
+      </p>
+
+      <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-white mb-4">Arquivo de Coordenacao</h3>
+        <div class="bg-dark-900 rounded-lg p-4 font-mono text-xs text-neutral-300 overflow-x-auto">
+<pre><span class="text-purple-400"># .claude/coordination.md</span>
+
+## Status dos Agentes
+
+| Agente | Tarefa | Status | Bloqueio |
+|--------|--------|--------|----------|
+| Frontend | Tela de login | Em progresso | Aguarda API |
+| Backend | API de auth | Completo | - |
+| Tests | Testes unitarios | Em progresso | - |
+
+## Interfaces Acordadas
+
+### API de Autenticacao
+- POST /api/auth/login
+  - Body: { email, password }
+  - Response: { token, user }
+
+### Eventos de Frontend
+- onLoginSuccess(user)
+- onLoginError(error)
+
+## Decisoes Pendentes
+- [ ] Usar JWT ou sessao?
+- [ ] Refresh token automatico?
+
+## Log de Mudancas
+- 10:30 - Backend: API de login pronta
+- 10:45 - Frontend: Iniciando integracao</pre>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="bg-gradient-to-br from-purple-900/30 to-dark-800 rounded-xl border border-purple-500/30 p-6">
+          <h4 class="font-bold text-purple-400 mb-4">Sinais do Orquestrador</h4>
+          <ul class="space-y-2 text-neutral-300 text-sm">
+            <li><code class="text-purple-400">@all PAUSA</code> - Todos param</li>
+            <li><code class="text-purple-400">@frontend ESPERA</code> - Aguardar dependencia</li>
+            <li><code class="text-purple-400">@backend PRIORIDADE</code> - Foco nessa tarefa</li>
+            <li><code class="text-purple-400">@all SYNC</code> - Commit e push agora</li>
+          </ul>
+        </div>
+        <div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
+          <h4 class="font-bold text-white mb-4">Sinais dos Agentes</h4>
+          <ul class="space-y-2 text-neutral-300 text-sm">
+            <li><code class="text-emerald-400">DONE</code> - Tarefa concluida</li>
+            <li><code class="text-yellow-400">BLOCKED</code> - Precisa de algo</li>
+            <li><code class="text-red-400">CONFLICT</code> - Encontrou conflito</li>
+            <li><code class="text-blue-400">QUESTION</code> - Duvida de requisito</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">💡</span> Dica
+        </h3>
+        <p class="text-neutral-300">
+          Mantenha o arquivo coordination.md aberto em uma aba. Atualize-o conforme os agentes
+          progridem para ter visibilidade do status geral.
+        </p>
+      </div>
+    </section>
+
+    <!-- TOPICO 6 -->
+    <section id="topico-6" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">6</span>
+        <h2 class="text-2xl font-bold">🎯 Caso Pratico: Refatoracao</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Vamos ver um exemplo completo de <strong class="text-purple-400">refatoracao multi-agente</strong>
+        de um sistema legado.
+      </p>
+
+      <div class="space-y-6 mb-6">
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-12 h-12 rounded-full bg-purple-500/20 flex items-center justify-center">
+            <span class="text-purple-400 font-bold">1</span>
+          </div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+            <h4 class="font-semibold text-white mb-2">Analise e Planejamento</h4>
+            <p class="text-neutral-400 text-sm mb-3">Orquestrador analisa o codigo legado</p>
+            <div class="bg-dark-900 rounded-lg p-3 font-mono text-xs text-neutral-300">
+              "Analise src/ e identifique modulos independentes que podem ser refatorados em paralelo"
+            </div>
+          </div>
+        </div>
+
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-12 h-12 rounded-full bg-purple-500/20 flex items-center justify-center">
+            <span class="text-purple-400 font-bold">2</span>
+          </div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+            <h4 class="font-semibold text-white mb-2">Divisao de Tarefas</h4>
+            <p class="text-neutral-400 text-sm mb-3">Definir escopo de cada agente</p>
+            <div class="bg-dark-900 rounded-lg p-3 font-mono text-xs text-neutral-300">
+              Agente 1: Refatorar src/auth/ (5 arquivos)<br>
+              Agente 2: Refatorar src/users/ (4 arquivos)<br>
+              Agente 3: Atualizar testes de auth e users
+            </div>
+          </div>
+        </div>
+
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-12 h-12 rounded-full bg-purple-500/20 flex items-center justify-center">
+            <span class="text-purple-400 font-bold">3</span>
+          </div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+            <h4 class="font-semibold text-white mb-2">Execucao Paralela</h4>
+            <p class="text-neutral-400 text-sm mb-3">Cada agente trabalha em sua branch</p>
+            <div class="bg-dark-900 rounded-lg p-3 font-mono text-xs text-purple-400">
+              # Em cada terminal<br>
+              git checkout -b refactor/[modulo]<br>
+              claude "Refatore [escopo] seguindo os padroes em CLAUDE.md"
+            </div>
+          </div>
+        </div>
+
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-12 h-12 rounded-full bg-purple-500/20 flex items-center justify-center">
+            <span class="text-purple-400 font-bold">4</span>
+          </div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+            <h4 class="font-semibold text-white mb-2">Integracao e Validacao</h4>
+            <p class="text-neutral-400 text-sm mb-3">Merge das branches e testes finais</p>
+            <div class="bg-dark-900 rounded-lg p-3 font-mono text-xs text-neutral-300">
+              git checkout main<br>
+              git merge --no-ff refactor/auth<br>
+              git merge --no-ff refactor/users<br>
+              npm run test && npm run lint
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-gradient-to-br from-purple-900/30 to-dark-800 rounded-xl border border-purple-500/30 p-6">
+        <h3 class="text-lg font-semibold text-purple-400 mb-4">Resultado</h3>
+        <div class="grid grid-cols-3 gap-4 text-center">
+          <div>
+            <div class="text-3xl font-bold text-emerald-400">3x</div>
+            <div class="text-neutral-400 text-sm">Mais rapido</div>
+          </div>
+          <div>
+            <div class="text-3xl font-bold text-blue-400">0</div>
+            <div class="text-neutral-400 text-sm">Conflitos de merge</div>
+          </div>
+          <div>
+            <div class="text-3xl font-bold text-purple-400">100%</div>
+            <div class="text-neutral-400 text-sm">Cobertura de testes</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- RESUMO -->
+    <section class="mb-12">
+      <div class="bg-gradient-to-br from-purple-900/40 via-dark-800 to-dark-800 rounded-xl border border-purple-500/30 p-8">
+        <h2 class="text-2xl font-bold mb-6 flex items-center">
+          <span class="mr-3">📋</span> Resumo do Modulo
+        </h2>
+
+        <div class="space-y-4 mb-8">
+          <div class="flex items-start space-x-3">
+            <span class="text-purple-400 mt-1">✓</span>
+            <div>
+              <strong class="text-white">Multi-agente multiplica produtividade</strong>
+              <span class="text-neutral-400"> - tarefas paralelas, resultados mais rapidos</span>
+            </div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-purple-400 mt-1">✓</span>
+            <div>
+              <strong class="text-white">Divisao correta e essencial</strong>
+              <span class="text-neutral-400"> - por diretorio, feature ou tipo de tarefa</span>
+            </div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-purple-400 mt-1">✓</span>
+            <div>
+              <strong class="text-white">Tmux para gerenciar terminais</strong>
+              <span class="text-neutral-400"> - multiplos agentes em uma tela</span>
+            </div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-purple-400 mt-1">✓</span>
+            <div>
+              <strong class="text-white">Git branches evitam conflitos</strong>
+              <span class="text-neutral-400"> - uma branch por agente, merge sequencial</span>
+            </div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-purple-400 mt-1">✓</span>
+            <div>
+              <strong class="text-white">Protocolo de comunicacao claro</strong>
+              <span class="text-neutral-400"> - coordination.md para status e decisoes</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+          <h3 class="font-semibold text-purple-400 mb-2">Proximo Modulo:</h3>
+          <p class="text-neutral-300">3.7 - GitHub Actions e CI/CD com Claude - automatize reviews e testes no pipeline</p>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-4">
+          <a href="modulo-3-5.html" class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors">
+            ← Modulo Anterior
+          </a>
+          <a href="modulo-3-7.html" class="flex-1 text-center px-6 py-3 bg-purple-600 text-white rounded-lg font-semibold hover:bg-purple-500 transition-colors">
+            Proximo Modulo →
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-dark-600 py-8 mt-16">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+      <p>Claude Code 2026 - Curso criado por <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300">INEMA.CLUB</a></p>
+    </div>
+  </footer>
+
+  <!-- SCRIPTS -->
+  <script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    const html = document.documentElement;
+
+    if (localStorage.getItem('theme') === 'light' || (!localStorage.getItem('theme') && !html.classList.contains('dark'))) {
+      themeToggleDarkIcon.classList.remove('hidden');
+      html.classList.remove('dark');
+    } else {
+      themeToggleLightIcon.classList.remove('hidden');
+    }
+
+    themeToggle.addEventListener('click', () => {
+      themeToggleDarkIcon.classList.toggle('hidden');
+      themeToggleLightIcon.classList.toggle('hidden');
+      html.classList.toggle('dark');
+      localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+    });
+  </script>
+
+</body>
+</html>

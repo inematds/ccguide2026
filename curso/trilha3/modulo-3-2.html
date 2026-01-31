@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Modulo 3.2: Skills | Claude Code 2026</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: '#FACC15',
+            dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' }
+          }
+        }
+      }
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+
+    /* Light mode overrides */
+    html:not(.dark) body {
+      background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 50%, #f1f5f9 100%);
+    }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+  </style>
+</head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen">
+
+  <!-- NAVIGATION -->
+  <nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-14">
+        <div class="flex items-center space-x-4">
+          <a href="../../index.html" class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300">
+            <span class="text-2xl">🤖</span>
+            <span class="font-bold text-lg hidden sm:inline">Claude Code 2026</span>
+          </a>
+          <span class="text-neutral-600">|</span>
+          <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300 text-sm font-medium">INEMA.CLUB</a>
+        </div>
+
+        <div class="flex items-center space-x-1 sm:space-x-2">
+          <a href="../trilha1/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors">
+            <span class="sm:hidden">T1</span>
+            <span class="hidden sm:inline">Fundamentos</span>
+          </a>
+          <a href="../trilha2/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors">
+            <span class="sm:hidden">T2</span>
+            <span class="hidden sm:inline">Comandos</span>
+          </a>
+          <a href="index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-purple-400 bg-purple-500/10">
+            <span class="sm:hidden">T3</span>
+            <span class="hidden sm:inline">Avancado</span>
+          </a>
+
+          <button id="theme-toggle" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2">
+            <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+            </svg>
+            <svg id="theme-toggle-light-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- BREADCRUMB -->
+  <nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+    <div class="flex items-center space-x-2 text-sm text-neutral-400">
+      <a href="../../index.html" class="hover:text-purple-400">Inicio</a>
+      <span>/</span>
+      <a href="index.html" class="hover:text-purple-400">Trilha 3</a>
+      <span>/</span>
+      <span class="text-purple-400">Modulo 3.2</span>
+    </div>
+  </nav>
+
+  <!-- HEADER -->
+  <header class="bg-gradient-to-br from-purple-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <span class="inline-block px-3 py-1 bg-purple-500/20 text-purple-400 text-xs font-semibold rounded-full mb-4">
+        MODULO 3.2
+      </span>
+      <h1 class="text-3xl sm:text-4xl font-bold mb-4">⚡ Skills: Criando Fluxos Sob Demanda</h1>
+      <p class="text-lg text-neutral-400 max-w-3xl">
+        Skills sao comandos customizados que automatizam tarefas repetitivas. Aprenda a criar,
+        configurar e compartilhar skills para multiplicar sua produtividade com Claude Code.
+      </p>
+
+      <div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-purple-400">6</div>
+          <div class="text-xs text-neutral-400">Topicos</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-purple-400">45</div>
+          <div class="text-xs text-neutral-400">Minutos</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-purple-400">Avancado</div>
+          <div class="text-xs text-neutral-400">Nivel</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-purple-400">Pratico</div>
+          <div class="text-xs text-neutral-400">Tipo</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN CONTENT -->
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+    <!-- TOPICO 1 -->
+    <section id="topico-1" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">1</span>
+        <h2 class="text-2xl font-bold">🎯 O que sao Skills</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Skills sao <strong class="text-purple-400">comandos slash customizados</strong> que voce define
+        para encapsular prompts complexos, fluxos de trabalho ou instrucoes especificas. Quando invocado,
+        o skill injeta seu conteudo no contexto e executa as instrucoes.
+      </p>
+
+      <div class="bg-gradient-to-br from-purple-900/30 to-dark-800 rounded-xl border border-purple-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-purple-400 mb-4 flex items-center">
+          <span class="mr-2">💡</span> Analogia Simples
+        </h3>
+        <p class="text-neutral-300 mb-4">
+          Pense em skills como <strong class="text-white">macros</strong> ou <strong class="text-white">aliases</strong>
+          para prompts. Em vez de digitar um prompt de 500 palavras toda vez que quiser fazer code review,
+          voce cria um skill <code class="bg-dark-700 px-2 py-1 rounded text-purple-400">/review</code> que faz isso automaticamente.
+        </p>
+        <ul class="space-y-2 text-neutral-300">
+          <li class="flex items-start space-x-2">
+            <span class="text-purple-400 mt-1">•</span>
+            <span>Invocados com <code class="bg-dark-700 px-1 rounded">/nome-do-skill</code></span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-purple-400 mt-1">•</span>
+            <span>Podem receber argumentos dinamicos</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-purple-400 mt-1">•</span>
+            <span>Salvos em arquivos markdown (.md)</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-purple-400 mt-1">•</span>
+            <span>Podem ser globais ou por projeto</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6">
+        <h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center">
+          <span class="mr-2">📊</span> Casos de Uso Comuns
+        </h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <ul class="space-y-2 text-neutral-300">
+            <li><strong class="text-white">/review</strong> - Code review automatizado</li>
+            <li><strong class="text-white">/test</strong> - Geracao de testes</li>
+            <li><strong class="text-white">/doc</strong> - Documentacao automatica</li>
+          </ul>
+          <ul class="space-y-2 text-neutral-300">
+            <li><strong class="text-white">/refactor</strong> - Refatoracao guiada</li>
+            <li><strong class="text-white">/commit</strong> - Mensagens de commit</li>
+            <li><strong class="text-white">/debug</strong> - Analise de bugs</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- TOPICO 2 -->
+    <section id="topico-2" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">2</span>
+        <h2 class="text-2xl font-bold">📁 Estrutura e Localizacao</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Skills sao arquivos markdown armazenados em diretorios especificos. O <strong class="text-purple-400">nome
+        do arquivo</strong> (sem extensao) define o comando slash.
+      </p>
+
+      <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-white mb-4">Diretorios de Skills</h3>
+        <div class="bg-dark-900 rounded-lg p-4 font-mono text-sm text-neutral-300">
+<pre><span class="text-purple-400"># Skills globais (todas as sessoes)</span>
+~/.claude/skills/
+├── review.md      <span class="text-neutral-500"># /review</span>
+├── commit.md      <span class="text-neutral-500"># /commit</span>
+└── debug.md       <span class="text-neutral-500"># /debug</span>
+
+<span class="text-purple-400"># Skills do projeto (apenas este projeto)</span>
+./claude/skills/
+├── deploy.md      <span class="text-neutral-500"># /deploy</span>
+└── test-e2e.md    <span class="text-neutral-500"># /test-e2e</span></pre>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+          <h4 class="font-bold text-emerald-400 mb-4">Skills Globais</h4>
+          <ul class="space-y-3 text-neutral-300">
+            <li class="flex items-start space-x-2">
+              <span class="text-emerald-400">✓</span>
+              <span>Disponiveis em todos os projetos</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-emerald-400">✓</span>
+              <span>Bom para fluxos pessoais</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-emerald-400">✓</span>
+              <span>Local: <code class="bg-dark-700 px-1 rounded text-xs">~/.claude/skills/</code></span>
+            </li>
+          </ul>
+        </div>
+        <div class="bg-purple-900/20 rounded-xl border border-purple-500/30 p-6">
+          <h4 class="font-bold text-purple-400 mb-4">Skills de Projeto</h4>
+          <ul class="space-y-3 text-neutral-300">
+            <li class="flex items-start space-x-2">
+              <span class="text-purple-400">✓</span>
+              <span>Especificos para o projeto</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-purple-400">✓</span>
+              <span>Versionados no Git com a equipe</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-purple-400">✓</span>
+              <span>Local: <code class="bg-dark-700 px-1 rounded text-xs">./.claude/skills/</code></span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">💡</span> Prioridade
+        </h3>
+        <p class="text-neutral-300">
+          Skills de projeto tem prioridade sobre globais. Se existir <code class="bg-dark-700 px-2 py-1 rounded">/review</code>
+          em ambos, o do projeto sera usado.
+        </p>
+      </div>
+    </section>
+
+    <!-- TOPICO 3 -->
+    <section id="topico-3" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">3</span>
+        <h2 class="text-2xl font-bold">✍️ Criando seu Primeiro Skill</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Vamos criar um skill de <strong class="text-purple-400">code review</strong> passo a passo.
+        Este skill analisara codigo e fornecera feedback estruturado.
+      </p>
+
+      <div class="space-y-6 mb-6">
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-12 h-12 rounded-full bg-purple-500/20 flex items-center justify-center">
+            <span class="text-purple-400 font-bold">1</span>
+          </div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+            <h4 class="font-semibold text-white mb-2">Criar o diretorio</h4>
+            <div class="bg-dark-900 rounded-lg p-3 font-mono text-sm text-purple-400">
+              mkdir -p .claude/skills
+            </div>
+          </div>
+        </div>
+
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-12 h-12 rounded-full bg-purple-500/20 flex items-center justify-center">
+            <span class="text-purple-400 font-bold">2</span>
+          </div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+            <h4 class="font-semibold text-white mb-2">Criar o arquivo review.md</h4>
+            <div class="bg-dark-900 rounded-lg p-4 font-mono text-xs text-neutral-300 overflow-x-auto">
+<pre><span class="text-purple-400"># Code Review Skill</span>
+
+Analise o codigo fornecido e forneca feedback estruturado:
+
+## Checklist de Review
+- [ ] Logica correta e sem bugs obvios
+- [ ] Tratamento de erros adequado
+- [ ] Codigo legivel e bem nomeado
+- [ ] Sem duplicacao desnecessaria
+- [ ] Performance aceitavel
+- [ ] Testes cobrindo casos principais
+
+## Formato de Resposta
+Para cada issue encontrada:
+1. **Severidade**: Critica/Alta/Media/Baixa
+2. **Localizacao**: Arquivo e linha
+3. **Descricao**: O que esta errado
+4. **Sugestao**: Como corrigir
+
+## Exemplo
+**Severidade**: Media
+**Localizacao**: src/auth.ts:45
+**Descricao**: Senha nao esta sendo hasheada
+**Sugestao**: Use bcrypt.hash() antes de salvar
+
+---
+Agora analise: $ARGUMENTS</pre>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-12 h-12 rounded-full bg-purple-500/20 flex items-center justify-center">
+            <span class="text-purple-400 font-bold">3</span>
+          </div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+            <h4 class="font-semibold text-white mb-2">Usar o skill</h4>
+            <div class="bg-dark-900 rounded-lg p-3 font-mono text-sm text-purple-400">
+              /review o arquivo src/auth.ts
+            </div>
+            <p class="text-neutral-400 text-sm mt-2">O texto apos /review substitui $ARGUMENTS</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-gradient-to-br from-purple-900/30 to-dark-800 rounded-xl border border-purple-500/30 p-6">
+        <h3 class="text-lg font-semibold text-purple-400 mb-4">Variaveis Disponiveis</h3>
+        <div class="overflow-x-auto">
+          <table class="w-full text-sm">
+            <thead>
+              <tr class="border-b border-dark-600">
+                <th class="text-left py-2 text-neutral-400">Variavel</th>
+                <th class="text-left py-2 text-neutral-400">Descricao</th>
+              </tr>
+            </thead>
+            <tbody class="text-neutral-300">
+              <tr class="border-b border-dark-700">
+                <td class="py-2 text-purple-400 font-mono">$ARGUMENTS</td>
+                <td class="py-2">Texto apos o comando /skill</td>
+              </tr>
+              <tr class="border-b border-dark-700">
+                <td class="py-2 text-purple-400 font-mono">$SELECTION</td>
+                <td class="py-2">Texto selecionado (se integrado com editor)</td>
+              </tr>
+              <tr>
+                <td class="py-2 text-purple-400 font-mono">$FILE</td>
+                <td class="py-2">Caminho do arquivo atual</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- TOPICO 4 -->
+    <section id="topico-4" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">4</span>
+        <h2 class="text-2xl font-bold">🎨 Skills Avancados</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Skills podem ser muito mais sofisticados, incluindo <strong class="text-purple-400">condicoes</strong>,
+        <strong class="text-purple-400">multiplas etapas</strong> e <strong class="text-purple-400">integracao
+        com outras ferramentas</strong>.
+      </p>
+
+      <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-white mb-4">Skill Multi-etapas: /new-feature</h3>
+        <div class="bg-dark-900 rounded-lg p-4 font-mono text-xs text-neutral-300 overflow-x-auto">
+<pre><span class="text-purple-400"># New Feature Skill</span>
+
+Voce vai implementar uma nova feature seguindo TDD.
+
+## Etapa 1: Entendimento
+Primeiro, analise o requisito e faca perguntas de clarificacao
+se necessario: $ARGUMENTS
+
+## Etapa 2: Testes
+Depois de entender, escreva os testes ANTES da implementacao.
+Use o padrao do projeto (ver CLAUDE.md para convencoes de teste).
+
+## Etapa 3: Implementacao
+Implemente o minimo necessario para passar os testes.
+
+## Etapa 4: Refatoracao
+Melhore o codigo mantendo testes passando.
+
+## Etapa 5: Documentacao
+Atualize README ou JSDoc se necessario.
+
+---
+Requisito da feature: $ARGUMENTS
+
+Comece pela Etapa 1.</pre>
+        </div>
+      </div>
+
+      <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-white mb-4">Skill com Condicoes: /deploy</h3>
+        <div class="bg-dark-900 rounded-lg p-4 font-mono text-xs text-neutral-300 overflow-x-auto">
+<pre><span class="text-purple-400"># Deploy Skill</span>
+
+Antes de fazer deploy, verifique:
+
+1. Rode `npm run test` - TODOS testes devem passar
+2. Rode `npm run lint` - Sem erros de lint
+3. Rode `npm run build` - Build sem erros
+
+Se algum falhar, PARE e reporte o erro.
+
+Se todos passarem, execute o deploy para o ambiente:
+- Se $ARGUMENTS contem "prod": use `npm run deploy:prod`
+- Se $ARGUMENTS contem "staging": use `npm run deploy:staging`
+- Caso contrario: use `npm run deploy:dev`
+
+Ambiente solicitado: $ARGUMENTS</pre>
+        </div>
+      </div>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">💡</span> Dica Pro
+        </h3>
+        <p class="text-neutral-300">
+          Skills podem referenciar outros skills! Use <code class="bg-dark-700 px-2 py-1 rounded">/outro-skill</code>
+          dentro do markdown para criar fluxos compostos.
+        </p>
+      </div>
+    </section>
+
+    <!-- TOPICO 5 -->
+    <section id="topico-5" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">5</span>
+        <h2 class="text-2xl font-bold">🤝 Compartilhando Skills</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Skills de projeto podem ser <strong class="text-purple-400">versionados no Git</strong> e
+        compartilhados com toda a equipe, padronizando fluxos de trabalho.
+      </p>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+          <h4 class="font-bold text-emerald-400 mb-4">✓ Beneficios de Compartilhar</h4>
+          <ul class="space-y-3 text-neutral-300">
+            <li class="flex items-start space-x-2">
+              <span class="text-emerald-400">✓</span>
+              <span>Padronizacao de code review</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-emerald-400">✓</span>
+              <span>Onboarding mais rapido</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-emerald-400">✓</span>
+              <span>Melhores praticas documentadas</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-emerald-400">✓</span>
+              <span>Consistencia entre desenvolvedores</span>
+            </li>
+          </ul>
+        </div>
+        <div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
+          <h4 class="font-bold text-white mb-4">Estrutura Recomendada</h4>
+          <div class="bg-dark-900 rounded-lg p-3 font-mono text-xs text-neutral-300">
+<pre>.claude/
+├── skills/
+│   ├── review.md
+│   ├── test.md
+│   └── deploy.md
+└── README.md  <span class="text-neutral-500"># Documenta os skills</span></pre>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-white mb-4">Template de README para Skills</h3>
+        <div class="bg-dark-900 rounded-lg p-4 font-mono text-xs text-neutral-300 overflow-x-auto">
+<pre><span class="text-purple-400"># Skills do Projeto</span>
+
+## Disponiveis
+
+| Skill | Descricao | Exemplo |
+|-------|-----------|---------|
+| /review | Code review automatico | /review src/auth.ts |
+| /test | Gera testes unitarios | /test UserService |
+| /deploy | Deploy com verificacoes | /deploy staging |
+
+## Criando Novos Skills
+
+1. Crie um arquivo .md em .claude/skills/
+2. Use o template em .claude/skills/_template.md
+3. Teste localmente antes de commitar
+4. Adicione a tabela acima</pre>
+        </div>
+      </div>
+
+      <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+        <h3 class="text-lg font-semibold text-red-400 mb-3 flex items-center">
+          <span class="mr-2">⚠️</span> Atencao
+        </h3>
+        <p class="text-neutral-300">
+          Nao inclua informacoes sensiveis (tokens, senhas, endpoints internos) em skills
+          versionados. Use variaveis de ambiente para dados sensiveis.
+        </p>
+      </div>
+    </section>
+
+    <!-- TOPICO 6 -->
+    <section id="topico-6" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">6</span>
+        <h2 class="text-2xl font-bold">📚 Biblioteca de Skills Prontos</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Aqui estao skills prontos para usar que cobrem os <strong class="text-purple-400">casos mais
+        comuns</strong>. Copie, adapte e expanda conforme sua necessidade.
+      </p>
+
+      <div class="grid grid-cols-1 gap-6 mb-6">
+        <div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
+          <h4 class="font-semibold text-purple-400 mb-4">/commit - Mensagem de Commit</h4>
+          <div class="bg-dark-900 rounded-lg p-4 font-mono text-xs text-neutral-300 overflow-x-auto">
+<pre>Analise as mudancas staged (git diff --cached) e gere uma
+mensagem de commit seguindo Conventional Commits:
+
+- feat: nova funcionalidade
+- fix: correcao de bug
+- docs: documentacao
+- refactor: refatoracao
+- test: testes
+
+Formato:
+tipo(escopo): descricao curta
+
+Corpo opcional com mais detalhes.
+
+Gere APENAS a mensagem, sem explicacoes.</pre>
+          </div>
+        </div>
+
+        <div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
+          <h4 class="font-semibold text-purple-400 mb-4">/explain - Explicacao de Codigo</h4>
+          <div class="bg-dark-900 rounded-lg p-4 font-mono text-xs text-neutral-300 overflow-x-auto">
+<pre>Explique o codigo a seguir de forma clara e didatica:
+
+1. **Visao Geral**: O que este codigo faz em uma frase
+2. **Passo a Passo**: Explique cada parte relevante
+3. **Entrada/Saida**: Quais dados recebe e retorna
+4. **Complexidade**: Analise Big O se relevante
+5. **Possiveis Melhorias**: Sugestoes de refatoracao
+
+Codigo para explicar: $ARGUMENTS</pre>
+          </div>
+        </div>
+
+        <div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
+          <h4 class="font-semibold text-purple-400 mb-4">/optimize - Otimizacao de Performance</h4>
+          <div class="bg-dark-900 rounded-lg p-4 font-mono text-xs text-neutral-300 overflow-x-auto">
+<pre>Analise o codigo fornecido focando em performance:
+
+## Checklist
+- Loops desnecessarios ou ineficientes
+- Operacoes N+1 (queries em loop)
+- Falta de memoizacao/cache
+- Algoritmos com complexidade alta
+- Memory leaks potenciais
+
+## Formato de Resposta
+1. Issues encontradas (ordenadas por impacto)
+2. Codigo otimizado
+3. Benchmarks estimados (antes vs depois)
+
+Codigo para otimizar: $ARGUMENTS</pre>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-gradient-to-br from-purple-900/30 to-dark-800 rounded-xl border border-purple-500/30 p-6">
+        <h3 class="text-lg font-semibold text-purple-400 mb-4">Proximo Passo</h3>
+        <p class="text-neutral-300 mb-4">
+          Crie um skill para sua tarefa mais repetitiva esta semana. Comece simples e
+          itere conforme aprende o que funciona.
+        </p>
+        <div class="bg-dark-900 rounded-lg p-4 font-mono text-sm text-purple-400">
+          <span class="text-neutral-400"># Exemplo: criar skill de traducao</span><br>
+          echo "Traduza para portugues: \$ARGUMENTS" > ~/.claude/skills/pt.md
+        </div>
+      </div>
+    </section>
+
+    <!-- RESUMO -->
+    <section class="mb-12">
+      <div class="bg-gradient-to-br from-purple-900/40 via-dark-800 to-dark-800 rounded-xl border border-purple-500/30 p-8">
+        <h2 class="text-2xl font-bold mb-6 flex items-center">
+          <span class="mr-3">📋</span> Resumo do Modulo
+        </h2>
+
+        <div class="space-y-4 mb-8">
+          <div class="flex items-start space-x-3">
+            <span class="text-purple-400 mt-1">✓</span>
+            <div>
+              <strong class="text-white">Skills sao macros para prompts</strong>
+              <span class="text-neutral-400"> - automatize tarefas repetitivas</span>
+            </div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-purple-400 mt-1">✓</span>
+            <div>
+              <strong class="text-white">Dois niveis: global e projeto</strong>
+              <span class="text-neutral-400"> - skills de projeto versionados no Git</span>
+            </div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-purple-400 mt-1">✓</span>
+            <div>
+              <strong class="text-white">Use $ARGUMENTS para parametros</strong>
+              <span class="text-neutral-400"> - skills dinamicos e reutilizaveis</span>
+            </div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-purple-400 mt-1">✓</span>
+            <div>
+              <strong class="text-white">Skills podem ser multi-etapas</strong>
+              <span class="text-neutral-400"> - fluxos complexos encapsulados</span>
+            </div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-purple-400 mt-1">✓</span>
+            <div>
+              <strong class="text-white">Compartilhe com a equipe</strong>
+              <span class="text-neutral-400"> - padronize processos via .claude/skills/</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+          <h3 class="font-semibold text-purple-400 mb-2">Proximo Modulo:</h3>
+          <p class="text-neutral-300">3.3 - MCP: Model Context Protocol - conectando Claude a fontes de dados externas</p>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-4">
+          <a href="modulo-3-1.html" class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors">
+            ← Modulo Anterior
+          </a>
+          <a href="modulo-3-3.html" class="flex-1 text-center px-6 py-3 bg-purple-600 text-white rounded-lg font-semibold hover:bg-purple-500 transition-colors">
+            Proximo Modulo →
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-dark-600 py-8 mt-16">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+      <p>Claude Code 2026 - Curso criado por <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300">INEMA.CLUB</a></p>
+    </div>
+  </footer>
+
+  <!-- SCRIPTS -->
+  <script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    const html = document.documentElement;
+
+    if (localStorage.getItem('theme') === 'light' || (!localStorage.getItem('theme') && !html.classList.contains('dark'))) {
+      themeToggleDarkIcon.classList.remove('hidden');
+      html.classList.remove('dark');
+    } else {
+      themeToggleLightIcon.classList.remove('hidden');
+    }
+
+    themeToggle.addEventListener('click', () => {
+      themeToggleDarkIcon.classList.toggle('hidden');
+      themeToggleLightIcon.classList.toggle('hidden');
+      html.classList.toggle('dark');
+      localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+    });
+  </script>
+
+</body>
+</html>

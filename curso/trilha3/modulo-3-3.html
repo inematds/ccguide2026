@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Modulo 3.3: MCP | Claude Code 2026</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: '#FACC15',
+            dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' }
+          }
+        }
+      }
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+    html:not(.dark) body { background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 50%, #f1f5f9 100%); }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+  </style>
+</head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen">
+
+  <!-- NAVIGATION -->
+  <nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-14">
+        <div class="flex items-center space-x-4">
+          <a href="../../index.html" class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300">
+            <span class="text-2xl">🤖</span>
+            <span class="font-bold text-lg hidden sm:inline">Claude Code 2026</span>
+          </a>
+          <span class="text-neutral-600">|</span>
+          <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300 text-sm font-medium">INEMA.CLUB</a>
+        </div>
+        <div class="flex items-center space-x-1 sm:space-x-2">
+          <a href="../trilha1/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors">
+            <span class="sm:hidden">T1</span>
+            <span class="hidden sm:inline">Fundamentos</span>
+          </a>
+          <a href="../trilha2/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors">
+            <span class="sm:hidden">T2</span>
+            <span class="hidden sm:inline">Comandos</span>
+          </a>
+          <a href="index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-purple-400 bg-purple-500/10">
+            <span class="sm:hidden">T3</span>
+            <span class="hidden sm:inline">Avancado</span>
+          </a>
+          <button id="theme-toggle" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2">
+            <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+            </svg>
+            <svg id="theme-toggle-light-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- BREADCRUMB -->
+  <nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+    <div class="flex items-center space-x-2 text-sm text-neutral-400">
+      <a href="../../index.html" class="hover:text-purple-400">Inicio</a>
+      <span>/</span>
+      <a href="index.html" class="hover:text-purple-400">Trilha 3</a>
+      <span>/</span>
+      <span class="text-purple-400">Modulo 3.3</span>
+    </div>
+  </nav>
+
+  <!-- HEADER -->
+  <header class="bg-gradient-to-br from-purple-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <span class="inline-block px-3 py-1 bg-purple-500/20 text-purple-400 text-xs font-semibold rounded-full mb-4">
+        MODULO 3.3
+      </span>
+      <h1 class="text-3xl sm:text-4xl font-bold mb-4">🔌 MCP: Model Context Protocol</h1>
+      <p class="text-lg text-neutral-400 max-w-3xl">
+        MCP permite que Claude se conecte a fontes de dados externas como bancos de dados, APIs e servicos.
+        Expanda as capacidades do Claude Code muito alem do sistema de arquivos local.
+      </p>
+
+      <div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-purple-400">6</div>
+          <div class="text-xs text-neutral-400">Topicos</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-purple-400">50</div>
+          <div class="text-xs text-neutral-400">Minutos</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-purple-400">Avancado</div>
+          <div class="text-xs text-neutral-400">Nivel</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-purple-400">Pratico</div>
+          <div class="text-xs text-neutral-400">Tipo</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN CONTENT -->
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+    <!-- TOPICO 1 -->
+    <section id="topico-1" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">1</span>
+        <h2 class="text-2xl font-bold">🌐 O que e MCP</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Model Context Protocol (MCP) e um <strong class="text-purple-400">protocolo aberto</strong> que permite
+        conectar LLMs a fontes de dados externas de forma padronizada. Com MCP, Claude pode consultar
+        bancos de dados, chamar APIs, acessar documentacao e muito mais.
+      </p>
+
+      <div class="bg-gradient-to-br from-purple-900/30 to-dark-800 rounded-xl border border-purple-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-purple-400 mb-4 flex items-center">
+          <span class="mr-2">🔗</span> Arquitetura MCP
+        </h3>
+        <div class="bg-dark-900 rounded-lg p-4 font-mono text-sm text-neutral-300 mb-4">
+<pre>┌─────────────────┐     ┌─────────────────┐     ┌─────────────────┐
+│   Claude Code   │ ←→  │   MCP Server    │ ←→  │   Data Source   │
+│   (Cliente)     │     │   (Bridge)      │     │   (DB, API...)  │
+└─────────────────┘     └─────────────────┘     └─────────────────┘</pre>
+        </div>
+        <ul class="space-y-2 text-neutral-300">
+          <li class="flex items-start space-x-2">
+            <span class="text-purple-400 mt-1">•</span>
+            <span><strong class="text-white">Cliente:</strong> Claude Code que faz as requisicoes</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-purple-400 mt-1">•</span>
+            <span><strong class="text-white">Server:</strong> Ponte que traduz requisicoes para a fonte de dados</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-purple-400 mt-1">•</span>
+            <span><strong class="text-white">Data Source:</strong> Banco de dados, API, servico externo</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6">
+        <h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center">
+          <span class="mr-2">📊</span> Servidores MCP Disponiveis
+        </h3>
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+          <div class="bg-dark-800 rounded-lg p-3">
+            <span class="text-purple-400 font-bold">PostgreSQL</span>
+            <p class="text-neutral-400 text-xs mt-1">Consultas SQL diretas</p>
+          </div>
+          <div class="bg-dark-800 rounded-lg p-3">
+            <span class="text-purple-400 font-bold">GitHub</span>
+            <p class="text-neutral-400 text-xs mt-1">Issues, PRs, repos</p>
+          </div>
+          <div class="bg-dark-800 rounded-lg p-3">
+            <span class="text-purple-400 font-bold">Slack</span>
+            <p class="text-neutral-400 text-xs mt-1">Mensagens, canais</p>
+          </div>
+          <div class="bg-dark-800 rounded-lg p-3">
+            <span class="text-purple-400 font-bold">Google Drive</span>
+            <p class="text-neutral-400 text-xs mt-1">Docs, Sheets</p>
+          </div>
+          <div class="bg-dark-800 rounded-lg p-3">
+            <span class="text-purple-400 font-bold">Notion</span>
+            <p class="text-neutral-400 text-xs mt-1">Paginas, databases</p>
+          </div>
+          <div class="bg-dark-800 rounded-lg p-3">
+            <span class="text-purple-400 font-bold">Custom</span>
+            <p class="text-neutral-400 text-xs mt-1">Crie o seu!</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TOPICO 2 -->
+    <section id="topico-2" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">2</span>
+        <h2 class="text-2xl font-bold">⚙️ Configurando MCP</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        A configuracao de servidores MCP e feita no arquivo <strong class="text-purple-400">~/.claude/mcp.json</strong>.
+        Cada servidor precisa de um comando de inicializacao e parametros opcionais.
+      </p>
+
+      <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-white mb-4">Estrutura do mcp.json</h3>
+        <div class="bg-dark-900 rounded-lg p-4 font-mono text-sm text-neutral-300 overflow-x-auto">
+<pre>{
+  "mcpServers": {
+    <span class="text-purple-400">"postgres"</span>: {
+      "command": "npx",
+      "args": ["-y", "@anthropic/mcp-server-postgres"],
+      "env": {
+        "DATABASE_URL": "postgresql://user:pass@localhost:5432/db"
+      }
+    },
+    <span class="text-purple-400">"github"</span>: {
+      "command": "npx",
+      "args": ["-y", "@anthropic/mcp-server-github"],
+      "env": {
+        "GITHUB_TOKEN": "ghp_xxxxxxxxxxxx"
+      }
+    }
+  }
+}</pre>
+        </div>
+      </div>
+
+      <div class="space-y-6 mb-6">
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-12 h-12 rounded-full bg-purple-500/20 flex items-center justify-center">
+            <span class="text-purple-400 font-bold">1</span>
+          </div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+            <h4 class="font-semibold text-white mb-2">Instalar servidor MCP</h4>
+            <p class="text-neutral-400 text-sm mb-3">A maioria roda via npx automaticamente</p>
+            <div class="bg-dark-900 rounded-lg p-3 font-mono text-sm text-purple-400">
+              npx -y @anthropic/mcp-server-postgres --help
+            </div>
+          </div>
+        </div>
+
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-12 h-12 rounded-full bg-purple-500/20 flex items-center justify-center">
+            <span class="text-purple-400 font-bold">2</span>
+          </div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+            <h4 class="font-semibold text-white mb-2">Criar mcp.json</h4>
+            <div class="bg-dark-900 rounded-lg p-3 font-mono text-sm text-purple-400">
+              mkdir -p ~/.claude && touch ~/.claude/mcp.json
+            </div>
+          </div>
+        </div>
+
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-12 h-12 rounded-full bg-purple-500/20 flex items-center justify-center">
+            <span class="text-purple-400 font-bold">3</span>
+          </div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+            <h4 class="font-semibold text-white mb-2">Reiniciar Claude Code</h4>
+            <p class="text-neutral-400 text-sm">MCP servers sao carregados no inicio da sessao</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+        <h3 class="text-lg font-semibold text-red-400 mb-3 flex items-center">
+          <span class="mr-2">⚠️</span> Seguranca
+        </h3>
+        <p class="text-neutral-300">
+          Nunca commite mcp.json com credenciais! Use variaveis de ambiente ou um arquivo
+          .env separado. Adicione mcp.json ao .gitignore.
+        </p>
+      </div>
+    </section>
+
+    <!-- TOPICO 3 -->
+    <section id="topico-3" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">3</span>
+        <h2 class="text-2xl font-bold">🗄️ MCP com PostgreSQL</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        O servidor MCP para PostgreSQL permite que Claude <strong class="text-purple-400">execute queries SQL</strong>
+        diretamente no seu banco de dados. Ideal para analise de dados, debugging e geracao de relatorios.
+      </p>
+
+      <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-white mb-4">Configuracao PostgreSQL</h3>
+        <div class="bg-dark-900 rounded-lg p-4 font-mono text-sm text-neutral-300 overflow-x-auto">
+<pre>{
+  "mcpServers": {
+    "postgres": {
+      "command": "npx",
+      "args": ["-y", "@anthropic/mcp-server-postgres"],
+      "env": {
+        "DATABASE_URL": "postgresql://user:password@localhost:5432/mydb"
+      }
+    }
+  }
+}</pre>
+        </div>
+      </div>
+
+      <div class="bg-gradient-to-br from-purple-900/30 to-dark-800 rounded-xl border border-purple-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-purple-400 mb-4">Exemplo de Uso</h3>
+        <div class="space-y-4">
+          <div class="bg-dark-900 rounded-lg p-4">
+            <p class="text-neutral-400 text-sm mb-2">Voce pergunta:</p>
+            <p class="text-white">"Quantos usuarios se cadastraram no ultimo mes?"</p>
+          </div>
+          <div class="bg-dark-900 rounded-lg p-4">
+            <p class="text-neutral-400 text-sm mb-2">Claude executa:</p>
+            <p class="text-purple-400 font-mono text-sm">SELECT COUNT(*) FROM users WHERE created_at > NOW() - INTERVAL '1 month';</p>
+          </div>
+          <div class="bg-dark-900 rounded-lg p-4">
+            <p class="text-neutral-400 text-sm mb-2">Claude responde:</p>
+            <p class="text-white">"Foram 1.247 novos cadastros no ultimo mes. Isso representa um aumento de 23% em relacao ao mes anterior."</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+          <h4 class="font-bold text-emerald-400 mb-4">✓ Casos de Uso</h4>
+          <ul class="space-y-2 text-neutral-300 text-sm">
+            <li>• Analise exploratoria de dados</li>
+            <li>• Geracao de relatorios</li>
+            <li>• Debug de problemas de dados</li>
+            <li>• Validacao de migracoes</li>
+          </ul>
+        </div>
+        <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+          <h4 class="font-bold text-red-400 mb-4">✗ Cuidados</h4>
+          <ul class="space-y-2 text-neutral-300 text-sm">
+            <li>• Use usuario read-only quando possivel</li>
+            <li>• Cuidado com queries pesadas</li>
+            <li>• Nao exponha dados sensiveis</li>
+            <li>• Monitore uso de recursos</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- TOPICO 4 -->
+    <section id="topico-4" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">4</span>
+        <h2 class="text-2xl font-bold">🐙 MCP com GitHub</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Conecte Claude ao GitHub para <strong class="text-purple-400">gerenciar issues, analisar PRs</strong>
+        e interagir com repositorios sem sair do terminal.
+      </p>
+
+      <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-white mb-4">Configuracao GitHub</h3>
+        <div class="bg-dark-900 rounded-lg p-4 font-mono text-sm text-neutral-300 overflow-x-auto">
+<pre>{
+  "mcpServers": {
+    "github": {
+      "command": "npx",
+      "args": ["-y", "@anthropic/mcp-server-github"],
+      "env": {
+        "GITHUB_TOKEN": "ghp_xxxxxxxxxxxxxxxxx"
+      }
+    }
+  }
+}</pre>
+        </div>
+        <p class="text-neutral-400 text-sm mt-3">Gere seu token em: github.com/settings/tokens</p>
+      </div>
+
+      <div class="bg-gradient-to-br from-purple-900/30 to-dark-800 rounded-xl border border-purple-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-purple-400 mb-4">Operacoes Disponiveis</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <h4 class="text-white font-semibold mb-2">Issues</h4>
+            <ul class="space-y-1 text-neutral-300 text-sm">
+              <li>• Listar issues abertas</li>
+              <li>• Criar nova issue</li>
+              <li>• Comentar em issue</li>
+              <li>• Fechar/reabrir issue</li>
+            </ul>
+          </div>
+          <div>
+            <h4 class="text-white font-semibold mb-2">Pull Requests</h4>
+            <ul class="space-y-1 text-neutral-300 text-sm">
+              <li>• Listar PRs pendentes</li>
+              <li>• Ver diff de PR</li>
+              <li>• Adicionar review</li>
+              <li>• Aprovar/solicitar mudancas</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">💡</span> Exemplo Pratico
+        </h3>
+        <p class="text-neutral-300 mb-3">
+          "Liste as 5 issues mais antigas do repositorio e sugira quais devem ser fechadas como stale"
+        </p>
+        <p class="text-neutral-400 text-sm">
+          Claude usara o MCP GitHub para buscar issues, analisar idade e atividade, e dar recomendacoes.
+        </p>
+      </div>
+    </section>
+
+    <!-- TOPICO 5 -->
+    <section id="topico-5" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">5</span>
+        <h2 class="text-2xl font-bold">🛠️ Criando seu MCP Server</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Voce pode criar <strong class="text-purple-400">servidores MCP customizados</strong> para
+        conectar Claude a qualquer fonte de dados da sua empresa.
+      </p>
+
+      <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-white mb-4">Estrutura Basica (TypeScript)</h3>
+        <div class="bg-dark-900 rounded-lg p-4 font-mono text-xs text-neutral-300 overflow-x-auto">
+<pre>import { Server } from "@modelcontextprotocol/sdk/server";
+import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio";
+
+const server = new Server({
+  name: "meu-servidor-mcp",
+  version: "1.0.0"
+});
+
+<span class="text-purple-400">// Definir tools disponiveis</span>
+server.setRequestHandler("tools/list", async () => ({
+  tools: [{
+    name: "buscar_cliente",
+    description: "Busca dados de um cliente pelo ID",
+    inputSchema: {
+      type: "object",
+      properties: {
+        clienteId: { type: "string" }
+      },
+      required: ["clienteId"]
+    }
+  }]
+}));
+
+<span class="text-purple-400">// Implementar a tool</span>
+server.setRequestHandler("tools/call", async (request) => {
+  if (request.params.name === "buscar_cliente") {
+    const cliente = await minhaAPI.getCliente(request.params.arguments.clienteId);
+    return { content: [{ type: "text", text: JSON.stringify(cliente) }] };
+  }
+});
+
+<span class="text-purple-400">// Iniciar servidor</span>
+const transport = new StdioServerTransport();
+server.connect(transport);</pre>
+        </div>
+      </div>
+
+      <div class="space-y-4 mb-6">
+        <div class="bg-dark-800 rounded-xl p-6 border border-dark-600">
+          <h4 class="font-semibold text-white mb-2">1. Instalar SDK</h4>
+          <div class="bg-dark-900 rounded-lg p-3 font-mono text-sm text-purple-400">
+            npm install @modelcontextprotocol/sdk
+          </div>
+        </div>
+
+        <div class="bg-dark-800 rounded-xl p-6 border border-dark-600">
+          <h4 class="font-semibold text-white mb-2">2. Implementar handlers</h4>
+          <p class="text-neutral-400 text-sm">Defina tools/list para listar capacidades e tools/call para executar</p>
+        </div>
+
+        <div class="bg-dark-800 rounded-xl p-6 border border-dark-600">
+          <h4 class="font-semibold text-white mb-2">3. Registrar no mcp.json</h4>
+          <div class="bg-dark-900 rounded-lg p-3 font-mono text-sm text-neutral-300">
+            "meu-servidor": { "command": "node", "args": ["./mcp-server.js"] }
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6">
+        <h3 class="text-lg font-semibold text-blue-400 mb-4">Casos de Uso Empresariais</h3>
+        <ul class="space-y-2 text-neutral-300">
+          <li>• <strong class="text-white">CRM interno:</strong> Claude consulta dados de clientes</li>
+          <li>• <strong class="text-white">Sistema de tickets:</strong> Gerenciar suporte via Claude</li>
+          <li>• <strong class="text-white">Analytics:</strong> Queries em data warehouse</li>
+          <li>• <strong class="text-white">Documentacao:</strong> Buscar em Confluence/Wiki interno</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- TOPICO 6 -->
+    <section id="topico-6" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">6</span>
+        <h2 class="text-2xl font-bold">🔐 Seguranca e Boas Praticas</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        MCP da a Claude acesso a dados sensiveis. <strong class="text-purple-400">Seguranca e fundamental</strong>
+        para evitar vazamentos e acessos indevidos.
+      </p>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+          <h4 class="font-bold text-emerald-400 mb-4">✓ Fazer</h4>
+          <ul class="space-y-3 text-neutral-300">
+            <li class="flex items-start space-x-2">
+              <span class="text-emerald-400">✓</span>
+              <span>Usar usuarios read-only quando possivel</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-emerald-400">✓</span>
+              <span>Rotacionar tokens regularmente</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-emerald-400">✓</span>
+              <span>Usar variaveis de ambiente</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-emerald-400">✓</span>
+              <span>Limitar escopo de permissoes</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-emerald-400">✓</span>
+              <span>Auditar acessos regularmente</span>
+            </li>
+          </ul>
+        </div>
+        <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+          <h4 class="font-bold text-red-400 mb-4">✗ Evitar</h4>
+          <ul class="space-y-3 text-neutral-300">
+            <li class="flex items-start space-x-2">
+              <span class="text-red-400">✗</span>
+              <span>Commitar credenciais no Git</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-red-400">✗</span>
+              <span>Usar usuario admin do banco</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-red-400">✗</span>
+              <span>Expor dados de producao desnecessarios</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-red-400">✗</span>
+              <span>Ignorar rate limits</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-red-400">✗</span>
+              <span>Compartilhar mcp.json pessoal</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="bg-gradient-to-br from-purple-900/30 to-dark-800 rounded-xl border border-purple-500/30 p-6">
+        <h3 class="text-lg font-semibold text-purple-400 mb-4">Checklist de Seguranca</h3>
+        <div class="space-y-2 text-neutral-300">
+          <label class="flex items-center space-x-3">
+            <input type="checkbox" class="w-4 h-4 rounded">
+            <span>mcp.json adicionado ao .gitignore</span>
+          </label>
+          <label class="flex items-center space-x-3">
+            <input type="checkbox" class="w-4 h-4 rounded">
+            <span>Credenciais em variaveis de ambiente</span>
+          </label>
+          <label class="flex items-center space-x-3">
+            <input type="checkbox" class="w-4 h-4 rounded">
+            <span>Usuarios com permissao minima necessaria</span>
+          </label>
+          <label class="flex items-center space-x-3">
+            <input type="checkbox" class="w-4 h-4 rounded">
+            <span>Tokens com data de expiracao</span>
+          </label>
+          <label class="flex items-center space-x-3">
+            <input type="checkbox" class="w-4 h-4 rounded">
+            <span>Logs de acesso habilitados</span>
+          </label>
+        </div>
+      </div>
+    </section>
+
+    <!-- RESUMO -->
+    <section class="mb-12">
+      <div class="bg-gradient-to-br from-purple-900/40 via-dark-800 to-dark-800 rounded-xl border border-purple-500/30 p-8">
+        <h2 class="text-2xl font-bold mb-6 flex items-center">
+          <span class="mr-3">📋</span> Resumo do Modulo
+        </h2>
+
+        <div class="space-y-4 mb-8">
+          <div class="flex items-start space-x-3">
+            <span class="text-purple-400 mt-1">✓</span>
+            <div>
+              <strong class="text-white">MCP conecta Claude a dados externos</strong>
+              <span class="text-neutral-400"> - bancos, APIs, servicos</span>
+            </div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-purple-400 mt-1">✓</span>
+            <div>
+              <strong class="text-white">Configuracao via mcp.json</strong>
+              <span class="text-neutral-400"> - defina servidores e credenciais</span>
+            </div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-purple-400 mt-1">✓</span>
+            <div>
+              <strong class="text-white">Servidores pre-construidos</strong>
+              <span class="text-neutral-400"> - PostgreSQL, GitHub, Slack e mais</span>
+            </div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-purple-400 mt-1">✓</span>
+            <div>
+              <strong class="text-white">Crie servers customizados</strong>
+              <span class="text-neutral-400"> - conecte qualquer sistema interno</span>
+            </div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-purple-400 mt-1">✓</span>
+            <div>
+              <strong class="text-white">Seguranca e critica</strong>
+              <span class="text-neutral-400"> - usuarios read-only, tokens rotativos</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+          <h3 class="font-semibold text-purple-400 mb-2">Proximo Modulo:</h3>
+          <p class="text-neutral-300">3.4 - Hooks: Automacao de Eventos - execute codigo em resposta a acoes do Claude</p>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-4">
+          <a href="modulo-3-2.html" class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors">
+            ← Modulo Anterior
+          </a>
+          <a href="modulo-3-4.html" class="flex-1 text-center px-6 py-3 bg-purple-600 text-white rounded-lg font-semibold hover:bg-purple-500 transition-colors">
+            Proximo Modulo →
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-dark-600 py-8 mt-16">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+      <p>Claude Code 2026 - Curso criado por <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300">INEMA.CLUB</a></p>
+    </div>
+  </footer>
+
+  <!-- SCRIPTS -->
+  <script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    const html = document.documentElement;
+
+    if (localStorage.getItem('theme') === 'light' || (!localStorage.getItem('theme') && !html.classList.contains('dark'))) {
+      themeToggleDarkIcon.classList.remove('hidden');
+      html.classList.remove('dark');
+    } else {
+      themeToggleLightIcon.classList.remove('hidden');
+    }
+
+    themeToggle.addEventListener('click', () => {
+      themeToggleDarkIcon.classList.toggle('hidden');
+      themeToggleLightIcon.classList.toggle('hidden');
+      html.classList.toggle('dark');
+      localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+    });
+  </script>
+
+</body>
+</html>

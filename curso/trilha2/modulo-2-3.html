@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Modulo 2.3: Glob e Grep - Busca Avancada no Codebase | Claude Code 2026</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: '#FACC15',
+            dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' }
+          }
+        }
+      }
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+
+    /* Light mode overrides */
+    html:not(.dark) body {
+      background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 50%, #f1f5f9 100%);
+    }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+  </style>
+</head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen">
+
+  <!-- NAVIGATION -->
+  <nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-14">
+        <div class="flex items-center space-x-4">
+          <a href="../../index.html" class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300">
+            <span class="text-2xl">🤖</span>
+            <span class="font-bold text-lg hidden sm:inline">Claude Code 2026</span>
+          </a>
+          <span class="text-neutral-600">|</span>
+          <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300 text-sm font-medium">INEMA.CLUB</a>
+        </div>
+
+        <div class="flex items-center space-x-1 sm:space-x-2">
+          <a href="../trilha1/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors">
+            <span class="sm:hidden">T1</span>
+            <span class="hidden sm:inline">Fundamentos</span>
+          </a>
+          <a href="index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-blue-400 bg-blue-500/10">
+            <span class="sm:hidden">T2</span>
+            <span class="hidden sm:inline">Comandos</span>
+          </a>
+          <a href="../trilha3/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors">
+            <span class="sm:hidden">T3</span>
+            <span class="hidden sm:inline">Avancado</span>
+          </a>
+
+          <button id="theme-toggle" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2">
+            <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+            </svg>
+            <svg id="theme-toggle-light-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- BREADCRUMB -->
+  <nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+    <div class="flex items-center space-x-2 text-sm text-neutral-400">
+      <a href="../../index.html" class="hover:text-blue-400">Inicio</a>
+      <span>/</span>
+      <a href="index.html" class="hover:text-blue-400">Trilha 2</a>
+      <span>/</span>
+      <span class="text-blue-400">Modulo 2.3</span>
+    </div>
+  </nav>
+
+  <!-- HEADER -->
+  <header class="bg-gradient-to-br from-blue-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <span class="inline-block px-3 py-1 bg-blue-500/20 text-blue-400 text-xs font-semibold rounded-full mb-4">
+        MODULO 2.3
+      </span>
+      <h1 class="text-3xl sm:text-4xl font-bold mb-4">🔍 Glob e Grep: Busca Avancada no Codebase</h1>
+      <p class="text-lg text-neutral-400 max-w-3xl">
+        Encontre arquivos por padrao com Glob e busque conteudo com Grep. Duas ferramentas essenciais para
+        navegar codebases grandes e localizar exatamente o que voce precisa.
+      </p>
+
+      <div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-blue-400">6</div>
+          <div class="text-xs text-neutral-400">Topicos</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-blue-400">40</div>
+          <div class="text-xs text-neutral-400">Minutos</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-blue-400">Pratico</div>
+          <div class="text-xs text-neutral-400">Nivel</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-blue-400">Core</div>
+          <div class="text-xs text-neutral-400">Tipo</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN CONTENT -->
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+    <!-- TOPICO 1 -->
+    <section id="topico-1" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">1</span>
+        <h2 class="text-2xl font-bold">📂 Glob: Busca por Padrao de Arquivo</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        <strong class="text-blue-400">Glob</strong> encontra arquivos baseado em padroes de nome. E como um "find"
+        ultra-rapido, otimizado para qualquer tamanho de codebase.
+      </p>
+
+      <div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center">
+          <span class="mr-2">📋</span> Parametros do Glob
+        </h3>
+        <div class="overflow-x-auto">
+          <table class="w-full text-sm">
+            <thead>
+              <tr class="border-b border-dark-600">
+                <th class="text-left py-2 text-neutral-400">Parametro</th>
+                <th class="text-left py-2 text-neutral-400">Tipo</th>
+                <th class="text-left py-2 text-neutral-400">Descricao</th>
+              </tr>
+            </thead>
+            <tbody class="text-neutral-300">
+              <tr class="border-b border-dark-700">
+                <td class="py-2 text-blue-400 font-mono">pattern</td>
+                <td class="py-2">string</td>
+                <td class="py-2">Padrao glob (ex: "**/*.js")</td>
+              </tr>
+              <tr>
+                <td class="py-2 text-blue-400 font-mono">path</td>
+                <td class="py-2">string</td>
+                <td class="py-2">Diretorio inicial (default: cwd)</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+        <h4 class="font-semibold text-white mb-4">Padroes Glob Comuns</h4>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="bg-dark-900 rounded-lg p-4 font-mono text-sm">
+            <p class="text-blue-400 mb-2">**/*.js</p>
+            <p class="text-neutral-400">Todos JS em subpastas</p>
+          </div>
+          <div class="bg-dark-900 rounded-lg p-4 font-mono text-sm">
+            <p class="text-blue-400 mb-2">src/**/*.{ts,tsx}</p>
+            <p class="text-neutral-400">TS e TSX em src/</p>
+          </div>
+          <div class="bg-dark-900 rounded-lg p-4 font-mono text-sm">
+            <p class="text-blue-400 mb-2">*.config.*</p>
+            <p class="text-neutral-400">Arquivos de config</p>
+          </div>
+          <div class="bg-dark-900 rounded-lg p-4 font-mono text-sm">
+            <p class="text-blue-400 mb-2">tests/**/test_*.py</p>
+            <p class="text-neutral-400">Testes Python</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">💡</span> Dica
+        </h3>
+        <p class="text-neutral-300">
+          Resultados sao ordenados por <strong>data de modificacao</strong> - arquivos mais recentes primeiro.
+          Isso e util para encontrar arquivos recem-editados.
+        </p>
+      </div>
+    </section>
+
+    <!-- TOPICO 2 -->
+    <section id="topico-2" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">2</span>
+        <h2 class="text-2xl font-bold">🔎 Grep: Busca por Conteudo</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        <strong class="text-blue-400">Grep</strong> busca texto dentro de arquivos usando regex. Construido sobre
+        ripgrep (rg), e extremamente rapido mesmo em projetos enormes.
+      </p>
+
+      <div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center">
+          <span class="mr-2">📋</span> Principais Parametros do Grep
+        </h3>
+        <div class="overflow-x-auto">
+          <table class="w-full text-sm">
+            <thead>
+              <tr class="border-b border-dark-600">
+                <th class="text-left py-2 text-neutral-400">Parametro</th>
+                <th class="text-left py-2 text-neutral-400">Descricao</th>
+              </tr>
+            </thead>
+            <tbody class="text-neutral-300">
+              <tr class="border-b border-dark-700">
+                <td class="py-2 text-blue-400 font-mono">pattern</td>
+                <td class="py-2">Regex a buscar</td>
+              </tr>
+              <tr class="border-b border-dark-700">
+                <td class="py-2 text-blue-400 font-mono">path</td>
+                <td class="py-2">Diretorio ou arquivo</td>
+              </tr>
+              <tr class="border-b border-dark-700">
+                <td class="py-2 text-blue-400 font-mono">output_mode</td>
+                <td class="py-2">content | files_with_matches | count</td>
+              </tr>
+              <tr class="border-b border-dark-700">
+                <td class="py-2 text-blue-400 font-mono">glob</td>
+                <td class="py-2">Filtrar por padrao de arquivo</td>
+              </tr>
+              <tr class="border-b border-dark-700">
+                <td class="py-2 text-blue-400 font-mono">type</td>
+                <td class="py-2">Tipo de arquivo (js, py, rust...)</td>
+              </tr>
+              <tr>
+                <td class="py-2 text-blue-400 font-mono">-i</td>
+                <td class="py-2">Case insensitive</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
+        <h4 class="font-semibold text-white mb-4">Exemplos de Uso</h4>
+        <div class="bg-dark-900 rounded-lg p-4 font-mono text-sm overflow-x-auto space-y-4">
+          <div>
+            <p class="text-neutral-500 mb-1"># Buscar funcao em todo projeto</p>
+            <p class="text-blue-400">Grep(pattern="def calcular_", path="/projeto")</p>
+          </div>
+          <div>
+            <p class="text-neutral-500 mb-1"># Buscar apenas em arquivos Python</p>
+            <p class="text-blue-400">Grep(pattern="import pandas", type="py")</p>
+          </div>
+          <div>
+            <p class="text-neutral-500 mb-1"># Ver conteudo com contexto</p>
+            <p class="text-blue-400">Grep(pattern="TODO", output_mode="content", -C=3)</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TOPICO 3 -->
+    <section id="topico-3" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">3</span>
+        <h2 class="text-2xl font-bold">📊 Modos de Saida do Grep</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        O parametro <strong class="text-blue-400">output_mode</strong> controla o que Grep retorna.
+        Escolha baseado no que voce precisa saber.
+      </p>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+        <div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
+          <div class="text-2xl mb-3">📄</div>
+          <h4 class="font-bold text-white mb-2">files_with_matches</h4>
+          <p class="text-neutral-400 text-sm mb-3">Apenas nomes dos arquivos (default)</p>
+          <div class="bg-dark-900 rounded-lg p-3 font-mono text-xs text-neutral-300">
+            /projeto/src/main.py<br>
+            /projeto/lib/utils.py
+          </div>
+        </div>
+
+        <div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
+          <div class="text-2xl mb-3">📝</div>
+          <h4 class="font-bold text-white mb-2">content</h4>
+          <p class="text-neutral-400 text-sm mb-3">Linhas que fazem match</p>
+          <div class="bg-dark-900 rounded-lg p-3 font-mono text-xs text-neutral-300">
+            main.py:10: def calcular()<br>
+            utils.py:25: def calcular_total()
+          </div>
+        </div>
+
+        <div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
+          <div class="text-2xl mb-3">🔢</div>
+          <h4 class="font-bold text-white mb-2">count</h4>
+          <p class="text-neutral-400 text-sm mb-3">Contagem por arquivo</p>
+          <div class="bg-dark-900 rounded-lg p-3 font-mono text-xs text-neutral-300">
+            main.py: 5<br>
+            utils.py: 12
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6">
+        <h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center">
+          <span class="mr-2">📐</span> Contexto com -A, -B, -C
+        </h3>
+        <p class="text-neutral-300 mb-4">
+          Quando usando <code class="bg-dark-700 px-2 py-1 rounded">output_mode: "content"</code>, voce pode
+          adicionar linhas de contexto:
+        </p>
+        <ul class="space-y-2 text-neutral-300">
+          <li><code class="text-blue-400">-A=N</code> - N linhas depois (After)</li>
+          <li><code class="text-blue-400">-B=N</code> - N linhas antes (Before)</li>
+          <li><code class="text-blue-400">-C=N</code> - N linhas antes E depois (Context)</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- TOPICO 4 -->
+    <section id="topico-4" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">4</span>
+        <h2 class="text-2xl font-bold">🎯 Regex Essencial para Grep</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Grep usa sintaxe <strong class="text-blue-400">ripgrep</strong> (similar a Perl/PCRE). Alguns padroes
+        uteis para buscas de codigo.
+      </p>
+
+      <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+        <h4 class="font-semibold text-white mb-4">Padroes Uteis</h4>
+        <div class="space-y-3">
+          <div class="flex items-center justify-between bg-dark-700/50 rounded-lg p-3">
+            <code class="text-blue-400 font-mono">function\s+\w+</code>
+            <span class="text-neutral-400 text-sm">Declaracoes de funcao JS</span>
+          </div>
+          <div class="flex items-center justify-between bg-dark-700/50 rounded-lg p-3">
+            <code class="text-blue-400 font-mono">def\s+\w+\(</code>
+            <span class="text-neutral-400 text-sm">Funcoes Python</span>
+          </div>
+          <div class="flex items-center justify-between bg-dark-700/50 rounded-lg p-3">
+            <code class="text-blue-400 font-mono">class\s+[A-Z]\w+</code>
+            <span class="text-neutral-400 text-sm">Classes (CamelCase)</span>
+          </div>
+          <div class="flex items-center justify-between bg-dark-700/50 rounded-lg p-3">
+            <code class="text-blue-400 font-mono">TODO|FIXME|HACK</code>
+            <span class="text-neutral-400 text-sm">Comentarios de tarefas</span>
+          </div>
+          <div class="flex items-center justify-between bg-dark-700/50 rounded-lg p-3">
+            <code class="text-blue-400 font-mono">import.*from</code>
+            <span class="text-neutral-400 text-sm">Imports ES6</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+        <h3 class="text-lg font-semibold text-red-400 mb-3 flex items-center">
+          <span class="mr-2">⚠️</span> Cuidado com Caracteres Especiais
+        </h3>
+        <p class="text-neutral-300">
+          Para buscar literalmente <code class="bg-dark-700 px-2 py-1 rounded">{}</code> ou outros caracteres
+          especiais de regex, escape com <code class="bg-dark-700 px-2 py-1 rounded">\</code>:
+          <code class="text-blue-400">interface\{\}</code>
+        </p>
+      </div>
+    </section>
+
+    <!-- TOPICO 5 -->
+    <section id="topico-5" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">5</span>
+        <h2 class="text-2xl font-bold">🔄 Glob + Grep: Workflow Combinado</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Combine Glob e Grep para navegacao eficiente: <strong class="text-blue-400">Glob encontra arquivos,
+        Grep encontra conteudo</strong>.
+      </p>
+
+      <div class="space-y-6 mb-6">
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center">
+            <span class="text-blue-400 font-bold">1</span>
+          </div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+            <h4 class="font-semibold text-white mb-2">Descobrir estrutura</h4>
+            <div class="bg-dark-900 rounded-lg p-3 font-mono text-sm">
+              <p class="text-blue-400">Glob(pattern="**/*.py", path="/projeto")</p>
+            </div>
+            <p class="text-neutral-400 text-sm mt-2">Encontra todos os arquivos Python</p>
+          </div>
+        </div>
+
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center">
+            <span class="text-blue-400 font-bold">2</span>
+          </div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+            <h4 class="font-semibold text-white mb-2">Localizar funcao especifica</h4>
+            <div class="bg-dark-900 rounded-lg p-3 font-mono text-sm">
+              <p class="text-blue-400">Grep(pattern="def process_data", type="py")</p>
+            </div>
+            <p class="text-neutral-400 text-sm mt-2">Encontra onde a funcao esta definida</p>
+          </div>
+        </div>
+
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center">
+            <span class="text-blue-400 font-bold">3</span>
+          </div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+            <h4 class="font-semibold text-white mb-2">Ler contexto</h4>
+            <div class="bg-dark-900 rounded-lg p-3 font-mono text-sm">
+              <p class="text-blue-400">Read(file_path="/projeto/src/processing.py", offset=45, limit=30)</p>
+            </div>
+            <p class="text-neutral-400 text-sm mt-2">Le apenas o trecho relevante</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">💡</span> Economia de Contexto
+        </h3>
+        <p class="text-neutral-300">
+          Este workflow usa <strong>minimo contexto</strong>: Glob e Grep retornam apenas metadados, e Read
+          le apenas o trecho necessario. Muito mais eficiente que ler arquivos inteiros.
+        </p>
+      </div>
+    </section>
+
+    <!-- TOPICO 6 -->
+    <section id="topico-6" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">6</span>
+        <h2 class="text-2xl font-bold">⚡ Otimizacao e Limites</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Para codebases grandes, use os parametros de otimizacao para <strong class="text-blue-400">limitar
+        resultados</strong> e acelerar buscas.
+      </p>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
+          <h4 class="font-semibold text-white mb-4">Parametros de Limite</h4>
+          <ul class="space-y-3 text-neutral-300">
+            <li class="flex items-start space-x-2">
+              <span class="text-blue-400 mt-1">•</span>
+              <span><code class="text-blue-400">head_limit</code> - Limita primeiros N resultados</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-blue-400 mt-1">•</span>
+              <span><code class="text-blue-400">offset</code> - Pula primeiros N resultados</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-blue-400 mt-1">•</span>
+              <span><code class="text-blue-400">type</code> - Filtra por tipo de arquivo</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-blue-400 mt-1">•</span>
+              <span><code class="text-blue-400">glob</code> - Filtra por padrao de nome</span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
+          <h4 class="font-semibold text-white mb-4">Exemplo Otimizado</h4>
+          <div class="bg-dark-900 rounded-lg p-4 font-mono text-sm">
+            <p class="text-blue-400">Grep(
+  pattern="async function",
+  path="/projeto/src",
+  type="ts",
+  output_mode="files_with_matches",
+  head_limit=10
+)</p>
+          </div>
+          <p class="text-neutral-400 text-sm mt-3">Retorna max 10 arquivos TS com funcoes async</p>
+        </div>
+      </div>
+
+      <div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6">
+        <h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center">
+          <span class="mr-2">📊</span> Multiline Mode
+        </h3>
+        <p class="text-neutral-300 mb-4">
+          Para padroes que cruzam linhas, use <code class="bg-dark-700 px-2 py-1 rounded">multiline: true</code>:
+        </p>
+        <div class="bg-dark-900 rounded-lg p-4 font-mono text-sm">
+          <p class="text-blue-400">Grep(
+  pattern="struct \\{[\\s\\S]*?field",
+  multiline=true
+)</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- RESUMO -->
+    <section class="mb-12">
+      <div class="bg-gradient-to-br from-blue-900/40 via-dark-800 to-dark-800 rounded-xl border border-blue-500/30 p-8">
+        <h2 class="text-2xl font-bold mb-6 flex items-center">
+          <span class="mr-3">📋</span> Resumo do Modulo
+        </h2>
+
+        <div class="space-y-4 mb-8">
+          <div class="flex items-start space-x-3">
+            <span class="text-blue-400 mt-1">✓</span>
+            <div>
+              <strong class="text-white">Glob busca arquivos</strong>
+              <span class="text-neutral-400"> - por padrao de nome, ordenados por data</span>
+            </div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-blue-400 mt-1">✓</span>
+            <div>
+              <strong class="text-white">Grep busca conteudo</strong>
+              <span class="text-neutral-400"> - regex em arquivos, baseado em ripgrep</span>
+            </div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-blue-400 mt-1">✓</span>
+            <div>
+              <strong class="text-white">Tres modos de saida</strong>
+              <span class="text-neutral-400"> - files_with_matches, content, count</span>
+            </div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-blue-400 mt-1">✓</span>
+            <div>
+              <strong class="text-white">Combine Glob + Grep + Read</strong>
+              <span class="text-neutral-400"> - para navegacao eficiente</span>
+            </div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-blue-400 mt-1">✓</span>
+            <div>
+              <strong class="text-white">Use limites</strong>
+              <span class="text-neutral-400"> - head_limit, type, glob para otimizar</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+          <h3 class="font-semibold text-blue-400 mb-2">Proximo Modulo:</h3>
+          <p class="text-neutral-300">2.4 - Bash: Execucao de Comandos do Sistema - rode qualquer comando no terminal</p>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-4">
+          <a href="modulo-2-2.html" class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors">
+            ← Modulo Anterior
+          </a>
+          <a href="modulo-2-4.html" class="flex-1 text-center px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-500 transition-colors">
+            Proximo Modulo →
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-dark-600 py-8 mt-16">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+      <p>Claude Code 2026 - Curso criado por <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300">INEMA.CLUB</a></p>
+    </div>
+  </footer>
+
+  <!-- SCRIPTS -->
+  <script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    const html = document.documentElement;
+
+    if (localStorage.getItem('theme') === 'light' || (!localStorage.getItem('theme') && !html.classList.contains('dark'))) {
+      themeToggleDarkIcon.classList.remove('hidden');
+      html.classList.remove('dark');
+    } else {
+      themeToggleLightIcon.classList.remove('hidden');
+    }
+
+    themeToggle.addEventListener('click', () => {
+      themeToggleDarkIcon.classList.toggle('hidden');
+      themeToggleLightIcon.classList.toggle('hidden');
+      html.classList.toggle('dark');
+      localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+    });
+  </script>
+
+</body>
+</html>

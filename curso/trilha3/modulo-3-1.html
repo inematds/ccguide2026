@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Modulo 3.1: CLAUDE.md | Claude Code 2026</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: '#FACC15',
+            dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' }
+          }
+        }
+      }
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+
+    /* Light mode overrides */
+    html:not(.dark) body {
+      background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 50%, #f1f5f9 100%);
+    }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+  </style>
+</head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen">
+
+  <!-- NAVIGATION -->
+  <nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-14">
+        <div class="flex items-center space-x-4">
+          <a href="../../index.html" class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300">
+            <span class="text-2xl">🤖</span>
+            <span class="font-bold text-lg hidden sm:inline">Claude Code 2026</span>
+          </a>
+          <span class="text-neutral-600">|</span>
+          <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300 text-sm font-medium">INEMA.CLUB</a>
+        </div>
+
+        <div class="flex items-center space-x-1 sm:space-x-2">
+          <a href="../trilha1/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors">
+            <span class="sm:hidden">T1</span>
+            <span class="hidden sm:inline">Fundamentos</span>
+          </a>
+          <a href="../trilha2/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors">
+            <span class="sm:hidden">T2</span>
+            <span class="hidden sm:inline">Comandos</span>
+          </a>
+          <a href="index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-purple-400 bg-purple-500/10">
+            <span class="sm:hidden">T3</span>
+            <span class="hidden sm:inline">Avancado</span>
+          </a>
+
+          <button id="theme-toggle" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2">
+            <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+            </svg>
+            <svg id="theme-toggle-light-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- BREADCRUMB -->
+  <nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+    <div class="flex items-center space-x-2 text-sm text-neutral-400">
+      <a href="../../index.html" class="hover:text-purple-400">Inicio</a>
+      <span>/</span>
+      <a href="index.html" class="hover:text-purple-400">Trilha 3</a>
+      <span>/</span>
+      <span class="text-purple-400">Modulo 3.1</span>
+    </div>
+  </nav>
+
+  <!-- HEADER -->
+  <header class="bg-gradient-to-br from-purple-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <span class="inline-block px-3 py-1 bg-purple-500/20 text-purple-400 text-xs font-semibold rounded-full mb-4">
+        MODULO 3.1
+      </span>
+      <h1 class="text-3xl sm:text-4xl font-bold mb-4">📝 CLAUDE.md: Memoria Persistente do Projeto</h1>
+      <p class="text-lg text-neutral-400 max-w-3xl">
+        Aprenda a criar, estruturar e otimizar o arquivo CLAUDE.md para que Claude tenha contexto
+        permanente sobre seu projeto, reducindo retrabalho e melhorando a qualidade das respostas.
+      </p>
+
+      <div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-purple-400">6</div>
+          <div class="text-xs text-neutral-400">Topicos</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-purple-400">45</div>
+          <div class="text-xs text-neutral-400">Minutos</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-purple-400">Avancado</div>
+          <div class="text-xs text-neutral-400">Nivel</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-purple-400">Pratico</div>
+          <div class="text-xs text-neutral-400">Tipo</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN CONTENT -->
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+    <!-- TOPICO 1 -->
+    <section id="topico-1" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">1</span>
+        <h2 class="text-2xl font-bold">📋 O que e CLAUDE.md</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        CLAUDE.md e o <strong class="text-purple-400">arquivo de memoria persistente</strong> do seu projeto.
+        Diferente de outros arquivos que Claude le apenas quando solicitado, o CLAUDE.md e carregado
+        automaticamente no inicio de cada sessao, fornecendo contexto imediato sobre arquitetura,
+        convencoes e regras do projeto.
+      </p>
+
+      <div class="bg-gradient-to-br from-purple-900/30 to-dark-800 rounded-xl border border-purple-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-purple-400 mb-4 flex items-center">
+          <span class="mr-2">🧠</span> Como Funciona
+        </h3>
+        <p class="text-neutral-300 mb-4">
+          Quando voce inicia uma sessao do Claude Code, o sistema automaticamente busca e le o arquivo CLAUDE.md
+          na raiz do projeto. Este conteudo e injetado no contexto antes mesmo do seu primeiro prompt.
+        </p>
+        <ul class="space-y-2 text-neutral-300">
+          <li class="flex items-start space-x-2">
+            <span class="text-purple-400 mt-1">•</span>
+            <span>Carregado automaticamente em cada sessao</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-purple-400 mt-1">•</span>
+            <span>Nao precisa ser mencionado no prompt</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-purple-400 mt-1">•</span>
+            <span>Consome tokens do seu contexto de 200K</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-purple-400 mt-1">•</span>
+            <span>Pode ser complementado por arquivos em subpastas</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center">
+          <span class="mr-2">📊</span> Impacto na Produtividade
+        </h3>
+        <ul class="space-y-2 text-neutral-300">
+          <li><strong class="text-white">60% menos reexplicacoes</strong> - Claude ja sabe as regras do projeto</li>
+          <li><strong class="text-white">40% menos erros</strong> - Convencoes de codigo sao seguidas automaticamente</li>
+          <li><strong class="text-white">3x mais rapido</strong> - Menos idas e vindas para alinhar contexto</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- TOPICO 2 -->
+    <section id="topico-2" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">2</span>
+        <h2 class="text-2xl font-bold">🏗️ Estrutura Ideal</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Um CLAUDE.md bem estruturado segue uma <strong class="text-purple-400">ordem logica de prioridade</strong>
+        - informacoes mais criticas primeiro, detalhes opcionais depois. Isso garante que mesmo em
+        situacoes de compaction, o essencial seja preservado.
+      </p>
+
+      <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-white mb-4">Template Recomendado</h3>
+        <div class="bg-dark-900 rounded-lg p-4 font-mono text-sm text-neutral-300 overflow-x-auto">
+<pre class="text-purple-400"># CLAUDE.md
+
+## Visao Geral
+<span class="text-neutral-400">Descricao em 2-3 frases do que e o projeto.</span>
+
+## Stack Tecnologico
+<span class="text-neutral-400">- Frontend: React 18 + TypeScript
+- Backend: Node.js + Express
+- Database: PostgreSQL
+- Deploy: Vercel + Railway</span>
+
+## Estrutura de Pastas
+<span class="text-neutral-400">```
+src/
+├── components/    # Componentes React
+├── hooks/         # Custom hooks
+├── services/      # Chamadas API
+├── utils/         # Funcoes utilitarias
+└── types/         # TypeScript types
+```</span>
+
+## Convencoes de Codigo
+<span class="text-neutral-400">- Componentes: PascalCase (UserProfile.tsx)
+- Hooks: camelCase com 'use' (useAuth.ts)
+- Testes: mesmo nome + .test.ts</span>
+
+## Comandos Frequentes
+<span class="text-neutral-400">- npm run dev    # Inicia desenvolvimento
+- npm run test   # Roda testes
+- npm run build  # Build producao</span>
+
+## Regras Importantes
+<span class="text-neutral-400">- Sempre usar TypeScript strict
+- Commits em portugues
+- PR reviews obrigatorios</span></pre>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+          <h4 class="font-bold text-emerald-400 mb-4">Secoes Obrigatorias</h4>
+          <ul class="space-y-3 text-neutral-300">
+            <li class="flex items-start space-x-2">
+              <span class="text-emerald-400">✓</span>
+              <span>Visao geral do projeto</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-emerald-400">✓</span>
+              <span>Stack tecnologico</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-emerald-400">✓</span>
+              <span>Estrutura de pastas</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-emerald-400">✓</span>
+              <span>Convencoes de codigo</span>
+            </li>
+          </ul>
+        </div>
+        <div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
+          <h4 class="font-bold text-neutral-300 mb-4">Secoes Opcionais</h4>
+          <ul class="space-y-3 text-neutral-300">
+            <li class="flex items-start space-x-2">
+              <span class="text-neutral-500">○</span>
+              <span>Arquitetura detalhada</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-neutral-500">○</span>
+              <span>Decisoes de design (ADRs)</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-neutral-500">○</span>
+              <span>Links para documentacao</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-neutral-500">○</span>
+              <span>Changelog recente</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- TOPICO 3 -->
+    <section id="topico-3" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">3</span>
+        <h2 class="text-2xl font-bold">⚡ Otimizacao de Tokens</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Como CLAUDE.md e carregado em <strong class="text-purple-400">toda requisicao</strong>, cada token
+        conta. Um arquivo de 5.000 tokens significa 5.000 tokens a menos para sua tarefa atual.
+        A meta e <strong class="text-purple-400">maximo contexto com minimo de tokens</strong>.
+      </p>
+
+      <div class="bg-gradient-to-br from-purple-900/30 to-dark-800 rounded-xl border border-purple-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-purple-400 mb-4 flex items-center">
+          <span class="mr-2">🎯</span> Tecnicas de Compressao
+        </h3>
+        <div class="space-y-4">
+          <div>
+            <h4 class="font-semibold text-white mb-2">1. Use listas em vez de paragrafos</h4>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div class="bg-red-900/20 rounded-lg p-3 border border-red-500/30">
+                <span class="text-red-400 text-xs">RUIM - 45 tokens</span>
+                <p class="text-neutral-300 text-sm mt-1">Este projeto utiliza React para o frontend com TypeScript para tipagem estatica, Node.js no backend com Express como framework...</p>
+              </div>
+              <div class="bg-emerald-900/20 rounded-lg p-3 border border-emerald-500/30">
+                <span class="text-emerald-400 text-xs">BOM - 12 tokens</span>
+                <p class="text-neutral-300 text-sm mt-1">Stack: React/TS, Node/Express, PostgreSQL</p>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <h4 class="font-semibold text-white mb-2">2. Tabelas para dados estruturados</h4>
+            <div class="bg-dark-900 rounded-lg p-3 font-mono text-sm text-neutral-300">
+              | Pasta | Conteudo |
+              |-------|----------|
+              | /src | Codigo fonte |
+              | /tests | Testes automatizados |
+            </div>
+          </div>
+
+          <div>
+            <h4 class="font-semibold text-white mb-2">3. Referencias em vez de conteudo</h4>
+            <p class="text-neutral-300 text-sm">Em vez de copiar documentacao, use: "Ver docs/API.md para endpoints"</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">💡</span> Regra de Ouro
+        </h3>
+        <p class="text-neutral-300">
+          Mantenha CLAUDE.md abaixo de <strong>2.000 tokens</strong> (aproximadamente 500-700 palavras).
+          Use <code class="bg-dark-700 px-2 py-1 rounded text-purple-400">/context</code> para verificar
+          quanto seu arquivo esta consumindo.
+        </p>
+      </div>
+    </section>
+
+    <!-- TOPICO 4 -->
+    <section id="topico-4" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">4</span>
+        <h2 class="text-2xl font-bold">📁 Hierarquia de Configuracoes</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Em projetos grandes, voce pode ter <strong class="text-purple-400">multiplos arquivos CLAUDE.md</strong>
+        em diferentes niveis da arvore de diretorios. Arquivos em subpastas complementam ou
+        sobrescrevem o arquivo raiz.
+      </p>
+
+      <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-white mb-4">Exemplo de Hierarquia</h3>
+        <div class="bg-dark-900 rounded-lg p-4 font-mono text-sm text-neutral-300">
+<pre>projeto/
+├── CLAUDE.md              <span class="text-purple-400"># Contexto global do projeto</span>
+├── frontend/
+│   └── CLAUDE.md          <span class="text-purple-400"># Regras especificas de React</span>
+├── backend/
+│   └── CLAUDE.md          <span class="text-purple-400"># Regras especificas de Node</span>
+└── mobile/
+    └── CLAUDE.md          <span class="text-purple-400"># Regras especificas de React Native</span></pre>
+        </div>
+      </div>
+
+      <div class="bg-gradient-to-br from-purple-900/30 to-dark-800 rounded-xl border border-purple-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-purple-400 mb-4 flex items-center">
+          <span class="mr-2">🔄</span> Regras de Merge
+        </h3>
+        <ul class="space-y-3 text-neutral-300">
+          <li class="flex items-start space-x-2">
+            <span class="text-purple-400 font-bold">1.</span>
+            <span>Claude le primeiro o CLAUDE.md da raiz</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-purple-400 font-bold">2.</span>
+            <span>Depois le CLAUDE.md do diretorio atual (se existir)</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-purple-400 font-bold">3.</span>
+            <span>Informacoes do arquivo mais proximo tem prioridade</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-purple-400 font-bold">4.</span>
+            <span>Use para isolar contexto de equipes ou modulos</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+        <h3 class="text-lg font-semibold text-red-400 mb-3 flex items-center">
+          <span class="mr-2">⚠️</span> Cuidado
+        </h3>
+        <p class="text-neutral-300">
+          Multiplos CLAUDE.md aumentam o consumo de tokens. Use com moderacao e apenas quando
+          contextos muito diferentes justificarem a separacao.
+        </p>
+      </div>
+    </section>
+
+    <!-- TOPICO 5 -->
+    <section id="topico-5" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">5</span>
+        <h2 class="text-2xl font-bold">🔄 Manutencao e Versionamento</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Um CLAUDE.md desatualizado pode ser pior que nenhum - Claude tomara decisoes baseadas em
+        <strong class="text-purple-400">informacoes obsoletas</strong>. Implemente processos para
+        manter o arquivo sincronizado com a evolucao do projeto.
+      </p>
+
+      <div class="space-y-6 mb-6">
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-12 h-12 rounded-full bg-purple-500/20 flex items-center justify-center">
+            <span class="text-purple-400 font-bold">1</span>
+          </div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+            <h4 class="font-semibold text-white mb-2">Revisao em Pull Requests</h4>
+            <p class="text-sm text-neutral-400 mb-3">Adicione ao checklist de PR</p>
+            <p class="text-neutral-300 text-sm">Sempre que mudar arquitetura, adicionar dependencia ou criar convencao nova, inclua atualizacao do CLAUDE.md no mesmo PR.</p>
+          </div>
+        </div>
+
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-12 h-12 rounded-full bg-purple-500/20 flex items-center justify-center">
+            <span class="text-purple-400 font-bold">2</span>
+          </div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+            <h4 class="font-semibold text-white mb-2">Git Hook Pre-commit</h4>
+            <p class="text-sm text-neutral-400 mb-3">Automacao leve</p>
+            <div class="bg-dark-900 rounded-lg p-3 font-mono text-sm text-purple-400">
+              # .husky/pre-commit<br>
+              if git diff --cached --name-only | grep -E "^(src/|package.json)"; then<br>
+              &nbsp;&nbsp;echo "Lembre de atualizar CLAUDE.md se necessario"<br>
+              fi
+            </div>
+          </div>
+        </div>
+
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-12 h-12 rounded-full bg-purple-500/20 flex items-center justify-center">
+            <span class="text-purple-400 font-bold">3</span>
+          </div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+            <h4 class="font-semibold text-white mb-2">Revisao Mensal</h4>
+            <p class="text-sm text-neutral-400 mb-3">Calendario recorrente</p>
+            <p class="text-neutral-300 text-sm">Agende uma revisao mensal do CLAUDE.md junto com outras housekeeping tasks. Remova informacoes obsoletas e adicione novos padroes estabelecidos.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">💡</span> Dica Pro
+        </h3>
+        <p class="text-neutral-300">
+          Adicione um campo "Ultima atualizacao: YYYY-MM-DD" no final do CLAUDE.md.
+          Isso ajuda a identificar quando o arquivo pode estar desatualizado.
+        </p>
+      </div>
+    </section>
+
+    <!-- TOPICO 6 -->
+    <section id="topico-6" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">6</span>
+        <h2 class="text-2xl font-bold">💼 Exemplos Empresariais</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Veja exemplos reais de CLAUDE.md usados em diferentes tipos de projetos. Adapte
+        <strong class="text-purple-400">o que fizer sentido</strong> para sua realidade.
+      </p>
+
+      <div class="grid grid-cols-1 gap-6 mb-6">
+        <div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
+          <h4 class="font-semibold text-purple-400 mb-4">Projeto SaaS B2B</h4>
+          <div class="bg-dark-900 rounded-lg p-4 font-mono text-xs text-neutral-300 overflow-x-auto">
+<pre># CLAUDE.md - SaaS Dashboard
+
+## Sobre
+Dashboard multi-tenant para gestao empresarial.
+
+## Stack
+Frontend: Next.js 14, Tailwind, Zustand
+Backend: tRPC, Prisma, PostgreSQL
+Auth: NextAuth + RBAC customizado
+
+## Regras de Negocio Criticas
+- Tenant isolation obrigatoria em TODAS queries
+- PII deve ser criptografada (ver utils/crypto)
+- Audit log para acoes destrutivas
+
+## Padroes
+- Server Components por padrao
+- Client Components apenas quando necessario interatividade
+- Todas APIs tipadas via tRPC
+
+Atualizado: 2026-01-15</pre>
+          </div>
+        </div>
+
+        <div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
+          <h4 class="font-semibold text-purple-400 mb-4">Biblioteca Open Source</h4>
+          <div class="bg-dark-900 rounded-lg p-4 font-mono text-xs text-neutral-300 overflow-x-auto">
+<pre># CLAUDE.md - UI Components Library
+
+## Sobre
+Biblioteca de componentes React acessiveis.
+
+## Requisitos
+- WCAG 2.1 AA compliance obrigatorio
+- Suporte SSR (Next.js, Remix)
+- Bundle size &lt; 5kb per component
+
+## Estrutura
+/src/components/[Name]/
+  ├── index.ts       # Export publico
+  ├── [Name].tsx     # Implementacao
+  ├── [Name].test.tsx
+  └── [Name].stories.tsx
+
+## Antes de PR
+- npm run test (100% coverage)
+- npm run a11y (sem violacoes)
+- npm run build (sem erros TS)
+
+Atualizado: 2026-01-20</pre>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-gradient-to-br from-purple-900/30 to-dark-800 rounded-xl border border-purple-500/30 p-6">
+        <h3 class="text-lg font-semibold text-purple-400 mb-4">Gerando seu CLAUDE.md</h3>
+        <p class="text-neutral-300 mb-4">
+          Use o comando <code class="bg-dark-700 px-2 py-1 rounded text-purple-400">/init</code> para
+          Claude analisar seu projeto e gerar um CLAUDE.md inicial. Depois, refine manualmente.
+        </p>
+        <div class="bg-dark-900 rounded-lg p-4 font-mono text-sm text-purple-400">
+          $ claude<br>
+          &gt; /init<br>
+          <span class="text-neutral-400"># Claude analisa a estrutura e gera CLAUDE.md</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- RESUMO -->
+    <section class="mb-12">
+      <div class="bg-gradient-to-br from-purple-900/40 via-dark-800 to-dark-800 rounded-xl border border-purple-500/30 p-8">
+        <h2 class="text-2xl font-bold mb-6 flex items-center">
+          <span class="mr-3">📋</span> Resumo do Modulo
+        </h2>
+
+        <div class="space-y-4 mb-8">
+          <div class="flex items-start space-x-3">
+            <span class="text-purple-400 mt-1">✓</span>
+            <div>
+              <strong class="text-white">CLAUDE.md e memoria persistente</strong>
+              <span class="text-neutral-400"> - carregado automaticamente em cada sessao</span>
+            </div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-purple-400 mt-1">✓</span>
+            <div>
+              <strong class="text-white">Estrutura importa</strong>
+              <span class="text-neutral-400"> - informacoes criticas primeiro, detalhes depois</span>
+            </div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-purple-400 mt-1">✓</span>
+            <div>
+              <strong class="text-white">Otimize tokens</strong>
+              <span class="text-neutral-400"> - mantenha abaixo de 2.000 tokens (~700 palavras)</span>
+            </div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-purple-400 mt-1">✓</span>
+            <div>
+              <strong class="text-white">Use hierarquia</strong>
+              <span class="text-neutral-400"> - CLAUDE.md em subpastas para contextos especificos</span>
+            </div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-purple-400 mt-1">✓</span>
+            <div>
+              <strong class="text-white">Mantenha atualizado</strong>
+              <span class="text-neutral-400"> - revise em PRs e mensalmente</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+          <h3 class="font-semibold text-purple-400 mb-2">Proximo Modulo:</h3>
+          <p class="text-neutral-300">3.2 - Skills: Criando Fluxos Sob Demanda - comandos customizados para automatizar tarefas</p>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-4">
+          <a href="index.html" class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors">
+            ← Voltar para Trilha
+          </a>
+          <a href="modulo-3-2.html" class="flex-1 text-center px-6 py-3 bg-purple-600 text-white rounded-lg font-semibold hover:bg-purple-500 transition-colors">
+            Proximo Modulo →
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-dark-600 py-8 mt-16">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+      <p>Claude Code 2026 - Curso criado por <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300">INEMA.CLUB</a></p>
+    </div>
+  </footer>
+
+  <!-- SCRIPTS -->
+  <script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    const html = document.documentElement;
+
+    if (localStorage.getItem('theme') === 'light' || (!localStorage.getItem('theme') && !html.classList.contains('dark'))) {
+      themeToggleDarkIcon.classList.remove('hidden');
+      html.classList.remove('dark');
+    } else {
+      themeToggleLightIcon.classList.remove('hidden');
+    }
+
+    themeToggle.addEventListener('click', () => {
+      themeToggleDarkIcon.classList.toggle('hidden');
+      themeToggleLightIcon.classList.toggle('hidden');
+      html.classList.toggle('dark');
+      localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+    });
+  </script>
+
+</body>
+</html>

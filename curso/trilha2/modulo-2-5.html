@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Modulo 2.5: Git e Versionamento Integrado | Claude Code 2026</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: '#FACC15',
+            dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' }
+          }
+        }
+      }
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+
+    /* Light mode overrides */
+    html:not(.dark) body {
+      background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 50%, #f1f5f9 100%);
+    }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+  </style>
+</head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen">
+
+  <!-- NAVIGATION -->
+  <nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-14">
+        <div class="flex items-center space-x-4">
+          <a href="../../index.html" class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300">
+            <span class="text-2xl">🤖</span>
+            <span class="font-bold text-lg hidden sm:inline">Claude Code 2026</span>
+          </a>
+          <span class="text-neutral-600">|</span>
+          <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300 text-sm font-medium">INEMA.CLUB</a>
+        </div>
+
+        <div class="flex items-center space-x-1 sm:space-x-2">
+          <a href="../trilha1/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors">
+            <span class="sm:hidden">T1</span>
+            <span class="hidden sm:inline">Fundamentos</span>
+          </a>
+          <a href="index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-blue-400 bg-blue-500/10">
+            <span class="sm:hidden">T2</span>
+            <span class="hidden sm:inline">Comandos</span>
+          </a>
+          <a href="../trilha3/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors">
+            <span class="sm:hidden">T3</span>
+            <span class="hidden sm:inline">Avancado</span>
+          </a>
+
+          <button id="theme-toggle" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2">
+            <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+            </svg>
+            <svg id="theme-toggle-light-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- BREADCRUMB -->
+  <nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+    <div class="flex items-center space-x-2 text-sm text-neutral-400">
+      <a href="../../index.html" class="hover:text-blue-400">Inicio</a>
+      <span>/</span>
+      <a href="index.html" class="hover:text-blue-400">Trilha 2</a>
+      <span>/</span>
+      <span class="text-blue-400">Modulo 2.5</span>
+    </div>
+  </nav>
+
+  <!-- HEADER -->
+  <header class="bg-gradient-to-br from-blue-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <span class="inline-block px-3 py-1 bg-blue-500/20 text-blue-400 text-xs font-semibold rounded-full mb-4">
+        MODULO 2.5
+      </span>
+      <h1 class="text-3xl sm:text-4xl font-bold mb-4">📚 Git e Versionamento Integrado</h1>
+      <p class="text-lg text-neutral-400 max-w-3xl">
+        Claude Code tem integracao nativa com Git e GitHub. Aprenda a criar commits, branches, PRs e usar
+        gh CLI de forma segura seguindo o protocolo de seguranca do Git.
+      </p>
+
+      <div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-blue-400">6</div>
+          <div class="text-xs text-neutral-400">Topicos</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-blue-400">40</div>
+          <div class="text-xs text-neutral-400">Minutos</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-blue-400">Pratico</div>
+          <div class="text-xs text-neutral-400">Nivel</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-blue-400">Core</div>
+          <div class="text-xs text-neutral-400">Tipo</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN CONTENT -->
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+    <!-- TOPICO 1 -->
+    <section id="topico-1" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">1</span>
+        <h2 class="text-2xl font-bold">🔒 Protocolo de Seguranca Git</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Claude Code segue um <strong class="text-blue-400">protocolo rigoroso de seguranca</strong> para operacoes
+        Git, protegendo seu repositorio de acoes destrutivas.
+      </p>
+
+      <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-red-400 mb-4 flex items-center">
+          <span class="mr-2">🚫</span> NUNCA Executar (a menos que explicitamente pedido)
+        </h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <ul class="space-y-2 text-neutral-300">
+            <li><code class="text-red-400">git push --force</code></li>
+            <li><code class="text-red-400">git reset --hard</code></li>
+            <li><code class="text-red-400">git checkout .</code></li>
+          </ul>
+          <ul class="space-y-2 text-neutral-300">
+            <li><code class="text-red-400">git clean -f</code></li>
+            <li><code class="text-red-400">git branch -D</code></li>
+            <li><code class="text-red-400">--no-verify</code></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6">
+        <h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center">
+          <span class="mr-2">✓</span> Regras Importantes
+        </h3>
+        <ul class="space-y-3 text-neutral-300">
+          <li class="flex items-start space-x-2">
+            <span class="text-blue-400 mt-1">•</span>
+            <span><strong class="text-white">Nunca modificar git config</strong></span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-blue-400 mt-1">•</span>
+            <span><strong class="text-white">Criar commits NOVOS</strong> - nao usar --amend apos hook falhar</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-blue-400 mt-1">•</span>
+            <span><strong class="text-white">Adicionar arquivos especificos</strong> - evitar git add -A ou git add .</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-blue-400 mt-1">•</span>
+            <span><strong class="text-white">Nao commitar secrets</strong> - .env, credentials, API keys</span>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- TOPICO 2 -->
+    <section id="topico-2" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">2</span>
+        <h2 class="text-2xl font-bold">📝 Criando Commits</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        O processo de commit segue um <strong class="text-blue-400">workflow especifico</strong> que analisa
+        mudancas, cria mensagem apropriada e verifica o resultado.
+      </p>
+
+      <div class="space-y-6 mb-6">
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center">
+            <span class="text-blue-400 font-bold">1</span>
+          </div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+            <h4 class="font-semibold text-white mb-2">Analisar estado</h4>
+            <div class="bg-dark-900 rounded-lg p-3 font-mono text-sm">
+              <p class="text-blue-400">git status</p>
+              <p class="text-blue-400">git diff</p>
+              <p class="text-blue-400">git log --oneline -5</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center">
+            <span class="text-blue-400 font-bold">2</span>
+          </div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+            <h4 class="font-semibold text-white mb-2">Adicionar arquivos especificos</h4>
+            <div class="bg-dark-900 rounded-lg p-3 font-mono text-sm">
+              <p class="text-blue-400">git add src/main.py src/utils.py</p>
+            </div>
+            <p class="text-neutral-400 text-sm mt-2">Nunca git add -A ou git add .</p>
+          </div>
+        </div>
+
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center">
+            <span class="text-blue-400 font-bold">3</span>
+          </div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+            <h4 class="font-semibold text-white mb-2">Commit com HEREDOC</h4>
+            <div class="bg-dark-900 rounded-lg p-3 font-mono text-sm overflow-x-auto">
+              <pre class="text-blue-400">git commit -m "$(cat &lt;&lt;'EOF'
+Fix authentication bug in login flow
+
+Co-Authored-By: Claude Opus 4.5 &lt;noreply@anthropic.com&gt;
+EOF
+)"</pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">💡</span> Formato HEREDOC
+        </h3>
+        <p class="text-neutral-300">
+          Use HEREDOC para mensagens de commit com multiplas linhas. Isso garante formatacao correta
+          e evita problemas com caracteres especiais.
+        </p>
+      </div>
+    </section>
+
+    <!-- TOPICO 3 -->
+    <section id="topico-3" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">3</span>
+        <h2 class="text-2xl font-bold">🌿 Branches e Merges</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Gerenciamento de branches segue as mesmas regras de seguranca.
+        <strong class="text-blue-400">Evite comandos destrutivos</strong> e prefira operacoes seguras.
+      </p>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+          <h4 class="font-bold text-emerald-400 mb-4">✓ Operacoes Seguras</h4>
+          <div class="space-y-2 font-mono text-sm">
+            <p class="text-neutral-300">git checkout -b feature/nova</p>
+            <p class="text-neutral-300">git switch main</p>
+            <p class="text-neutral-300">git merge feature/x</p>
+            <p class="text-neutral-300">git branch -d (d minusculo)</p>
+          </div>
+        </div>
+        <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+          <h4 class="font-bold text-red-400 mb-4">✗ Evitar</h4>
+          <div class="space-y-2 font-mono text-sm">
+            <p class="text-neutral-500">git branch -D (D maiusculo)</p>
+            <p class="text-neutral-500">git rebase -i</p>
+            <p class="text-neutral-500">git checkout . (descarta mudancas)</p>
+            <p class="text-neutral-500">git merge --force</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6">
+        <h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center">
+          <span class="mr-2">🔄</span> Fluxo de Branch
+        </h3>
+        <div class="bg-dark-900 rounded-lg p-4 font-mono text-sm">
+          <p class="text-neutral-500 mb-1"># Criar branch para feature</p>
+          <p class="text-blue-400 mb-3">git checkout -b feature/user-auth</p>
+          <p class="text-neutral-500 mb-1"># Fazer commits...</p>
+          <p class="text-neutral-500 mb-1"># Voltar para main e merge</p>
+          <p class="text-blue-400 mb-1">git checkout main</p>
+          <p class="text-blue-400">git merge feature/user-auth</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TOPICO 4 -->
+    <section id="topico-4" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">4</span>
+        <h2 class="text-2xl font-bold">🐙 GitHub CLI (gh)</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Use <strong class="text-blue-400">gh CLI</strong> para todas as operacoes GitHub: issues, PRs, releases,
+        actions. E mais eficiente que WebFetch para URLs do GitHub.
+      </p>
+
+      <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+        <h4 class="font-semibold text-white mb-4">Comandos Essenciais</h4>
+        <div class="space-y-4">
+          <div class="bg-dark-900 rounded-lg p-4 font-mono text-sm">
+            <p class="text-neutral-500 mb-1"># Ver PR</p>
+            <p class="text-blue-400 mb-3">gh pr view 123</p>
+            <p class="text-neutral-500 mb-1"># Listar issues</p>
+            <p class="text-blue-400 mb-3">gh issue list --state open</p>
+            <p class="text-neutral-500 mb-1"># Ver comentarios de PR</p>
+            <p class="text-blue-400 mb-3">gh api repos/owner/repo/pulls/123/comments</p>
+            <p class="text-neutral-500 mb-1"># Status de checks</p>
+            <p class="text-blue-400">gh pr checks 123</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">💡</span> Dica
+        </h3>
+        <p class="text-neutral-300">
+          Para qualquer URL do GitHub, prefira usar <code class="bg-dark-700 px-2 py-1 rounded">gh</code>
+          em vez de WebFetch. O gh CLI tem autenticacao e acesso a APIs privadas.
+        </p>
+      </div>
+    </section>
+
+    <!-- TOPICO 5 -->
+    <section id="topico-5" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">5</span>
+        <h2 class="text-2xl font-bold">📤 Criando Pull Requests</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Claude Code pode criar PRs completos com titulo, descricao estruturada e labels.
+        O processo segue um <strong class="text-blue-400">template padrao</strong>.
+      </p>
+
+      <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+        <h4 class="font-semibold text-white mb-4">Estrutura de PR</h4>
+        <div class="bg-dark-900 rounded-lg p-4 font-mono text-sm overflow-x-auto">
+          <pre class="text-blue-400">gh pr create --title "Fix authentication bug" --body "$(cat &lt;&lt;'EOF'
+## Summary
+- Fixed session timeout issue
+- Added token refresh logic
+- Updated error messages
+
+## Test plan
+- [ ] Login with valid credentials
+- [ ] Test session expiry after 1 hour
+- [ ] Verify token refresh works
+
+🤖 Generated with Claude Code
+EOF
+)"</pre>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+          <h4 class="font-bold text-emerald-400 mb-4">✓ Bom PR</h4>
+          <ul class="space-y-2 text-neutral-300 text-sm">
+            <li>Titulo curto (< 70 chars)</li>
+            <li>Summary com bullet points</li>
+            <li>Test plan com checklist</li>
+            <li>Labels apropriados</li>
+          </ul>
+        </div>
+        <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+          <h4 class="font-bold text-red-400 mb-4">✗ Evitar</h4>
+          <ul class="space-y-2 text-neutral-300 text-sm">
+            <li>Titulo muito longo/vago</li>
+            <li>Sem descricao</li>
+            <li>Muitos arquivos nao relacionados</li>
+            <li>Secrets commitados</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- TOPICO 6 -->
+    <section id="topico-6" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">6</span>
+        <h2 class="text-2xl font-bold">🔧 Lidando com Pre-commit Hooks</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Quando um pre-commit hook falha, o commit <strong class="text-blue-400">NAO foi criado</strong>.
+        E critico entender isso para nao perder trabalho.
+      </p>
+
+      <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-red-400 mb-3 flex items-center">
+          <span class="mr-2">⚠️</span> Erro Critico: Usar --amend apos falha
+        </h3>
+        <p class="text-neutral-300 mb-4">
+          Se o hook falhar e voce usar <code class="bg-dark-700 px-2 py-1 rounded">git commit --amend</code>,
+          voce vai modificar o COMMIT ANTERIOR, potencialmente destruindo trabalho.
+        </p>
+        <div class="bg-dark-900 rounded-lg p-4 font-mono text-sm">
+          <p class="text-red-400 mb-2"># ERRADO - modifica commit anterior!</p>
+          <p class="text-neutral-500 mb-3">git commit --amend -m "mensagem"</p>
+          <p class="text-emerald-400 mb-2"># CORRETO - cria novo commit</p>
+          <p class="text-neutral-300">git add . && git commit -m "mensagem"</p>
+        </div>
+      </div>
+
+      <div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
+        <h4 class="font-semibold text-white mb-4">Fluxo Correto apos Hook Falhar</h4>
+        <ol class="space-y-3 text-neutral-300">
+          <li class="flex items-start space-x-3">
+            <span class="bg-blue-500/20 text-blue-400 rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold flex-shrink-0">1</span>
+            <span>Identificar o problema (lint, testes, formatacao)</span>
+          </li>
+          <li class="flex items-start space-x-3">
+            <span class="bg-blue-500/20 text-blue-400 rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold flex-shrink-0">2</span>
+            <span>Corrigir o codigo</span>
+          </li>
+          <li class="flex items-start space-x-3">
+            <span class="bg-blue-500/20 text-blue-400 rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold flex-shrink-0">3</span>
+            <span>Re-stage os arquivos (<code class="text-blue-400">git add</code>)</span>
+          </li>
+          <li class="flex items-start space-x-3">
+            <span class="bg-blue-500/20 text-blue-400 rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold flex-shrink-0">4</span>
+            <span>Criar NOVO commit (sem --amend)</span>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- RESUMO -->
+    <section class="mb-12">
+      <div class="bg-gradient-to-br from-blue-900/40 via-dark-800 to-dark-800 rounded-xl border border-blue-500/30 p-8">
+        <h2 class="text-2xl font-bold mb-6 flex items-center">
+          <span class="mr-3">📋</span> Resumo do Modulo
+        </h2>
+
+        <div class="space-y-4 mb-8">
+          <div class="flex items-start space-x-3">
+            <span class="text-blue-400 mt-1">✓</span>
+            <div>
+              <strong class="text-white">Protocolo de seguranca</strong>
+              <span class="text-neutral-400"> - nunca force push, reset hard, ou skip hooks</span>
+            </div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-blue-400 mt-1">✓</span>
+            <div>
+              <strong class="text-white">Commits com HEREDOC</strong>
+              <span class="text-neutral-400"> - formatacao correta de mensagens</span>
+            </div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-blue-400 mt-1">✓</span>
+            <div>
+              <strong class="text-white">Use gh CLI</strong>
+              <span class="text-neutral-400"> - para PRs, issues, e operacoes GitHub</span>
+            </div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-blue-400 mt-1">✓</span>
+            <div>
+              <strong class="text-white">Nunca --amend apos hook falhar</strong>
+              <span class="text-neutral-400"> - sempre criar novo commit</span>
+            </div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-blue-400 mt-1">✓</span>
+            <div>
+              <strong class="text-white">Adicionar arquivos especificos</strong>
+              <span class="text-neutral-400"> - evitar git add -A</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+          <h3 class="font-semibold text-blue-400 mb-2">Proximo Modulo:</h3>
+          <p class="text-neutral-300">2.6 - Web Tools: WebSearch e WebFetch - busca na web e extracao de conteudo</p>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-4">
+          <a href="modulo-2-4.html" class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors">
+            ← Modulo Anterior
+          </a>
+          <a href="modulo-2-6.html" class="flex-1 text-center px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-500 transition-colors">
+            Proximo Modulo →
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-dark-600 py-8 mt-16">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+      <p>Claude Code 2026 - Curso criado por <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300">INEMA.CLUB</a></p>
+    </div>
+  </footer>
+
+  <!-- SCRIPTS -->
+  <script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    const html = document.documentElement;
+
+    if (localStorage.getItem('theme') === 'light' || (!localStorage.getItem('theme') && !html.classList.contains('dark'))) {
+      themeToggleDarkIcon.classList.remove('hidden');
+      html.classList.remove('dark');
+    } else {
+      themeToggleLightIcon.classList.remove('hidden');
+    }
+
+    themeToggle.addEventListener('click', () => {
+      themeToggleDarkIcon.classList.toggle('hidden');
+      themeToggleLightIcon.classList.toggle('hidden');
+      html.classList.toggle('dark');
+      localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+    });
+  </script>
+
+</body>
+</html>

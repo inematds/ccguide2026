@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Modulo 3.4: Hooks | Claude Code 2026</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: '#FACC15',
+            dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' }
+          }
+        }
+      }
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+    html:not(.dark) body { background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 50%, #f1f5f9 100%); }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+  </style>
+</head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen">
+
+  <!-- NAVIGATION -->
+  <nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-14">
+        <div class="flex items-center space-x-4">
+          <a href="../../index.html" class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300">
+            <span class="text-2xl">🤖</span>
+            <span class="font-bold text-lg hidden sm:inline">Claude Code 2026</span>
+          </a>
+          <span class="text-neutral-600">|</span>
+          <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300 text-sm font-medium">INEMA.CLUB</a>
+        </div>
+        <div class="flex items-center space-x-1 sm:space-x-2">
+          <a href="../trilha1/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors">
+            <span class="sm:hidden">T1</span>
+            <span class="hidden sm:inline">Fundamentos</span>
+          </a>
+          <a href="../trilha2/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors">
+            <span class="sm:hidden">T2</span>
+            <span class="hidden sm:inline">Comandos</span>
+          </a>
+          <a href="index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-purple-400 bg-purple-500/10">
+            <span class="sm:hidden">T3</span>
+            <span class="hidden sm:inline">Avancado</span>
+          </a>
+          <button id="theme-toggle" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2">
+            <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+            </svg>
+            <svg id="theme-toggle-light-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- BREADCRUMB -->
+  <nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+    <div class="flex items-center space-x-2 text-sm text-neutral-400">
+      <a href="../../index.html" class="hover:text-purple-400">Inicio</a>
+      <span>/</span>
+      <a href="index.html" class="hover:text-purple-400">Trilha 3</a>
+      <span>/</span>
+      <span class="text-purple-400">Modulo 3.4</span>
+    </div>
+  </nav>
+
+  <!-- HEADER -->
+  <header class="bg-gradient-to-br from-purple-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <span class="inline-block px-3 py-1 bg-purple-500/20 text-purple-400 text-xs font-semibold rounded-full mb-4">
+        MODULO 3.4
+      </span>
+      <h1 class="text-3xl sm:text-4xl font-bold mb-4">🪝 Hooks: Automacao de Eventos</h1>
+      <p class="text-lg text-neutral-400 max-w-3xl">
+        Hooks permitem executar codigo personalizado em resposta a eventos do Claude Code.
+        Automatize validacoes, notificacoes e integracoes sem intervencao manual.
+      </p>
+
+      <div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-purple-400">6</div>
+          <div class="text-xs text-neutral-400">Topicos</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-purple-400">40</div>
+          <div class="text-xs text-neutral-400">Minutos</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-purple-400">Avancado</div>
+          <div class="text-xs text-neutral-400">Nivel</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-purple-400">Pratico</div>
+          <div class="text-xs text-neutral-400">Tipo</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN CONTENT -->
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+    <!-- TOPICO 1 -->
+    <section id="topico-1" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">1</span>
+        <h2 class="text-2xl font-bold">🎣 O que sao Hooks</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Hooks sao <strong class="text-purple-400">pontos de extensao</strong> que permitem executar
+        scripts ou comandos em momentos especificos do fluxo de trabalho do Claude Code. Similar a
+        Git hooks, eles reagem a eventos automaticamente.
+      </p>
+
+      <div class="bg-gradient-to-br from-purple-900/30 to-dark-800 rounded-xl border border-purple-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-purple-400 mb-4 flex items-center">
+          <span class="mr-2">🔄</span> Fluxo de Eventos
+        </h3>
+        <div class="bg-dark-900 rounded-lg p-4 font-mono text-sm text-neutral-300 mb-4">
+<pre>┌─────────────┐    ┌─────────────┐    ┌─────────────┐
+│   EVENTO    │ →  │    HOOK     │ →  │    ACAO     │
+│ (pre-edit)  │    │ (seu script)│    │ (continua   │
+│             │    │             │    │  ou bloqueia)│
+└─────────────┘    └─────────────┘    └─────────────┘</pre>
+        </div>
+        <ul class="space-y-2 text-neutral-300">
+          <li class="flex items-start space-x-2">
+            <span class="text-purple-400 mt-1">•</span>
+            <span><strong class="text-white">pre-*:</strong> Executam ANTES da acao (podem bloquear)</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-purple-400 mt-1">•</span>
+            <span><strong class="text-white">post-*:</strong> Executam DEPOIS da acao (para notificacoes)</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6">
+        <h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center">
+          <span class="mr-2">📊</span> Hooks Disponiveis
+        </h3>
+        <div class="grid grid-cols-2 gap-4">
+          <div>
+            <h4 class="text-white font-semibold mb-2">Pre-hooks</h4>
+            <ul class="space-y-1 text-neutral-300 text-sm">
+              <li>• <code class="text-purple-400">pre-edit</code> - antes de editar arquivo</li>
+              <li>• <code class="text-purple-400">pre-bash</code> - antes de executar bash</li>
+              <li>• <code class="text-purple-400">pre-session</code> - inicio de sessao</li>
+            </ul>
+          </div>
+          <div>
+            <h4 class="text-white font-semibold mb-2">Post-hooks</h4>
+            <ul class="space-y-1 text-neutral-300 text-sm">
+              <li>• <code class="text-purple-400">post-edit</code> - depois de editar</li>
+              <li>• <code class="text-purple-400">post-bash</code> - depois de bash</li>
+              <li>• <code class="text-purple-400">post-session</code> - fim de sessao</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TOPICO 2 -->
+    <section id="topico-2" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">2</span>
+        <h2 class="text-2xl font-bold">⚙️ Configurando Hooks</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Hooks sao configurados no arquivo <strong class="text-purple-400">settings.json</strong>
+        ou em <strong class="text-purple-400">.claude/hooks/</strong> do projeto.
+      </p>
+
+      <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-white mb-4">Configuracao via settings.json</h3>
+        <div class="bg-dark-900 rounded-lg p-4 font-mono text-sm text-neutral-300 overflow-x-auto">
+<pre>{
+  "hooks": {
+    <span class="text-purple-400">"pre-edit"</span>: {
+      "command": ".claude/hooks/validate-edit.sh",
+      "timeout": 5000,
+      "failOnError": true
+    },
+    <span class="text-purple-400">"post-edit"</span>: {
+      "command": ".claude/hooks/notify-edit.sh",
+      "timeout": 3000,
+      "failOnError": false
+    }
+  }
+}</pre>
+        </div>
+      </div>
+
+      <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-white mb-4">Estrutura de Hooks por Projeto</h3>
+        <div class="bg-dark-900 rounded-lg p-4 font-mono text-sm text-neutral-300">
+<pre>.claude/
+└── hooks/
+    ├── pre-edit.sh      <span class="text-neutral-500"># Validacao antes de editar</span>
+    ├── post-edit.sh     <span class="text-neutral-500"># Notificacao apos editar</span>
+    ├── pre-bash.sh      <span class="text-neutral-500"># Validacao antes de bash</span>
+    └── post-session.sh  <span class="text-neutral-500"># Cleanup ao finalizar</span></pre>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600">
+          <h4 class="font-semibold text-purple-400 mb-2">command</h4>
+          <p class="text-neutral-400 text-sm">Script ou comando a executar</p>
+        </div>
+        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600">
+          <h4 class="font-semibold text-purple-400 mb-2">timeout</h4>
+          <p class="text-neutral-400 text-sm">Tempo maximo em ms (padrao: 5000)</p>
+        </div>
+        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600">
+          <h4 class="font-semibold text-purple-400 mb-2">failOnError</h4>
+          <p class="text-neutral-400 text-sm">Bloquear acao se hook falhar</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TOPICO 3 -->
+    <section id="topico-3" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">3</span>
+        <h2 class="text-2xl font-bold">✍️ Hook pre-edit: Validacao</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        O hook <strong class="text-purple-400">pre-edit</strong> e executado antes de Claude editar
+        qualquer arquivo. Use para validar, fazer backup ou impedir edicoes indesejadas.
+      </p>
+
+      <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-white mb-4">Exemplo: Proteger arquivos criticos</h3>
+        <div class="bg-dark-900 rounded-lg p-4 font-mono text-xs text-neutral-300 overflow-x-auto">
+<pre>#!/bin/bash
+<span class="text-purple-400"># .claude/hooks/pre-edit.sh</span>
+<span class="text-purple-400"># Variaveis recebidas: $CLAUDE_FILE, $CLAUDE_ACTION</span>
+
+PROTECTED_FILES=(
+  "package-lock.json"
+  ".env"
+  ".env.production"
+  "prisma/migrations/*"
+)
+
+for pattern in "${PROTECTED_FILES[@]}"; do
+  if [[ "$CLAUDE_FILE" == $pattern ]]; then
+    echo "BLOQUEADO: $CLAUDE_FILE e um arquivo protegido"
+    exit 1  <span class="text-neutral-500"># Exit 1 = bloqueia a acao</span>
+  fi
+done
+
+echo "OK: Edicao permitida em $CLAUDE_FILE"
+exit 0  <span class="text-neutral-500"># Exit 0 = permite a acao</span></pre>
+        </div>
+      </div>
+
+      <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-white mb-4">Exemplo: Backup automatico</h3>
+        <div class="bg-dark-900 rounded-lg p-4 font-mono text-xs text-neutral-300 overflow-x-auto">
+<pre>#!/bin/bash
+<span class="text-purple-400"># Criar backup antes de cada edicao</span>
+
+BACKUP_DIR=".claude/backups/$(date +%Y%m%d)"
+mkdir -p "$BACKUP_DIR"
+
+if [ -f "$CLAUDE_FILE" ]; then
+  TIMESTAMP=$(date +%H%M%S)
+  BASENAME=$(basename "$CLAUDE_FILE")
+  cp "$CLAUDE_FILE" "$BACKUP_DIR/${BASENAME}.${TIMESTAMP}.bak"
+  echo "Backup criado: $BACKUP_DIR/${BASENAME}.${TIMESTAMP}.bak"
+fi
+
+exit 0</pre>
+        </div>
+      </div>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">💡</span> Variaveis de Ambiente
+        </h3>
+        <div class="grid grid-cols-2 gap-4 text-sm">
+          <div>
+            <code class="text-purple-400">$CLAUDE_FILE</code>
+            <p class="text-neutral-400">Arquivo sendo editado</p>
+          </div>
+          <div>
+            <code class="text-purple-400">$CLAUDE_ACTION</code>
+            <p class="text-neutral-400">Tipo de acao (edit, create, delete)</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TOPICO 4 -->
+    <section id="topico-4" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">4</span>
+        <h2 class="text-2xl font-bold">🔔 Hook post-edit: Notificacoes</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Hooks <strong class="text-purple-400">post-edit</strong> sao ideais para notificacoes,
+        logging e integracoes que nao devem bloquear o fluxo de trabalho.
+      </p>
+
+      <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-white mb-4">Exemplo: Notificacao Slack</h3>
+        <div class="bg-dark-900 rounded-lg p-4 font-mono text-xs text-neutral-300 overflow-x-auto">
+<pre>#!/bin/bash
+<span class="text-purple-400"># .claude/hooks/post-edit.sh</span>
+
+SLACK_WEBHOOK="$SLACK_CLAUDE_WEBHOOK"
+PROJECT_NAME=$(basename "$(pwd)")
+
+curl -X POST "$SLACK_WEBHOOK" \
+  -H "Content-Type: application/json" \
+  -d "{
+    \"text\": \"🤖 Claude editou arquivo\",
+    \"blocks\": [{
+      \"type\": \"section\",
+      \"text\": {
+        \"type\": \"mrkdwn\",
+        \"text\": \"*Projeto:* $PROJECT_NAME\n*Arquivo:* $CLAUDE_FILE\n*Acao:* $CLAUDE_ACTION\"
+      }
+    }]
+  }"</pre>
+        </div>
+      </div>
+
+      <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-white mb-4">Exemplo: Log de Auditoria</h3>
+        <div class="bg-dark-900 rounded-lg p-4 font-mono text-xs text-neutral-300 overflow-x-auto">
+<pre>#!/bin/bash
+<span class="text-purple-400"># Log todas edicoes em arquivo JSON</span>
+
+LOG_FILE=".claude/audit-log.jsonl"
+
+echo "{
+  \"timestamp\": \"$(date -Iseconds)\",
+  \"file\": \"$CLAUDE_FILE\",
+  \"action\": \"$CLAUDE_ACTION\",
+  \"session\": \"$CLAUDE_SESSION_ID\"
+}" >> "$LOG_FILE"</pre>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+          <h4 class="font-bold text-emerald-400 mb-4">Casos de Uso</h4>
+          <ul class="space-y-2 text-neutral-300 text-sm">
+            <li>• Notificacao em Slack/Teams</li>
+            <li>• Log de auditoria</li>
+            <li>• Trigger de CI/CD</li>
+            <li>• Sincronizacao com ferramentas</li>
+          </ul>
+        </div>
+        <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+          <h4 class="font-bold text-red-400 mb-4">Evitar em post-hooks</h4>
+          <ul class="space-y-2 text-neutral-300 text-sm">
+            <li>• Operacoes lentas (> 3s)</li>
+            <li>• Modificar o arquivo editado</li>
+            <li>• Dependencias de rede criticas</li>
+            <li>• Logica que deveria bloquear</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- TOPICO 5 -->
+    <section id="topico-5" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">5</span>
+        <h2 class="text-2xl font-bold">🛡️ Hook pre-bash: Seguranca</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        O hook <strong class="text-purple-400">pre-bash</strong> e sua ultima linha de defesa
+        antes de Claude executar comandos no terminal. Use para bloquear comandos perigosos.
+      </p>
+
+      <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-white mb-4">Exemplo: Bloquear comandos destrutivos</h3>
+        <div class="bg-dark-900 rounded-lg p-4 font-mono text-xs text-neutral-300 overflow-x-auto">
+<pre>#!/bin/bash
+<span class="text-purple-400"># .claude/hooks/pre-bash.sh</span>
+<span class="text-purple-400"># Variavel: $CLAUDE_COMMAND</span>
+
+BLOCKED_PATTERNS=(
+  "rm -rf /"
+  "rm -rf ~"
+  "rm -rf \$HOME"
+  "> /dev/sda"
+  "mkfs"
+  "dd if="
+  ":(){ :|:& };:"
+  "chmod -R 777 /"
+)
+
+for pattern in "${BLOCKED_PATTERNS[@]}"; do
+  if [[ "$CLAUDE_COMMAND" == *"$pattern"* ]]; then
+    echo "BLOQUEADO: Comando potencialmente destrutivo detectado"
+    echo "Comando: $CLAUDE_COMMAND"
+    exit 1
+  fi
+done
+
+<span class="text-purple-400"># Alertar para comandos com sudo</span>
+if [[ "$CLAUDE_COMMAND" == *"sudo"* ]]; then
+  echo "ALERTA: Comando com sudo detectado - requer aprovacao manual"
+  <span class="text-neutral-500"># Nao bloqueia, mas alerta</span>
+fi
+
+exit 0</pre>
+        </div>
+      </div>
+
+      <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-red-400 mb-3 flex items-center">
+          <span class="mr-2">⚠️</span> Comandos a Bloquear
+        </h3>
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-3 text-sm">
+          <code class="bg-dark-800 p-2 rounded text-red-400">rm -rf /</code>
+          <code class="bg-dark-800 p-2 rounded text-red-400">mkfs.*</code>
+          <code class="bg-dark-800 p-2 rounded text-red-400">dd if=</code>
+          <code class="bg-dark-800 p-2 rounded text-red-400">> /dev/*</code>
+          <code class="bg-dark-800 p-2 rounded text-red-400">chmod 777</code>
+          <code class="bg-dark-800 p-2 rounded text-red-400">fork bomb</code>
+        </div>
+      </div>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">💡</span> Dica Pro
+        </h3>
+        <p class="text-neutral-300">
+          Combine pre-bash hooks com o sistema de permissoes do Claude Code. O hook e uma
+          camada adicional de seguranca, nao um substituto.
+        </p>
+      </div>
+    </section>
+
+    <!-- TOPICO 6 -->
+    <section id="topico-6" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">6</span>
+        <h2 class="text-2xl font-bold">📚 Biblioteca de Hooks</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Colecao de hooks prontos para usar. Copie, adapte e combine conforme necessario.
+      </p>
+
+      <div class="grid grid-cols-1 gap-6 mb-6">
+        <div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
+          <h4 class="font-semibold text-purple-400 mb-4">Auto-format com Prettier</h4>
+          <div class="bg-dark-900 rounded-lg p-4 font-mono text-xs text-neutral-300 overflow-x-auto">
+<pre>#!/bin/bash
+<span class="text-purple-400"># post-edit: Formatar arquivo editado</span>
+
+if [[ "$CLAUDE_FILE" =~ \.(js|ts|jsx|tsx|json|css|md)$ ]]; then
+  npx prettier --write "$CLAUDE_FILE" 2>/dev/null
+  echo "Formatado: $CLAUDE_FILE"
+fi</pre>
+          </div>
+        </div>
+
+        <div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
+          <h4 class="font-semibold text-purple-400 mb-4">Git auto-stage</h4>
+          <div class="bg-dark-900 rounded-lg p-4 font-mono text-xs text-neutral-300 overflow-x-auto">
+<pre>#!/bin/bash
+<span class="text-purple-400"># post-edit: Adicionar ao stage automaticamente</span>
+
+if git rev-parse --git-dir > /dev/null 2>&1; then
+  git add "$CLAUDE_FILE"
+  echo "Staged: $CLAUDE_FILE"
+fi</pre>
+          </div>
+        </div>
+
+        <div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
+          <h4 class="font-semibold text-purple-400 mb-4">Validacao TypeScript</h4>
+          <div class="bg-dark-900 rounded-lg p-4 font-mono text-xs text-neutral-300 overflow-x-auto">
+<pre>#!/bin/bash
+<span class="text-purple-400"># pre-edit: Validar que arquivo TS compila</span>
+
+if [[ "$CLAUDE_FILE" =~ \.tsx?$ ]]; then
+  npx tsc --noEmit "$CLAUDE_FILE" 2>&1
+  if [ $? -ne 0 ]; then
+    echo "AVISO: Arquivo tem erros TS (nao bloqueando)"
+  fi
+fi
+exit 0</pre>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-gradient-to-br from-purple-900/30 to-dark-800 rounded-xl border border-purple-500/30 p-6">
+        <h3 class="text-lg font-semibold text-purple-400 mb-4">Organizando Hooks</h3>
+        <div class="bg-dark-900 rounded-lg p-4 font-mono text-sm text-neutral-300">
+<pre>.claude/hooks/
+├── pre-edit.sh      <span class="text-neutral-500"># Orquestrador</span>
+├── pre-edit.d/      <span class="text-neutral-500"># Hooks modulares</span>
+│   ├── 01-backup.sh
+│   ├── 02-protect.sh
+│   └── 03-validate.sh
+└── post-edit.sh</pre>
+        </div>
+        <p class="text-neutral-400 text-sm mt-3">
+          O orquestrador pode executar todos os scripts em pre-edit.d/ em ordem.
+        </p>
+      </div>
+    </section>
+
+    <!-- RESUMO -->
+    <section class="mb-12">
+      <div class="bg-gradient-to-br from-purple-900/40 via-dark-800 to-dark-800 rounded-xl border border-purple-500/30 p-8">
+        <h2 class="text-2xl font-bold mb-6 flex items-center">
+          <span class="mr-3">📋</span> Resumo do Modulo
+        </h2>
+
+        <div class="space-y-4 mb-8">
+          <div class="flex items-start space-x-3">
+            <span class="text-purple-400 mt-1">✓</span>
+            <div>
+              <strong class="text-white">Hooks reagem a eventos</strong>
+              <span class="text-neutral-400"> - pre-* bloqueia, post-* notifica</span>
+            </div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-purple-400 mt-1">✓</span>
+            <div>
+              <strong class="text-white">Configuracao em settings.json</strong>
+              <span class="text-neutral-400"> - ou .claude/hooks/ por projeto</span>
+            </div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-purple-400 mt-1">✓</span>
+            <div>
+              <strong class="text-white">pre-edit para validacao</strong>
+              <span class="text-neutral-400"> - proteja arquivos criticos, faca backups</span>
+            </div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-purple-400 mt-1">✓</span>
+            <div>
+              <strong class="text-white">post-edit para integracoes</strong>
+              <span class="text-neutral-400"> - notificacoes, logging, auto-format</span>
+            </div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-purple-400 mt-1">✓</span>
+            <div>
+              <strong class="text-white">pre-bash para seguranca</strong>
+              <span class="text-neutral-400"> - bloqueie comandos destrutivos</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+          <h3 class="font-semibold text-purple-400 mb-2">Proximo Modulo:</h3>
+          <p class="text-neutral-300">3.5 - Subagentes Customizados - crie agentes especializados para tarefas especificas</p>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-4">
+          <a href="modulo-3-3.html" class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors">
+            ← Modulo Anterior
+          </a>
+          <a href="modulo-3-5.html" class="flex-1 text-center px-6 py-3 bg-purple-600 text-white rounded-lg font-semibold hover:bg-purple-500 transition-colors">
+            Proximo Modulo →
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-dark-600 py-8 mt-16">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+      <p>Claude Code 2026 - Curso criado por <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300">INEMA.CLUB</a></p>
+    </div>
+  </footer>
+
+  <!-- SCRIPTS -->
+  <script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    const html = document.documentElement;
+
+    if (localStorage.getItem('theme') === 'light' || (!localStorage.getItem('theme') && !html.classList.contains('dark'))) {
+      themeToggleDarkIcon.classList.remove('hidden');
+      html.classList.remove('dark');
+    } else {
+      themeToggleLightIcon.classList.remove('hidden');
+    }
+
+    themeToggle.addEventListener('click', () => {
+      themeToggleDarkIcon.classList.toggle('hidden');
+      themeToggleLightIcon.classList.toggle('hidden');
+      html.classList.toggle('dark');
+      localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+    });
+  </script>
+
+</body>
+</html>

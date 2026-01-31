@@ -9,7 +9,7 @@
 
 | Trilha | Nome | Cor | Modulos | Status |
 |--------|------|-----|---------|--------|
-| T1 | Fundamentos | Emerald | 8 | 🔄 Em progresso |
+| T1 | Fundamentos | Emerald | 8 | ✅ Completa |
 | T2 | Comandos e Ferramentas | Blue | 8 | ⏳ Pendente |
 | T3 | Projetos Avancados | Purple | 8 | ⏳ Pendente |
 
@@ -22,16 +22,16 @@
 - [x] index.html - Pagina principal do curso
 - [ ] curso/ - Pasta do curso
 
-### Trilha 1 - Fundamentos (Emerald)
+### Trilha 1 - Fundamentos (Emerald) ✅
 - [x] curso/trilha1/index.html - Index da trilha
 - [x] curso/trilha1/modulo-1-1.html - Introducao ao Claude Code
-- [ ] curso/trilha1/modulo-1-2.html - Arquitetura do Sistema
-- [ ] curso/trilha1/modulo-1-3.html - Loop Central: Gather → Act → Verify
-- [ ] curso/trilha1/modulo-1-4.html - Gerenciamento de Contexto
-- [ ] curso/trilha1/modulo-1-5.html - Compaction: Dominando a Compressao
-- [ ] curso/trilha1/modulo-1-6.html - Sessoes e Persistencia
-- [ ] curso/trilha1/modulo-1-7.html - Permissoes e Seguranca
-- [ ] curso/trilha1/modulo-1-8.html - Interface e Navegacao
+- [x] curso/trilha1/modulo-1-2.html - Arquitetura do Sistema
+- [x] curso/trilha1/modulo-1-3.html - Loop Central: Gather → Act → Verify
+- [x] curso/trilha1/modulo-1-4.html - Gerenciamento de Contexto
+- [x] curso/trilha1/modulo-1-5.html - Compaction: Dominando a Compressao
+- [x] curso/trilha1/modulo-1-6.html - Sessoes e Persistencia
+- [x] curso/trilha1/modulo-1-7.html - Permissoes e Seguranca
+- [x] curso/trilha1/modulo-1-8.html - Interface e Navegacao
 
 ### Trilha 2 - Comandos e Ferramentas (Blue)
 - [ ] curso/trilha2/index.html - Index da trilha
@@ -60,27 +60,27 @@
 ## CHECKLIST DE VALIDACAO
 
 ### Pagina Principal (index.html)
-- [ ] Hero section com titulo e descricao
-- [ ] Cards das 3 trilhas
-- [ ] Navegacao funcional
-- [ ] Theme toggle funcionando
-- [ ] Light mode CSS incluido
-- [ ] INEMA.CLUB link presente
+- [x] Hero section com titulo e descricao
+- [x] Cards das 3 trilhas
+- [x] Navegacao funcional
+- [x] Theme toggle funcionando
+- [x] Light mode CSS incluido
+- [x] INEMA.CLUB link presente
 
 ### Index da Trilha 1
-- [ ] Header com gradiente emerald
-- [ ] Stats grid (modulos, topicos, duracao, nivel)
-- [ ] Cards de modulo com topicos expansiveis
-- [ ] Botoes a ESQUERDA (justify-start)
-- [ ] Numeros em circulo (nao setas)
-- [ ] 3 secoes por topico
+- [x] Header com gradiente emerald
+- [x] Stats grid (modulos, topicos, duracao, nivel)
+- [x] Cards de modulo com topicos expansiveis
+- [x] Botoes a ESQUERDA (justify-start)
+- [x] Numeros em circulo (nao setas)
+- [x] 3 secoes por topico
 
-### Modulo 1.1
-- [ ] Breadcrumb funcional
-- [ ] 6 topicos com numeros grandes (w-12 h-12)
-- [ ] Boxes variados (conceito, dica, fazer/evitar)
-- [ ] Resumo final com checklist
-- [ ] Navegacao para proximo modulo
+### Modulos da Trilha 1 (1.1 a 1.8)
+- [x] Breadcrumb funcional
+- [x] 6 topicos com numeros grandes (w-12 h-12)
+- [x] Boxes variados (conceito, dica, fazer/evitar)
+- [x] Resumo final com checklist
+- [x] Navegacao entre modulos
 
 ---
 
@@ -88,10 +88,10 @@
 
 1. ✅ Criar index.html (pagina principal)
 2. ✅ Criar curso/trilha1/index.html
-3. ✅ Criar curso/trilha1/modulo-1-1.html
-4. ⏳ Validar com usuario
-5. ⏳ Ajustar conforme feedback
-6. ⏳ Continuar com demais modulos
+3. ✅ Criar todos os modulos da Trilha 1 (1.1 a 1.8)
+4. ⏳ Criar Trilha 2 - Comandos e Ferramentas (8 modulos)
+5. ⏳ Criar Trilha 3 - Projetos Avancados (8 modulos)
+6. ⏳ Configurar GitHub Pages
 
 ---
 
@@ -104,4 +104,4 @@
 
 ---
 
-**Ultima atualizacao:** 2026-01-31 01:15
+**Ultima atualizacao:** 2026-01-31 02:30

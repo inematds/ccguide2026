@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Modulo 1.5: Compaction | Claude Code 2026</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: '#FACC15',
+            dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' }
+          }
+        }
+      }
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+    html:not(.dark) body { background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 50%, #f1f5f9 100%); }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+  </style>
+</head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen">
+
+  <!-- NAVIGATION -->
+  <nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-14">
+        <div class="flex items-center space-x-4">
+          <a href="../../index.html" class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300">
+            <span class="text-2xl">🤖</span>
+            <span class="font-bold text-lg hidden sm:inline">Claude Code 2026</span>
+          </a>
+          <span class="text-neutral-600">|</span>
+          <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300 text-sm font-medium">INEMA.CLUB</a>
+        </div>
+        <div class="flex items-center space-x-1 sm:space-x-2">
+          <a href="index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-emerald-400 bg-emerald-500/10">
+            <span class="sm:hidden">T1</span>
+            <span class="hidden sm:inline">Fundamentos</span>
+          </a>
+          <a href="../trilha2/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors">
+            <span class="sm:hidden">T2</span>
+            <span class="hidden sm:inline">Comandos</span>
+          </a>
+          <a href="../trilha3/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors">
+            <span class="sm:hidden">T3</span>
+            <span class="hidden sm:inline">Avancado</span>
+          </a>
+          <button id="theme-toggle" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2">
+            <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+            </svg>
+            <svg id="theme-toggle-light-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- BREADCRUMB -->
+  <nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+    <div class="flex items-center space-x-2 text-sm text-neutral-400">
+      <a href="../../index.html" class="hover:text-emerald-400">Inicio</a>
+      <span>/</span>
+      <a href="index.html" class="hover:text-emerald-400">Trilha 1</a>
+      <span>/</span>
+      <span class="text-emerald-400">Modulo 1.5</span>
+    </div>
+  </nav>
+
+  <!-- HEADER -->
+  <header class="bg-gradient-to-br from-emerald-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <span class="inline-block px-3 py-1 bg-emerald-500/20 text-emerald-400 text-xs font-semibold rounded-full mb-4">MODULO 1.5</span>
+      <h1 class="text-3xl sm:text-4xl font-bold mb-4">📦 Compaction: Dominando a Compressao</h1>
+      <p class="text-lg text-neutral-400 max-w-3xl">
+        Aprenda como funciona a compactacao de contexto, quando usar, e tecnicas para preservar informacoes criticas durante a compressao.
+      </p>
+      <div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-emerald-400">6</div>
+          <div class="text-xs text-neutral-400">Topicos</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-emerald-400">30</div>
+          <div class="text-xs text-neutral-400">Minutos</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-emerald-400">Basico</div>
+          <div class="text-xs text-neutral-400">Nivel</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-emerald-400">Pratico</div>
+          <div class="text-xs text-neutral-400">Tipo</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN CONTENT -->
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+    <!-- TOPICO 1 -->
+    <section id="topico-1" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">1</span>
+        <h2 class="text-2xl font-bold">🗜️ O que e Compaction</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Compaction e o processo de <strong class="text-emerald-400">comprimir a conversa</strong> quando o contexto fica muito cheio. Claude resume o historico, descarta detalhes menos importantes e libera espaco para continuar trabalhando.
+      </p>
+
+      <div class="bg-gradient-to-br from-emerald-900/30 to-dark-800 rounded-xl border border-emerald-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-emerald-400 mb-4">Como Funciona</h3>
+        <div class="flex items-center justify-center space-x-4 text-sm mb-4">
+          <div class="text-center">
+            <div class="w-20 h-20 rounded-lg bg-red-500/20 border border-red-500/30 flex items-center justify-center mb-2">
+              <span class="text-red-400 font-bold text-2xl">85%</span>
+            </div>
+            <span class="text-neutral-400">Antes</span>
+          </div>
+          <div class="text-emerald-400 text-3xl">→</div>
+          <div class="text-center">
+            <div class="w-20 h-20 rounded-lg bg-blue-500/20 border border-blue-500/30 flex items-center justify-center mb-2">
+              <span class="text-blue-400 font-bold">📝</span>
+            </div>
+            <span class="text-neutral-400">Resume</span>
+          </div>
+          <div class="text-emerald-400 text-3xl">→</div>
+          <div class="text-center">
+            <div class="w-20 h-20 rounded-lg bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center mb-2">
+              <span class="text-emerald-400 font-bold text-2xl">25%</span>
+            </div>
+            <span class="text-neutral-400">Depois</span>
+          </div>
+        </div>
+        <p class="text-center text-neutral-400 text-sm">Contexto e comprimido, mantendo informacoes essenciais</p>
+      </div>
+
+      <div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6">
+        <h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center">
+          <span class="mr-2">📊</span> O que e Preservado
+        </h3>
+        <ul class="space-y-2 text-neutral-300">
+          <li>• <strong class="text-white">Decisoes arquiteturais</strong> importantes</li>
+          <li>• <strong class="text-white">Bugs nao resolvidos</strong> e erros pendentes</li>
+          <li>• <strong class="text-white">Detalhes de implementacao</strong> criticos</li>
+          <li>• <strong class="text-white">5 arquivos mais recentes</strong> acessados</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- TOPICO 2 -->
+    <section id="topico-2" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">2</span>
+        <h2 class="text-2xl font-bold">⚙️ Auto-Compact vs Manual</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Existem duas formas de compactacao: <strong class="text-emerald-400">automatica</strong> (quando atinge o limite) e <strong class="text-emerald-400">manual</strong> (quando voce decide). Cada uma tem suas vantagens.
+      </p>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
+          <h4 class="font-bold text-yellow-400 mb-4">🤖 Auto-Compact</h4>
+          <p class="text-neutral-400 text-sm mb-4">Acontece automaticamente quando o contexto atinge ~90%</p>
+          <ul class="space-y-2 text-neutral-300 text-sm">
+            <li class="flex items-start space-x-2">
+              <span class="text-yellow-400">•</span>
+              <span>Pode acontecer no meio de uma tarefa</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-yellow-400">•</span>
+              <span>Voce nao controla o que e preservado</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-yellow-400">•</span>
+              <span>Pode perder contexto importante</span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+          <h4 class="font-bold text-emerald-400 mb-4">👆 Manual (/compact)</h4>
+          <p class="text-neutral-400 text-sm mb-4">Voce decide quando e como compactar</p>
+          <ul class="space-y-2 text-neutral-300 text-sm">
+            <li class="flex items-start space-x-2">
+              <span class="text-emerald-400">•</span>
+              <span>Escolhe o momento certo</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-emerald-400">•</span>
+              <span>Pode instruir o que preservar</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-emerald-400">•</span>
+              <span>Mais controle sobre resultado</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">💡</span> Recomendacao
+        </h3>
+        <p class="text-neutral-300">Prefira sempre compactacao <strong>manual</strong> quando possivel. Use <code class="bg-dark-700 px-2 py-1 rounded text-emerald-400">/compact</code> antes de chegar a 70% para ter controle sobre o que e preservado.</p>
+      </div>
+    </section>
+
+    <!-- TOPICO 3 -->
+    <section id="topico-3" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">3</span>
+        <h2 class="text-2xl font-bold">🎚️ Threshold Recomendado: 70%</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        O gatilho ideal para <code class="bg-dark-700 px-2 py-1 rounded text-emerald-400">/compact</code> e <strong class="text-emerald-400">70% de uso</strong>. Isso deixa espaco suficiente para Claude processar a compactacao sem perder qualidade.
+      </p>
+
+      <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+        <h4 class="font-semibold text-white mb-4">Por que 70%?</h4>
+        <div class="space-y-3">
+          <div class="flex items-center">
+            <div class="w-24 text-neutral-400">0-50%</div>
+            <div class="flex-1 h-3 bg-emerald-500/30 rounded-full mx-4"></div>
+            <div class="text-emerald-400 text-sm">Trabalhe normalmente</div>
+          </div>
+          <div class="flex items-center">
+            <div class="w-24 text-neutral-400">50-70%</div>
+            <div class="flex-1 h-3 bg-yellow-500/30 rounded-full mx-4"></div>
+            <div class="text-yellow-400 text-sm">Prepare compactacao</div>
+          </div>
+          <div class="flex items-center">
+            <div class="w-24 text-primary font-bold">70%</div>
+            <div class="flex-1 h-3 bg-primary/30 rounded-full mx-4"></div>
+            <div class="text-primary text-sm font-bold">COMPACTE AQUI!</div>
+          </div>
+          <div class="flex items-center">
+            <div class="w-24 text-neutral-400">70-85%</div>
+            <div class="flex-1 h-3 bg-orange-500/30 rounded-full mx-4"></div>
+            <div class="text-orange-400 text-sm">Urgente - compacte ja</div>
+          </div>
+          <div class="flex items-center">
+            <div class="w-24 text-neutral-400">85%+</div>
+            <div class="flex-1 h-3 bg-red-500/30 rounded-full mx-4"></div>
+            <div class="text-red-400 text-sm">Auto-compact ativado</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6">
+        <h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center">
+          <span class="mr-2">📊</span> Buffer de 30%
+        </h3>
+        <p class="text-neutral-300">Compactar em 70% deixa <strong>60K tokens</strong> livres (30% de 200K). Isso e espaco suficiente para Claude raciocinar, planejar alternativas e construir respostas de qualidade.</p>
+      </div>
+    </section>
+
+    <!-- TOPICO 4 -->
+    <section id="topico-4" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">4</span>
+        <h2 class="text-2xl font-bold">🎯 Personalizando Compaction</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        O comando <code class="bg-dark-700 px-2 py-1 rounded text-emerald-400">/compact</code> aceita instrucoes sobre <strong class="text-emerald-400">o que preservar</strong>. Isso e poderoso!
+      </p>
+
+      <div class="bg-gradient-to-br from-emerald-900/30 to-dark-800 rounded-xl border border-emerald-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-emerald-400 mb-4">Exemplos de Uso</h3>
+        <div class="space-y-4">
+          <div class="bg-dark-900 rounded-lg p-4">
+            <p class="text-neutral-400 text-sm mb-2">Preservar decisoes especificas:</p>
+            <code class="text-emerald-400 text-sm">/compact preserve as decisoes de autenticacao e os patterns de API</code>
+          </div>
+          <div class="bg-dark-900 rounded-lg p-4">
+            <p class="text-neutral-400 text-sm mb-2">Manter apenas nomes de arquivos:</p>
+            <code class="text-emerald-400 text-sm">/compact only keep the names of files we reviewed</code>
+          </div>
+          <div class="bg-dark-900 rounded-lg p-4">
+            <p class="text-neutral-400 text-sm mb-2">Preservar padroes de codigo:</p>
+            <code class="text-emerald-400 text-sm">/compact preserve the coding patterns we established</code>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">💡</span> Dica Avancada
+        </h3>
+        <p class="text-neutral-300">Antes de usar /compact, escreva explicitamente o que deve sobreviver: <code class="bg-dark-700 px-2 py-1 rounded text-emerald-400">"Antes de compactar, lembre: 1. Usamos JWT, 2. Token expira em 15min..."</code>. Claude incluira isso no resumo.</p>
+      </div>
+    </section>
+
+    <!-- TOPICO 5 -->
+    <section id="topico-5" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">5</span>
+        <h2 class="text-2xl font-bold">⚠️ Riscos da Compactacao</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Compactacao nao e magica - ela <strong class="text-red-400">perde informacao</strong>. Apos varias compactacoes, detalhes importantes podem desaparecer.
+      </p>
+
+      <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-red-400 mb-4 flex items-center">
+          <span class="mr-2">⚠️</span> O que Pode ser Perdido
+        </h3>
+        <ul class="space-y-2 text-neutral-300">
+          <li>• Detalhes de conversas antigas</li>
+          <li>• Nuances de decisoes tomadas</li>
+          <li>• Contexto de arquivos lidos ha tempo</li>
+          <li>• Feedback loops de erros anteriores</li>
+          <li>• Preferencias mencionadas no inicio</li>
+        </ul>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+          <h4 class="font-bold text-emerald-400 mb-4">✓ Mitigacoes</h4>
+          <ul class="space-y-2 text-neutral-300 text-sm">
+            <li>• Grave decisoes no CLAUDE.md</li>
+            <li>• Crie playbooks para fluxos complexos</li>
+            <li>• Use /compact com instrucoes</li>
+            <li>• Prefira sessoes novas quando possivel</li>
+          </ul>
+        </div>
+        <div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
+          <h4 class="font-bold text-white mb-4">Sinais de Problema</h4>
+          <ul class="space-y-2 text-neutral-300 text-sm">
+            <li>• Claude "esquece" instrucoes</li>
+            <li>• Repete erros ja corrigidos</li>
+            <li>• Pede informacoes ja dadas</li>
+            <li>• Contradiz decisoes anteriores</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- TOPICO 6 -->
+    <section id="topico-6" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">6</span>
+        <h2 class="text-2xl font-bold">📝 Hack: Pre-Compaction Summary</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        A tecnica mais poderosa para compactacao efetiva: <strong class="text-emerald-400">criar um resumo antes de compactar</strong>.
+      </p>
+
+      <div class="bg-gradient-to-br from-emerald-900/30 to-dark-800 rounded-xl border border-emerald-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-emerald-400 mb-4">Passo a Passo</h3>
+        <div class="space-y-4">
+          <div class="flex items-start space-x-4">
+            <div class="w-8 h-8 rounded-full bg-emerald-500/20 flex items-center justify-center flex-shrink-0">
+              <span class="text-emerald-400 font-bold">1</span>
+            </div>
+            <div>
+              <p class="text-white font-medium">Peca um resumo</p>
+              <div class="bg-dark-900 rounded-lg p-3 mt-2 text-sm">
+                <code class="text-emerald-400">"Antes de compactar, resuma em 5-7 bullets o que PRECISA sobreviver desta sessao"</code>
+              </div>
+            </div>
+          </div>
+          <div class="flex items-start space-x-4">
+            <div class="w-8 h-8 rounded-full bg-emerald-500/20 flex items-center justify-center flex-shrink-0">
+              <span class="text-emerald-400 font-bold">2</span>
+            </div>
+            <div>
+              <p class="text-white font-medium">Revise o resumo</p>
+              <p class="text-neutral-400 text-sm mt-1">Verifique se capturou tudo importante</p>
+            </div>
+          </div>
+          <div class="flex items-start space-x-4">
+            <div class="w-8 h-8 rounded-full bg-emerald-500/20 flex items-center justify-center flex-shrink-0">
+              <span class="text-emerald-400 font-bold">3</span>
+            </div>
+            <div>
+              <p class="text-white font-medium">Execute /compact</p>
+              <div class="bg-dark-900 rounded-lg p-3 mt-2 text-sm">
+                <code class="text-emerald-400">/compact</code>
+              </div>
+            </div>
+          </div>
+          <div class="flex items-start space-x-4">
+            <div class="w-8 h-8 rounded-full bg-emerald-500/20 flex items-center justify-center flex-shrink-0">
+              <span class="text-emerald-400 font-bold">4</span>
+            </div>
+            <div>
+              <p class="text-white font-medium">Opcional: Atualize CLAUDE.md</p>
+              <p class="text-neutral-400 text-sm mt-1">Grave aprendizados permanentes</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">🚀</span> Proximo Passo
+        </h3>
+        <p class="text-neutral-300">No proximo modulo vamos explorar <strong>Sessoes e Persistencia</strong> - o que persiste entre sessoes, snapshots de arquivos, e estrategias para multiplos terminais.</p>
+      </div>
+    </section>
+
+    <!-- RESUMO -->
+    <section class="mb-12">
+      <div class="bg-gradient-to-br from-emerald-900/40 via-dark-800 to-dark-800 rounded-xl border border-emerald-500/30 p-8">
+        <h2 class="text-2xl font-bold mb-6 flex items-center">
+          <span class="mr-3">📋</span> Resumo do Modulo
+        </h2>
+        <div class="space-y-4 mb-8">
+          <div class="flex items-start space-x-3">
+            <span class="text-emerald-400 mt-1">✓</span>
+            <div>
+              <strong class="text-white">Compaction comprime contexto</strong>
+              <span class="text-neutral-400"> - Resume historico e libera espaco</span>
+            </div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-emerald-400 mt-1">✓</span>
+            <div>
+              <strong class="text-white">Manual > Auto</strong>
+              <span class="text-neutral-400"> - /compact te da mais controle</span>
+            </div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-emerald-400 mt-1">✓</span>
+            <div>
+              <strong class="text-white">Gatilho ideal: 70%</strong>
+              <span class="text-neutral-400"> - Deixa buffer para qualidade</span>
+            </div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-emerald-400 mt-1">✓</span>
+            <div>
+              <strong class="text-white">Personalize com instrucoes</strong>
+              <span class="text-neutral-400"> - Diga o que preservar</span>
+            </div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-emerald-400 mt-1">✓</span>
+            <div>
+              <strong class="text-white">Use pre-compaction summary</strong>
+              <span class="text-neutral-400"> - Resume antes de compactar</span>
+            </div>
+          </div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+          <h3 class="font-semibold text-emerald-400 mb-2">Proximo Modulo:</h3>
+          <p class="text-neutral-300">1.6 - Sessoes e Persistencia</p>
+        </div>
+        <div class="flex flex-col sm:flex-row gap-4">
+          <a href="modulo-1-4.html" class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors">
+            ← Modulo Anterior
+          </a>
+          <a href="modulo-1-6.html" class="flex-1 text-center px-6 py-3 bg-emerald-600 text-white rounded-lg font-semibold hover:bg-emerald-500 transition-colors">
+            Proximo Modulo →
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-dark-600 py-8 mt-16">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+      <p>Claude Code 2026 - Curso criado por <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300">INEMA.CLUB</a></p>
+    </div>
+  </footer>
+
+  <script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    const html = document.documentElement;
+    if (localStorage.getItem('theme') === 'light' || (!localStorage.getItem('theme') && !html.classList.contains('dark'))) {
+      themeToggleDarkIcon.classList.remove('hidden');
+      html.classList.remove('dark');
+    } else {
+      themeToggleLightIcon.classList.remove('hidden');
+    }
+    themeToggle.addEventListener('click', () => {
+      themeToggleDarkIcon.classList.toggle('hidden');
+      themeToggleLightIcon.classList.toggle('hidden');
+      html.classList.toggle('dark');
+      localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+    });
+  </script>
+
+</body>
+</html>

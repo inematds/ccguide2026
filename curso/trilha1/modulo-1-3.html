@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Modulo 1.3: O Loop Central | Claude Code 2026</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: '#FACC15',
+            dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' }
+          }
+        }
+      }
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+    html:not(.dark) body { background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 50%, #f1f5f9 100%); }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+  </style>
+</head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen">
+
+  <!-- NAVIGATION -->
+  <nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-14">
+        <div class="flex items-center space-x-4">
+          <a href="../../index.html" class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300">
+            <span class="text-2xl">🤖</span>
+            <span class="font-bold text-lg hidden sm:inline">Claude Code 2026</span>
+          </a>
+          <span class="text-neutral-600">|</span>
+          <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300 text-sm font-medium">INEMA.CLUB</a>
+        </div>
+        <div class="flex items-center space-x-1 sm:space-x-2">
+          <a href="index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-emerald-400 bg-emerald-500/10">
+            <span class="sm:hidden">T1</span>
+            <span class="hidden sm:inline">Fundamentos</span>
+          </a>
+          <a href="../trilha2/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors">
+            <span class="sm:hidden">T2</span>
+            <span class="hidden sm:inline">Comandos</span>
+          </a>
+          <a href="../trilha3/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors">
+            <span class="sm:hidden">T3</span>
+            <span class="hidden sm:inline">Avancado</span>
+          </a>
+          <button id="theme-toggle" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2">
+            <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+            </svg>
+            <svg id="theme-toggle-light-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- BREADCRUMB -->
+  <nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+    <div class="flex items-center space-x-2 text-sm text-neutral-400">
+      <a href="../../index.html" class="hover:text-emerald-400">Inicio</a>
+      <span>/</span>
+      <a href="index.html" class="hover:text-emerald-400">Trilha 1</a>
+      <span>/</span>
+      <span class="text-emerald-400">Modulo 1.3</span>
+    </div>
+  </nav>
+
+  <!-- HEADER -->
+  <header class="bg-gradient-to-br from-emerald-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <span class="inline-block px-3 py-1 bg-emerald-500/20 text-emerald-400 text-xs font-semibold rounded-full mb-4">MODULO 1.3</span>
+      <h1 class="text-3xl sm:text-4xl font-bold mb-4">🔄 O Loop Central: Gather → Act → Verify</h1>
+      <p class="text-lg text-neutral-400 max-w-3xl">
+        Este e o modelo mental mais importante para entender Claude Code. Todas as acoes seguem este ciclo fundamental de coleta, acao e verificacao.
+      </p>
+      <div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-emerald-400">6</div>
+          <div class="text-xs text-neutral-400">Topicos</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-emerald-400">35</div>
+          <div class="text-xs text-neutral-400">Minutos</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-emerald-400">Basico</div>
+          <div class="text-xs text-neutral-400">Nivel</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-emerald-400">Conceito</div>
+          <div class="text-xs text-neutral-400">Tipo</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN CONTENT -->
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+    <!-- TOPICO 1 -->
+    <section id="topico-1" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">1</span>
+        <h2 class="text-2xl font-bold">🎯 O Modelo Mental</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Se voce guardar apenas <strong class="text-emerald-400">tres palavras</strong> deste curso, que sejam estas: <strong class="text-primary">Gather, Act, Verify</strong>. Este ciclo explica 90% de tudo que Claude Code faz.
+      </p>
+
+      <div class="bg-gradient-to-br from-emerald-900/30 to-dark-800 rounded-xl border border-emerald-500/30 p-6 mb-6">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div class="text-center p-6 bg-dark-800/50 rounded-lg">
+            <div class="text-4xl mb-3">📥</div>
+            <h4 class="font-bold text-emerald-400 text-lg mb-2">GATHER</h4>
+            <p class="text-neutral-400 text-sm">Coletar informacao antes de agir</p>
+          </div>
+          <div class="text-center p-6 bg-dark-800/50 rounded-lg">
+            <div class="text-4xl mb-3">⚡</div>
+            <h4 class="font-bold text-primary text-lg mb-2">ACT</h4>
+            <p class="text-neutral-400 text-sm">Executar acoes no sistema</p>
+          </div>
+          <div class="text-center p-6 bg-dark-800/50 rounded-lg">
+            <div class="text-4xl mb-3">✅</div>
+            <h4 class="font-bold text-blue-400 text-lg mb-2">VERIFY</h4>
+            <p class="text-neutral-400 text-sm">Verificar se funcionou</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">💡</span> Por que isso importa?
+        </h3>
+        <p class="text-neutral-300">Quando voce entende o ciclo, consegue <strong>prever o comportamento</strong> de Claude, <strong>identificar problemas</strong> mais rapido e <strong>escrever prompts melhores</strong> que aproveitam cada fase.</p>
+      </div>
+    </section>
+
+    <!-- TOPICO 2 -->
+    <section id="topico-2" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">2</span>
+        <h2 class="text-2xl font-bold">📥 Fase Gather: Entender Antes de Agir</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Na fase Gather, Claude <strong class="text-emerald-400">coleta informacoes</strong> antes de fazer qualquer mudanca. E aqui que ele le arquivos, explora a estrutura do projeto e faz perguntas.
+      </p>
+
+      <div class="bg-gradient-to-br from-emerald-900/30 to-dark-800 rounded-xl border border-emerald-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-emerald-400 mb-4">O que acontece no Gather</h3>
+        <ul class="space-y-3 text-neutral-300">
+          <li class="flex items-start space-x-2">
+            <span class="text-emerald-400 mt-1">📄</span>
+            <span><strong class="text-white">Le o CLAUDE.md:</strong> Primeiro passo de toda sessao</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-emerald-400 mt-1">🔍</span>
+            <span><strong class="text-white">Usa Glob:</strong> Encontra arquivos relevantes</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-emerald-400 mt-1">📖</span>
+            <span><strong class="text-white">Usa Read:</strong> Le o conteudo dos arquivos</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-emerald-400 mt-1">🔎</span>
+            <span><strong class="text-white">Usa Grep:</strong> Busca padroes especificos</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-emerald-400 mt-1">❓</span>
+            <span><strong class="text-white">Faz perguntas:</strong> Usa AskUserQuestion para clarificar</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+          <h4 class="font-bold text-emerald-400 mb-4">✓ Bom Gather</h4>
+          <ul class="space-y-2 text-neutral-300 text-sm">
+            <li>• Le apenas arquivos necessarios</li>
+            <li>• Usa Glob antes de Read</li>
+            <li>• Pergunta quando nao tem certeza</li>
+            <li>• Busca padrao no codigo existente</li>
+          </ul>
+        </div>
+        <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+          <h4 class="font-bold text-red-400 mb-4">✗ Gather Ruim</h4>
+          <ul class="space-y-2 text-neutral-300 text-sm">
+            <li>• Le arquivos enormes desnecessariamente</li>
+            <li>• Ignora CLAUDE.md</li>
+            <li>• Assume ao inves de perguntar</li>
+            <li>• Consome contexto lendo tudo</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- TOPICO 3 -->
+    <section id="topico-3" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">3</span>
+        <h2 class="text-2xl font-bold">⚡ Fase Act: Executando Mudancas</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Na fase Act, Claude <strong class="text-emerald-400">faz mudancas reais</strong> no seu sistema. E aqui que arquivos sao editados, criados, e comandos sao executados.
+      </p>
+
+      <div class="bg-gradient-to-br from-primary/20 to-dark-800 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-4">Ferramentas de Acao</h3>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div class="bg-dark-800/50 rounded-lg p-4 text-center">
+            <div class="text-2xl mb-2">✏️</div>
+            <span class="text-white font-medium">Edit</span>
+            <p class="text-neutral-400 text-xs mt-1">Modifica arquivos</p>
+          </div>
+          <div class="bg-dark-800/50 rounded-lg p-4 text-center">
+            <div class="text-2xl mb-2">📝</div>
+            <span class="text-white font-medium">Write</span>
+            <p class="text-neutral-400 text-xs mt-1">Cria arquivos</p>
+          </div>
+          <div class="bg-dark-800/50 rounded-lg p-4 text-center">
+            <div class="text-2xl mb-2">💻</div>
+            <span class="text-white font-medium">Bash</span>
+            <p class="text-neutral-400 text-xs mt-1">Roda comandos</p>
+          </div>
+          <div class="bg-dark-800/50 rounded-lg p-4 text-center">
+            <div class="text-2xl mb-2">📦</div>
+            <span class="text-white font-medium">Task</span>
+            <p class="text-neutral-400 text-xs mt-1">Delega tarefas</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+        <h3 class="text-lg font-semibold text-red-400 mb-3 flex items-center">
+          <span class="mr-2">⚠️</span> Cuidados na Fase Act
+        </h3>
+        <ul class="space-y-2 text-neutral-300">
+          <li>• <strong>Edit prefere edicoes cirurgicas</strong> - nao reescreve arquivos inteiros</li>
+          <li>• <strong>Bash pode ser perigoso</strong> - comandos rodam no seu sistema real</li>
+          <li>• <strong>Snapshots sao criados</strong> - Claude salva estado antes de editar</li>
+          <li>• <strong>Permissoes sao verificadas</strong> - depende do modo (Ask/YOLO)</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- TOPICO 4 -->
+    <section id="topico-4" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">4</span>
+        <h2 class="text-2xl font-bold">✅ Fase Verify: Confirmando Resultados</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Na fase Verify, Claude <strong class="text-emerald-400">confirma que a acao funcionou</strong>. E aqui que testes sao rodados, erros sao detectados, e o ciclo pode recomecar se necessario.
+      </p>
+
+      <div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-blue-400 mb-4">Como Claude Verifica</h3>
+        <ul class="space-y-3 text-neutral-300">
+          <li class="flex items-start space-x-2">
+            <span class="text-blue-400 mt-1">🧪</span>
+            <span><strong class="text-white">Roda testes:</strong> Se existirem, executa a suite de testes</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-blue-400 mt-1">📖</span>
+            <span><strong class="text-white">Re-le arquivos:</strong> Confirma que as mudancas foram aplicadas</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-blue-400 mt-1">🔧</span>
+            <span><strong class="text-white">Compila/builda:</strong> Verifica se o codigo ainda funciona</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-blue-400 mt-1">🔄</span>
+            <span><strong class="text-white">Corrige erros:</strong> Se falhar, volta para Gather/Act</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">💡</span> Dica Importante
+        </h3>
+        <p class="text-neutral-300">Incentive Claude a verificar. Prompts como <code class="bg-dark-700 px-2 py-1 rounded text-emerald-400">"depois de fazer a mudanca, rode os testes"</code> ou <code class="bg-dark-700 px-2 py-1 rounded text-emerald-400">"confirme que funciona"</code> ativam a fase Verify.</p>
+      </div>
+    </section>
+
+    <!-- TOPICO 5 -->
+    <section id="topico-5" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">5</span>
+        <h2 class="text-2xl font-bold">🔄 O Loop de Feedback</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Quando a verificacao falha, Claude <strong class="text-emerald-400">volta ao inicio do ciclo</strong>. Este loop continua ate o problema ser resolvido - ou ate voce intervir.
+      </p>
+
+      <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+        <h4 class="font-semibold text-white mb-4 text-center">Diagrama do Loop</h4>
+        <div class="flex items-center justify-center space-x-4 text-sm">
+          <div class="text-center">
+            <div class="w-16 h-16 rounded-full bg-emerald-500/20 flex items-center justify-center mx-auto mb-2">
+              <span class="text-emerald-400 font-bold">Gather</span>
+            </div>
+          </div>
+          <div class="text-emerald-400 text-2xl">→</div>
+          <div class="text-center">
+            <div class="w-16 h-16 rounded-full bg-primary/20 flex items-center justify-center mx-auto mb-2">
+              <span class="text-primary font-bold">Act</span>
+            </div>
+          </div>
+          <div class="text-emerald-400 text-2xl">→</div>
+          <div class="text-center">
+            <div class="w-16 h-16 rounded-full bg-blue-500/20 flex items-center justify-center mx-auto mb-2">
+              <span class="text-blue-400 font-bold">Verify</span>
+            </div>
+          </div>
+          <div class="text-red-400 text-2xl">↩</div>
+        </div>
+        <p class="text-center text-neutral-400 text-sm mt-4">Se falhar, volta para Gather com novo contexto</p>
+      </div>
+
+      <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+        <h3 class="text-lg font-semibold text-red-400 mb-3 flex items-center">
+          <span class="mr-2">⚠️</span> Perigo: Loop Infinito
+        </h3>
+        <p class="text-neutral-300 mb-3">Se Claude entrar em loop sem progresso, ele pode consumir todo seu contexto sem resolver o problema. Sinais de alerta:</p>
+        <ul class="space-y-1 text-neutral-300 text-sm">
+          <li>• Tentando a mesma solucao repetidamente</li>
+          <li>• Contexto passando de 50%</li>
+          <li>• Erros identicos aparecendo varias vezes</li>
+        </ul>
+        <p class="text-neutral-300 mt-3"><strong class="text-white">Solucao:</strong> Interrompa, de mais contexto, ou comece nova sessao.</p>
+      </div>
+    </section>
+
+    <!-- TOPICO 6 -->
+    <section id="topico-6" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">6</span>
+        <h2 class="text-2xl font-bold">🎯 Exemplo Pratico Completo</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Vamos ver o ciclo em acao com um exemplo real: <strong class="text-emerald-400">"Corrija o bug de login"</strong>.
+      </p>
+
+      <div class="space-y-4 mb-6">
+        <div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+          <h4 class="font-bold text-emerald-400 mb-3">📥 GATHER</h4>
+          <ol class="space-y-2 text-neutral-300 text-sm">
+            <li>1. Le CLAUDE.md para entender o projeto</li>
+            <li>2. Usa Glob para encontrar arquivos de autenticacao</li>
+            <li>3. Usa Grep para buscar "login" ou "auth"</li>
+            <li>4. Le os arquivos encontrados</li>
+            <li>5. Identifica a funcao com problema</li>
+          </ol>
+        </div>
+
+        <div class="bg-primary/20 rounded-xl border border-primary/30 p-6">
+          <h4 class="font-bold text-primary mb-3">⚡ ACT</h4>
+          <ol class="space-y-2 text-neutral-300 text-sm">
+            <li>1. Planeja a correcao necessaria</li>
+            <li>2. Usa Edit para modificar o arquivo</li>
+            <li>3. Faz edicao cirurgica (apenas o necessario)</li>
+            <li>4. Cria snapshot automatico antes</li>
+          </ol>
+        </div>
+
+        <div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6">
+          <h4 class="font-bold text-blue-400 mb-3">✅ VERIFY</h4>
+          <ol class="space-y-2 text-neutral-300 text-sm">
+            <li>1. Re-le o arquivo para confirmar mudanca</li>
+            <li>2. Roda <code class="text-blue-400">npm test</code> para verificar</li>
+            <li>3. Se passar: tarefa completa!</li>
+            <li>4. Se falhar: volta para Gather com erro</li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">🚀</span> Proximo Passo
+        </h3>
+        <p class="text-neutral-300">Agora que voce entende o ciclo fundamental, no proximo modulo vamos explorar o <strong>Gerenciamento de Contexto</strong> - como Claude gerencia seus 200K tokens e por que isso importa tanto.</p>
+      </div>
+    </section>
+
+    <!-- RESUMO -->
+    <section class="mb-12">
+      <div class="bg-gradient-to-br from-emerald-900/40 via-dark-800 to-dark-800 rounded-xl border border-emerald-500/30 p-8">
+        <h2 class="text-2xl font-bold mb-6 flex items-center">
+          <span class="mr-3">📋</span> Resumo do Modulo
+        </h2>
+        <div class="space-y-4 mb-8">
+          <div class="flex items-start space-x-3">
+            <span class="text-emerald-400 mt-1">✓</span>
+            <div>
+              <strong class="text-white">Gather → Act → Verify</strong>
+              <span class="text-neutral-400"> - O ciclo que explica tudo</span>
+            </div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-emerald-400 mt-1">✓</span>
+            <div>
+              <strong class="text-white">Gather coleta informacao</strong>
+              <span class="text-neutral-400"> - CLAUDE.md, Glob, Read, Grep</span>
+            </div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-emerald-400 mt-1">✓</span>
+            <div>
+              <strong class="text-white">Act executa mudancas</strong>
+              <span class="text-neutral-400"> - Edit, Write, Bash</span>
+            </div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-emerald-400 mt-1">✓</span>
+            <div>
+              <strong class="text-white">Verify confirma resultados</strong>
+              <span class="text-neutral-400"> - Testes, builds, re-leitura</span>
+            </div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-emerald-400 mt-1">✓</span>
+            <div>
+              <strong class="text-white">Cuidado com loops infinitos</strong>
+              <span class="text-neutral-400"> - Monitore o contexto</span>
+            </div>
+          </div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+          <h3 class="font-semibold text-emerald-400 mb-2">Proximo Modulo:</h3>
+          <p class="text-neutral-300">1.4 - Gerenciamento de Contexto: A analogia do balde</p>
+        </div>
+        <div class="flex flex-col sm:flex-row gap-4">
+          <a href="modulo-1-2.html" class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors">
+            ← Modulo Anterior
+          </a>
+          <a href="modulo-1-4.html" class="flex-1 text-center px-6 py-3 bg-emerald-600 text-white rounded-lg font-semibold hover:bg-emerald-500 transition-colors">
+            Proximo Modulo →
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-dark-600 py-8 mt-16">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+      <p>Claude Code 2026 - Curso criado por <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300">INEMA.CLUB</a></p>
+    </div>
+  </footer>
+
+  <script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    const html = document.documentElement;
+    if (localStorage.getItem('theme') === 'light' || (!localStorage.getItem('theme') && !html.classList.contains('dark'))) {
+      themeToggleDarkIcon.classList.remove('hidden');
+      html.classList.remove('dark');
+    } else {
+      themeToggleLightIcon.classList.remove('hidden');
+    }
+    themeToggle.addEventListener('click', () => {
+      themeToggleDarkIcon.classList.toggle('hidden');
+      themeToggleLightIcon.classList.toggle('hidden');
+      html.classList.toggle('dark');
+      localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+    });
+  </script>
+
+</body>
+</html>

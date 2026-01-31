@@ -142,41 +142,43 @@
         <div class="bg-dark-900 rounded-lg p-4 font-mono text-sm text-neutral-300 mb-4">
 <pre>┌─────────────┐    ┌─────────────┐    ┌─────────────┐
 │   EVENTO    │ →  │    HOOK     │ →  │    ACAO     │
-│ (pre-edit)  │    │ (seu script)│    │ (continua   │
+│(PreToolUse) │    │ (seu script)│    │ (continua   │
 │             │    │             │    │  ou bloqueia)│
 └─────────────┘    └─────────────┘    └─────────────┘</pre>
         </div>
         <ul class="space-y-2 text-neutral-300">
           <li class="flex items-start space-x-2">
             <span class="text-purple-400 mt-1">•</span>
-            <span><strong class="text-white">pre-*:</strong> Executam ANTES da acao (podem bloquear)</span>
+            <span><strong class="text-white">PreToolUse:</strong> Executa ANTES da ferramenta (pode bloquear com exit code 2)</span>
           </li>
           <li class="flex items-start space-x-2">
             <span class="text-purple-400 mt-1">•</span>
-            <span><strong class="text-white">post-*:</strong> Executam DEPOIS da acao (para notificacoes)</span>
+            <span><strong class="text-white">PostToolUse:</strong> Executa DEPOIS da ferramenta (para cleanup/notificacoes)</span>
           </li>
         </ul>
       </div>
 
       <div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6">
         <h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center">
-          <span class="mr-2">📊</span> Hooks Disponiveis
+          <span class="mr-2">📊</span> Eventos de Hook Disponiveis
         </h3>
         <div class="grid grid-cols-2 gap-4">
           <div>
-            <h4 class="text-white font-semibold mb-2">Pre-hooks</h4>
+            <h4 class="text-white font-semibold mb-2">Eventos de Tool</h4>
             <ul class="space-y-1 text-neutral-300 text-sm">
-              <li>• <code class="text-purple-400">pre-edit</code> - antes de editar arquivo</li>
-              <li>• <code class="text-purple-400">pre-bash</code> - antes de executar bash</li>
-              <li>• <code class="text-purple-400">pre-session</code> - inicio de sessao</li>
+              <li>• <code class="text-purple-400">PreToolUse</code> - antes de executar ferramenta</li>
+              <li>• <code class="text-purple-400">PostToolUse</code> - depois de executar ferramenta</li>
+              <li>• <code class="text-purple-400">PermissionRequest</code> - ao pedir permissao</li>
             </ul>
           </div>
           <div>
-            <h4 class="text-white font-semibold mb-2">Post-hooks</h4>
+            <h4 class="text-white font-semibold mb-2">Eventos de Sessao</h4>
             <ul class="space-y-1 text-neutral-300 text-sm">
-              <li>• <code class="text-purple-400">post-edit</code> - depois de editar</li>
-              <li>• <code class="text-purple-400">post-bash</code> - depois de bash</li>
-              <li>• <code class="text-purple-400">post-session</code> - fim de sessao</li>
+              <li>• <code class="text-purple-400">SessionStart</code> - inicio de sessao</li>
+              <li>• <code class="text-purple-400">SessionEnd</code> - fim de sessao</li>
+              <li>• <code class="text-purple-400">Stop</code> - agente termina resposta</li>
+              <li>• <code class="text-purple-400">SubagentStop</code> - subagente termina</li>
+              <li>• <code class="text-purple-400">Notification</code> - alertas do Claude</li>
             </ul>
           </div>
         </div>
@@ -191,54 +193,65 @@
       </div>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
-        Hooks sao configurados no arquivo <strong class="text-purple-400">settings.json</strong>
-        ou em <strong class="text-purple-400">.claude/hooks/</strong> do projeto.
+        Hooks sao configurados em arquivos <strong class="text-purple-400">settings.json</strong> em diferentes niveis:
+        usuario (<code class="text-purple-400">~/.claude/settings.json</code>), projeto (<code class="text-purple-400">.claude/settings.json</code>)
+        ou local (<code class="text-purple-400">.claude/settings.local.json</code>).
       </p>
 
       <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
-        <h3 class="text-lg font-semibold text-white mb-4">Configuracao via settings.json</h3>
+        <h3 class="text-lg font-semibold text-white mb-4">Configuracao em .claude/settings.json</h3>
         <div class="bg-dark-900 rounded-lg p-4 font-mono text-sm text-neutral-300 overflow-x-auto">
 <pre>{
   "hooks": {
-    <span class="text-purple-400">"pre-edit"</span>: {
-      "command": ".claude/hooks/validate-edit.sh",
-      "timeout": 5000,
-      "failOnError": true
-    },
-    <span class="text-purple-400">"post-edit"</span>: {
-      "command": ".claude/hooks/notify-edit.sh",
-      "timeout": 3000,
-      "failOnError": false
-    }
+    <span class="text-purple-400">"PreToolUse"</span>: [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/caminho/para/validate-edit.sh"
+          }
+        ]
+      }
+    ],
+    <span class="text-purple-400">"PostToolUse"</span>: [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/caminho/para/format-code.sh"
+          }
+        ]
+      }
+    ]
   }
 }</pre>
         </div>
       </div>
 
       <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
-        <h3 class="text-lg font-semibold text-white mb-4">Estrutura de Hooks por Projeto</h3>
+        <h3 class="text-lg font-semibold text-white mb-4">Localizacao dos Arquivos de Configuracao</h3>
         <div class="bg-dark-900 rounded-lg p-4 font-mono text-sm text-neutral-300">
-<pre>.claude/
-└── hooks/
-    ├── pre-edit.sh      <span class="text-neutral-500"># Validacao antes de editar</span>
-    ├── post-edit.sh     <span class="text-neutral-500"># Notificacao apos editar</span>
-    ├── pre-bash.sh      <span class="text-neutral-500"># Validacao antes de bash</span>
-    └── post-session.sh  <span class="text-neutral-500"># Cleanup ao finalizar</span></pre>
+<pre>~/.claude/settings.json        <span class="text-neutral-500"># Hooks globais (todos projetos)</span>
+.claude/settings.json          <span class="text-neutral-500"># Hooks do projeto (compartilhavel)</span>
+.claude/settings.local.json    <span class="text-neutral-500"># Hooks locais (nao commitar)</span></pre>
         </div>
+        <p class="text-neutral-400 text-sm mt-3">Configuracoes de projeto tem prioridade sobre configuracoes de usuario.</p>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div class="bg-dark-800 rounded-xl p-4 border border-dark-600">
+          <h4 class="font-semibold text-purple-400 mb-2">matcher</h4>
+          <p class="text-neutral-400 text-sm">Ferramentas que ativam o hook (Edit|Write|Bash|Read|Grep)</p>
+        </div>
+        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600">
+          <h4 class="font-semibold text-purple-400 mb-2">type</h4>
+          <p class="text-neutral-400 text-sm">Tipo do hook: "command"</p>
+        </div>
+        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600">
           <h4 class="font-semibold text-purple-400 mb-2">command</h4>
-          <p class="text-neutral-400 text-sm">Script ou comando a executar</p>
-        </div>
-        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600">
-          <h4 class="font-semibold text-purple-400 mb-2">timeout</h4>
-          <p class="text-neutral-400 text-sm">Tempo maximo em ms (padrao: 5000)</p>
-        </div>
-        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600">
-          <h4 class="font-semibold text-purple-400 mb-2">failOnError</h4>
-          <p class="text-neutral-400 text-sm">Bloquear acao se hook falhar</p>
+          <p class="text-neutral-400 text-sm">Caminho absoluto do script</p>
         </div>
       </div>
     </section>
@@ -251,32 +264,35 @@
       </div>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
-        O hook <strong class="text-purple-400">pre-edit</strong> e executado antes de Claude editar
-        qualquer arquivo. Use para validar, fazer backup ou impedir edicoes indesejadas.
+        O hook <strong class="text-purple-400">PreToolUse</strong> e executado antes de Claude usar
+        uma ferramenta (Edit, Write, Bash, etc). Use o <strong class="text-purple-400">matcher</strong>
+        para filtrar quais ferramentas ativam o hook.
       </p>
 
       <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
         <h3 class="text-lg font-semibold text-white mb-4">Exemplo: Proteger arquivos criticos</h3>
         <div class="bg-dark-900 rounded-lg p-4 font-mono text-xs text-neutral-300 overflow-x-auto">
 <pre>#!/bin/bash
-<span class="text-purple-400"># .claude/hooks/pre-edit.sh</span>
-<span class="text-purple-400"># Variaveis recebidas: $CLAUDE_FILE, $CLAUDE_ACTION</span>
+<span class="text-purple-400"># validate-edit.sh</span>
+<span class="text-purple-400"># Hook recebe JSON via stdin com detalhes da operacao</span>
+
+<span class="text-purple-400"># Ler input JSON do stdin</span>
+INPUT=$(cat)
+FILE_PATH=$(echo "$INPUT" | jq -r '.tool_input.file_path // empty')
 
 PROTECTED_FILES=(
   "package-lock.json"
   ".env"
   ".env.production"
-  "prisma/migrations/*"
 )
 
 for pattern in "${PROTECTED_FILES[@]}"; do
-  if [[ "$CLAUDE_FILE" == $pattern ]]; then
-    echo "BLOQUEADO: $CLAUDE_FILE e um arquivo protegido"
-    exit 1  <span class="text-neutral-500"># Exit 1 = bloqueia a acao</span>
+  if [[ "$FILE_PATH" == *"$pattern"* ]]; then
+    echo "BLOQUEADO: $FILE_PATH e um arquivo protegido" >&2
+    exit 2  <span class="text-neutral-500"># Exit 2 = bloqueia a acao</span>
   fi
 done
 
-echo "OK: Edicao permitida em $CLAUDE_FILE"
 exit 0  <span class="text-neutral-500"># Exit 0 = permite a acao</span></pre>
         </div>
       </div>
@@ -285,16 +301,18 @@ exit 0  <span class="text-neutral-500"># Exit 0 = permite a acao</span></pre>
         <h3 class="text-lg font-semibold text-white mb-4">Exemplo: Backup automatico</h3>
         <div class="bg-dark-900 rounded-lg p-4 font-mono text-xs text-neutral-300 overflow-x-auto">
 <pre>#!/bin/bash
-<span class="text-purple-400"># Criar backup antes de cada edicao</span>
+<span class="text-purple-400"># backup-pre-edit.sh - Criar backup antes de cada edicao</span>
 
-BACKUP_DIR=".claude/backups/$(date +%Y%m%d)"
+INPUT=$(cat)
+FILE_PATH=$(echo "$INPUT" | jq -r '.tool_input.file_path // empty')
+
+BACKUP_DIR="$CLAUDE_PROJECT_DIR/.claude/backups/$(date +%Y%m%d)"
 mkdir -p "$BACKUP_DIR"
 
-if [ -f "$CLAUDE_FILE" ]; then
+if [ -f "$FILE_PATH" ]; then
   TIMESTAMP=$(date +%H%M%S)
-  BASENAME=$(basename "$CLAUDE_FILE")
-  cp "$CLAUDE_FILE" "$BACKUP_DIR/${BASENAME}.${TIMESTAMP}.bak"
-  echo "Backup criado: $BACKUP_DIR/${BASENAME}.${TIMESTAMP}.bak"
+  BASENAME=$(basename "$FILE_PATH")
+  cp "$FILE_PATH" "$BACKUP_DIR/${BASENAME}.${TIMESTAMP}.bak"
 fi
 
 exit 0</pre>
@@ -303,16 +321,24 @@ exit 0</pre>
 
       <div class="bg-primary/10 rounded-xl border border-primary/30 p-6">
         <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
-          <span class="mr-2">💡</span> Variaveis de Ambiente
+          <span class="mr-2">💡</span> Variaveis de Ambiente e Exit Codes
         </h3>
         <div class="grid grid-cols-2 gap-4 text-sm">
           <div>
-            <code class="text-purple-400">$CLAUDE_FILE</code>
-            <p class="text-neutral-400">Arquivo sendo editado</p>
+            <code class="text-purple-400">$CLAUDE_PROJECT_DIR</code>
+            <p class="text-neutral-400">Caminho raiz do projeto</p>
           </div>
           <div>
-            <code class="text-purple-400">$CLAUDE_ACTION</code>
-            <p class="text-neutral-400">Tipo de acao (edit, create, delete)</p>
+            <code class="text-purple-400">Exit code 0</code>
+            <p class="text-neutral-400">Sucesso - acao permitida</p>
+          </div>
+          <div>
+            <code class="text-purple-400">$CLAUDE_CODE_REMOTE</code>
+            <p class="text-neutral-400">"true" se ambiente web</p>
+          </div>
+          <div>
+            <code class="text-purple-400">Exit code 2</code>
+            <p class="text-neutral-400">Erro bloqueante - acao impedida</p>
           </div>
         </div>
       </div>
@@ -326,28 +352,32 @@ exit 0</pre>
       </div>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
-        Hooks <strong class="text-purple-400">post-edit</strong> sao ideais para notificacoes,
-        logging e integracoes que nao devem bloquear o fluxo de trabalho.
+        Hooks <strong class="text-purple-400">PostToolUse</strong> sao ideais para notificacoes,
+        formatacao automatica, logging e integracoes que nao devem bloquear o fluxo.
       </p>
 
       <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
         <h3 class="text-lg font-semibold text-white mb-4">Exemplo: Notificacao Slack</h3>
         <div class="bg-dark-900 rounded-lg p-4 font-mono text-xs text-neutral-300 overflow-x-auto">
 <pre>#!/bin/bash
-<span class="text-purple-400"># .claude/hooks/post-edit.sh</span>
+<span class="text-purple-400"># notify-slack.sh - Hook PostToolUse</span>
+
+INPUT=$(cat)
+FILE_PATH=$(echo "$INPUT" | jq -r '.tool_input.file_path // empty')
+TOOL_NAME=$(echo "$INPUT" | jq -r '.tool_name // empty')
 
 SLACK_WEBHOOK="$SLACK_CLAUDE_WEBHOOK"
-PROJECT_NAME=$(basename "$(pwd)")
+PROJECT_NAME=$(basename "$CLAUDE_PROJECT_DIR")
 
 curl -X POST "$SLACK_WEBHOOK" \
   -H "Content-Type: application/json" \
   -d "{
-    \"text\": \"🤖 Claude editou arquivo\",
+    \"text\": \"🤖 Claude executou $TOOL_NAME\",
     \"blocks\": [{
       \"type\": \"section\",
       \"text\": {
         \"type\": \"mrkdwn\",
-        \"text\": \"*Projeto:* $PROJECT_NAME\n*Arquivo:* $CLAUDE_FILE\n*Acao:* $CLAUDE_ACTION\"
+        \"text\": \"*Projeto:* $PROJECT_NAME\n*Arquivo:* $FILE_PATH\n*Ferramenta:* $TOOL_NAME\"
       }
     }]
   }"</pre>
@@ -358,15 +388,19 @@ curl -X POST "$SLACK_WEBHOOK" \
         <h3 class="text-lg font-semibold text-white mb-4">Exemplo: Log de Auditoria</h3>
         <div class="bg-dark-900 rounded-lg p-4 font-mono text-xs text-neutral-300 overflow-x-auto">
 <pre>#!/bin/bash
-<span class="text-purple-400"># Log todas edicoes em arquivo JSON</span>
+<span class="text-purple-400"># audit-log.sh - Log todas operacoes em arquivo JSON</span>
 
-LOG_FILE=".claude/audit-log.jsonl"
+INPUT=$(cat)
+FILE_PATH=$(echo "$INPUT" | jq -r '.tool_input.file_path // "N/A"')
+TOOL_NAME=$(echo "$INPUT" | jq -r '.tool_name // "unknown"')
+
+LOG_FILE="$CLAUDE_PROJECT_DIR/.claude/audit-log.jsonl"
 
 echo "{
   \"timestamp\": \"$(date -Iseconds)\",
-  \"file\": \"$CLAUDE_FILE\",
-  \"action\": \"$CLAUDE_ACTION\",
-  \"session\": \"$CLAUDE_SESSION_ID\"
+  \"file\": \"$FILE_PATH\",
+  \"tool\": \"$TOOL_NAME\",
+  \"project\": \"$CLAUDE_PROJECT_DIR\"
 }" >> "$LOG_FILE"</pre>
         </div>
       </div>
@@ -401,16 +435,18 @@ echo "{
       </div>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
-        O hook <strong class="text-purple-400">pre-bash</strong> e sua ultima linha de defesa
-        antes de Claude executar comandos no terminal. Use para bloquear comandos perigosos.
+        Use <strong class="text-purple-400">PreToolUse</strong> com <code class="text-purple-400">matcher: "Bash"</code>
+        para validar comandos antes de Claude executa-los. Sua ultima linha de defesa contra comandos perigosos.
       </p>
 
       <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
         <h3 class="text-lg font-semibold text-white mb-4">Exemplo: Bloquear comandos destrutivos</h3>
         <div class="bg-dark-900 rounded-lg p-4 font-mono text-xs text-neutral-300 overflow-x-auto">
 <pre>#!/bin/bash
-<span class="text-purple-400"># .claude/hooks/pre-bash.sh</span>
-<span class="text-purple-400"># Variavel: $CLAUDE_COMMAND</span>
+<span class="text-purple-400"># validate-bash.sh - PreToolUse hook com matcher "Bash"</span>
+
+INPUT=$(cat)
+COMMAND=$(echo "$INPUT" | jq -r '.tool_input.command // empty')
 
 BLOCKED_PATTERNS=(
   "rm -rf /"
@@ -424,17 +460,16 @@ BLOCKED_PATTERNS=(
 )
 
 for pattern in "${BLOCKED_PATTERNS[@]}"; do
-  if [[ "$CLAUDE_COMMAND" == *"$pattern"* ]]; then
-    echo "BLOQUEADO: Comando potencialmente destrutivo detectado"
-    echo "Comando: $CLAUDE_COMMAND"
-    exit 1
+  if [[ "$COMMAND" == *"$pattern"* ]]; then
+    echo "BLOQUEADO: Comando potencialmente destrutivo detectado" >&2
+    echo "Comando: $COMMAND" >&2
+    exit 2  <span class="text-neutral-500"># Exit 2 = bloqueia</span>
   fi
 done
 
-<span class="text-purple-400"># Alertar para comandos com sudo</span>
-if [[ "$CLAUDE_COMMAND" == *"sudo"* ]]; then
-  echo "ALERTA: Comando com sudo detectado - requer aprovacao manual"
-  <span class="text-neutral-500"># Nao bloqueia, mas alerta</span>
+<span class="text-purple-400"># Alertar para comandos com sudo (nao bloqueia)</span>
+if [[ "$COMMAND" == *"sudo"* ]]; then
+  echo "ALERTA: Comando com sudo detectado"
 fi
 
 exit 0</pre>
@@ -479,61 +514,67 @@ exit 0</pre>
 
       <div class="grid grid-cols-1 gap-6 mb-6">
         <div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
-          <h4 class="font-semibold text-purple-400 mb-4">Auto-format com Prettier</h4>
+          <h4 class="font-semibold text-purple-400 mb-4">Auto-format com Prettier (PostToolUse)</h4>
           <div class="bg-dark-900 rounded-lg p-4 font-mono text-xs text-neutral-300 overflow-x-auto">
 <pre>#!/bin/bash
-<span class="text-purple-400"># post-edit: Formatar arquivo editado</span>
+<span class="text-purple-400"># format-code.sh - PostToolUse com matcher "Edit|Write"</span>
 
-if [[ "$CLAUDE_FILE" =~ \.(js|ts|jsx|tsx|json|css|md)$ ]]; then
-  npx prettier --write "$CLAUDE_FILE" 2>/dev/null
-  echo "Formatado: $CLAUDE_FILE"
+INPUT=$(cat)
+FILE_PATH=$(echo "$INPUT" | jq -r '.tool_input.file_path // empty')
+
+if [[ "$FILE_PATH" =~ \.(js|ts|jsx|tsx|json|css|md)$ ]]; then
+  npx prettier --write "$FILE_PATH" 2>/dev/null
+  echo "Formatado: $FILE_PATH"
 fi</pre>
           </div>
         </div>
 
         <div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
-          <h4 class="font-semibold text-purple-400 mb-4">Git auto-stage</h4>
+          <h4 class="font-semibold text-purple-400 mb-4">Git auto-stage (PostToolUse)</h4>
           <div class="bg-dark-900 rounded-lg p-4 font-mono text-xs text-neutral-300 overflow-x-auto">
 <pre>#!/bin/bash
-<span class="text-purple-400"># post-edit: Adicionar ao stage automaticamente</span>
+<span class="text-purple-400"># auto-stage.sh - PostToolUse com matcher "Edit|Write"</span>
+
+INPUT=$(cat)
+FILE_PATH=$(echo "$INPUT" | jq -r '.tool_input.file_path // empty')
 
 if git rev-parse --git-dir > /dev/null 2>&1; then
-  git add "$CLAUDE_FILE"
-  echo "Staged: $CLAUDE_FILE"
+  git add "$FILE_PATH"
+  echo "Staged: $FILE_PATH"
 fi</pre>
           </div>
         </div>
 
         <div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
-          <h4 class="font-semibold text-purple-400 mb-4">Validacao TypeScript</h4>
+          <h4 class="font-semibold text-purple-400 mb-4">Configuracao Completa em settings.json</h4>
           <div class="bg-dark-900 rounded-lg p-4 font-mono text-xs text-neutral-300 overflow-x-auto">
-<pre>#!/bin/bash
-<span class="text-purple-400"># pre-edit: Validar que arquivo TS compila</span>
-
-if [[ "$CLAUDE_FILE" =~ \.tsx?$ ]]; then
-  npx tsc --noEmit "$CLAUDE_FILE" 2>&1
-  if [ $? -ne 0 ]; then
-    echo "AVISO: Arquivo tem erros TS (nao bloqueando)"
-  fi
-fi
-exit 0</pre>
+<pre>{
+  "hooks": {
+    "PreToolUse": [
+      { "matcher": "Edit|Write", "hooks": [{"type": "command", "command": "./hooks/validate.sh"}] },
+      { "matcher": "Bash", "hooks": [{"type": "command", "command": "./hooks/validate-bash.sh"}] }
+    ],
+    "PostToolUse": [
+      { "matcher": "Edit|Write", "hooks": [{"type": "command", "command": "./hooks/format.sh"}] }
+    ]
+  }
+}</pre>
           </div>
         </div>
       </div>
 
       <div class="bg-gradient-to-br from-purple-900/30 to-dark-800 rounded-xl border border-purple-500/30 p-6">
-        <h3 class="text-lg font-semibold text-purple-400 mb-4">Organizando Hooks</h3>
+        <h3 class="text-lg font-semibold text-purple-400 mb-4">Estrutura de Retorno JSON (Avancado)</h3>
         <div class="bg-dark-900 rounded-lg p-4 font-mono text-sm text-neutral-300">
-<pre>.claude/hooks/
-├── pre-edit.sh      <span class="text-neutral-500"># Orquestrador</span>
-├── pre-edit.d/      <span class="text-neutral-500"># Hooks modulares</span>
-│   ├── 01-backup.sh
-│   ├── 02-protect.sh
-│   └── 03-validate.sh
-└── post-edit.sh</pre>
+<pre><span class="text-purple-400"># Hook pode retornar JSON para controle avancado:</span>
+{
+  "decision": "approve",      <span class="text-neutral-500"># approve, block, allow, deny</span>
+  "reason": "Validacao OK",   <span class="text-neutral-500"># Explicacao para Claude</span>
+  "updatedInput": {...}       <span class="text-neutral-500"># Modificar parametros (v2.0.10+)</span>
+}</pre>
         </div>
         <p class="text-neutral-400 text-sm mt-3">
-          O orquestrador pode executar todos os scripts em pre-edit.d/ em ordem.
+          O retorno JSON permite modificar inputs de ferramentas antes da execucao.
         </p>
       </div>
     </section>
@@ -550,35 +591,35 @@ exit 0</pre>
             <span class="text-purple-400 mt-1">✓</span>
             <div>
               <strong class="text-white">Hooks reagem a eventos</strong>
-              <span class="text-neutral-400"> - pre-* bloqueia, post-* notifica</span>
+              <span class="text-neutral-400"> - PreToolUse, PostToolUse, SessionStart, Stop...</span>
             </div>
           </div>
           <div class="flex items-start space-x-3">
             <span class="text-purple-400 mt-1">✓</span>
             <div>
-              <strong class="text-white">Configuracao em settings.json</strong>
-              <span class="text-neutral-400"> - ou .claude/hooks/ por projeto</span>
+              <strong class="text-white">Configuracao em .claude/settings.json</strong>
+              <span class="text-neutral-400"> - ou ~/.claude/settings.json para global</span>
             </div>
           </div>
           <div class="flex items-start space-x-3">
             <span class="text-purple-400 mt-1">✓</span>
             <div>
-              <strong class="text-white">pre-edit para validacao</strong>
-              <span class="text-neutral-400"> - proteja arquivos criticos, faca backups</span>
+              <strong class="text-white">PreToolUse para validacao</strong>
+              <span class="text-neutral-400"> - exit 2 bloqueia, exit 0 permite</span>
             </div>
           </div>
           <div class="flex items-start space-x-3">
             <span class="text-purple-400 mt-1">✓</span>
             <div>
-              <strong class="text-white">post-edit para integracoes</strong>
-              <span class="text-neutral-400"> - notificacoes, logging, auto-format</span>
+              <strong class="text-white">PostToolUse para integracoes</strong>
+              <span class="text-neutral-400"> - formatacao, logging, notificacoes</span>
             </div>
           </div>
           <div class="flex items-start space-x-3">
             <span class="text-purple-400 mt-1">✓</span>
             <div>
-              <strong class="text-white">pre-bash para seguranca</strong>
-              <span class="text-neutral-400"> - bloqueie comandos destrutivos</span>
+              <strong class="text-white">Matcher filtra ferramentas</strong>
+              <span class="text-neutral-400"> - "Edit|Write|Bash" para especificar quais ativam o hook</span>
             </div>
           </div>
         </div>

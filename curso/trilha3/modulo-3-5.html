@@ -166,12 +166,32 @@
         </ul>
       </div>
 
-      <div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6">
+      <div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
         <h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center">
+          <span class="mr-2">📊</span> Tipos de Subagentes Built-in
+        </h3>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div class="bg-dark-800 rounded-lg p-4">
+            <h4 class="text-purple-400 font-semibold mb-2">Explore</h4>
+            <p class="text-neutral-300 text-sm">Agente rapido e read-only para busca e analise de codebase</p>
+          </div>
+          <div class="bg-dark-800 rounded-lg p-4">
+            <h4 class="text-purple-400 font-semibold mb-2">Plan</h4>
+            <p class="text-neutral-300 text-sm">Pesquisa de codebase para planejamento (usado em plan mode)</p>
+          </div>
+          <div class="bg-dark-800 rounded-lg p-4">
+            <h4 class="text-purple-400 font-semibold mb-2">general-purpose</h4>
+            <p class="text-neutral-300 text-sm">Tarefas complexas com exploracao e modificacao</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
+        <h3 class="text-lg font-semibold text-white mb-4 flex items-center">
           <span class="mr-2">📊</span> Quando Usar Subagentes
         </h3>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div class="bg-dark-800 rounded-lg p-4">
+          <div class="bg-emerald-900/20 rounded-lg p-4 border border-emerald-500/30">
             <h4 class="text-emerald-400 font-semibold mb-2">Usar</h4>
             <ul class="space-y-1 text-neutral-300 text-sm">
               <li>• Tarefas bem definidas e isoladas</li>
@@ -179,7 +199,7 @@
               <li>• Evitar poluicao de contexto</li>
             </ul>
           </div>
-          <div class="bg-dark-800 rounded-lg p-4">
+          <div class="bg-red-900/20 rounded-lg p-4 border border-red-500/30">
             <h4 class="text-red-400 font-semibold mb-2">Evitar</h4>
             <ul class="space-y-1 text-neutral-300 text-sm">
               <li>• Tarefas simples e rapidas</li>
@@ -199,17 +219,25 @@
       </div>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
-        Subagentes sao definidos em arquivos de configuracao no diretorio
-        <strong class="text-purple-400">.claude/agents/</strong>.
+        Subagentes customizados sao definidos como arquivos Markdown em
+        <strong class="text-purple-400">.claude/agents/</strong>. Claude os invoca via
+        <strong class="text-purple-400">Task tool</strong> quando necessario.
       </p>
 
       <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
-        <h3 class="text-lg font-semibold text-white mb-4">Estrutura do Arquivo</h3>
+        <h3 class="text-lg font-semibold text-white mb-4">Estrutura do Arquivo (YAML frontmatter + Markdown)</h3>
         <div class="bg-dark-900 rounded-lg p-4 font-mono text-sm text-neutral-300 overflow-x-auto">
 <pre><span class="text-purple-400"># .claude/agents/code-reviewer.md</span>
 
-name: Code Reviewer
+---
+name: code-reviewer
 description: Especialista em code review com foco em qualidade
+tools:
+  - Read
+  - Grep
+  - Glob
+model: claude-sonnet-4-20250514
+---
 
 <span class="text-purple-400">## System Prompt</span>
 
@@ -230,12 +258,22 @@ Seu foco e qualidade, seguranca e manutenibilidade.
 [1-2 frases sobre qualidade geral]
 
 ### Issues
-| Severidade | Arquivo | Linha | Descricao |
-|------------|---------|-------|-----------|
-| ... | ... | ... | ... |
+| Severidade | Arquivo | Linha | Descricao |</pre>
+        </div>
+      </div>
 
-### Sugestoes
-[Lista de melhorias sugeridas com codigo]</pre>
+      <div class="bg-gradient-to-br from-purple-900/30 to-dark-800 rounded-xl border border-purple-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-purple-400 mb-4">Task Tool - Como Subagentes sao Invocados</h3>
+        <p class="text-neutral-300 mb-4">Claude usa a <strong class="text-white">Task tool</strong> internamente para delegar trabalho a subagentes:</p>
+        <div class="bg-dark-900 rounded-lg p-4 font-mono text-xs text-neutral-300 overflow-x-auto">
+<pre><span class="text-purple-400">// Parametros da Task tool:</span>
+{
+  "subagent_type": "code-reviewer",  <span class="text-neutral-500">// Nome do subagente customizado</span>
+  "description": "Revisar AuthController",
+  "prompt": "Analise src/controllers/AuthController.ts",
+  "run_in_background": false,        <span class="text-neutral-500">// true para rodar em paralelo</span>
+  "model": "haiku"                   <span class="text-neutral-500">// Opcional: modelo mais rapido</span>
+}</pre>
         </div>
       </div>
 
@@ -248,9 +286,9 @@ Seu foco e qualidade, seguranca e manutenibilidade.
         </div>
 
         <div class="bg-dark-800 rounded-xl p-6 border border-dark-600">
-          <h4 class="font-semibold text-purple-400 mb-2">2. Criar arquivo do agente</h4>
+          <h4 class="font-semibold text-purple-400 mb-2">2. Criar arquivo do agente com frontmatter YAML</h4>
           <div class="bg-dark-900 rounded-lg p-3 font-mono text-sm text-purple-400">
-            touch .claude/agents/code-reviewer.md
+            # Arquivo .claude/agents/code-reviewer.md com --- no inicio
           </div>
         </div>
 
@@ -265,24 +303,24 @@ Seu foco e qualidade, seguranca e manutenibilidade.
 
       <div class="bg-primary/10 rounded-xl border border-primary/30 p-6">
         <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
-          <span class="mr-2">💡</span> Componentes do Subagente
+          <span class="mr-2">💡</span> Metadados YAML do Subagente
         </h3>
         <div class="grid grid-cols-2 gap-4 text-sm">
           <div>
             <code class="text-purple-400">name</code>
-            <p class="text-neutral-400">Identificador unico</p>
+            <p class="text-neutral-400">Identificador unico (slug)</p>
           </div>
           <div>
             <code class="text-purple-400">description</code>
             <p class="text-neutral-400">O que o agente faz</p>
           </div>
           <div>
-            <code class="text-purple-400">System Prompt</code>
-            <p class="text-neutral-400">Personalidade e contexto</p>
+            <code class="text-purple-400">tools</code>
+            <p class="text-neutral-400">Ferramentas que pode usar</p>
           </div>
           <div>
-            <code class="text-purple-400">Regras</code>
-            <p class="text-neutral-400">Comportamentos obrigatorios</p>
+            <code class="text-purple-400">model</code>
+            <p class="text-neutral-400">Modelo a usar (opcional)</p>
           </div>
         </div>
       </div>
@@ -640,7 +678,21 @@ Identifica vulnerabilidades e sugere correcoes.
             <span class="text-purple-400 mt-1">✓</span>
             <div>
               <strong class="text-white">Definidos em .claude/agents/</strong>
-              <span class="text-neutral-400"> - arquivos markdown com system prompt</span>
+              <span class="text-neutral-400"> - arquivos Markdown com YAML frontmatter</span>
+            </div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-purple-400 mt-1">✓</span>
+            <div>
+              <strong class="text-white">Invocados via Task tool</strong>
+              <span class="text-neutral-400"> - com subagent_type, prompt, run_in_background</span>
+            </div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-purple-400 mt-1">✓</span>
+            <div>
+              <strong class="text-white">Built-ins: Explore, Plan, general-purpose</strong>
+              <span class="text-neutral-400"> - subagentes padrao do Claude Code</span>
             </div>
           </div>
           <div class="flex items-start space-x-3">

@@ -153,11 +153,13 @@
         <div class="bg-dark-900 rounded-lg p-4 font-mono text-sm">
           <p class="text-neutral-400">// .claude/settings.local.json</p>
           <p class="text-white">{"{"}</p>
-          <p class="text-emerald-400 ml-4">"allowedTools": ["Read", "Grep", "Glob"],</p>
-          <p class="text-emerald-400 ml-4">"allowedBashPatterns": ["npm run test:*", "git status"],</p>
-          <p class="text-red-400 ml-4">"blockedBashPatterns": ["rm -rf", "sudo *"]</p>
+          <p class="text-emerald-400 ml-4">"permissions": {"{"}</p>
+          <p class="text-emerald-400 ml-8">"allow": ["Read", "Grep", "Glob", "Bash(npm run test:*)", "Bash(git status)"],</p>
+          <p class="text-red-400 ml-8">"deny": ["Bash(rm -rf *)", "Bash(sudo *)"]</p>
+          <p class="text-emerald-400 ml-4">{"}"}</p>
           <p class="text-white">{"}"}</p>
         </div>
+        <p class="text-neutral-400 text-sm mt-3">Nota: Padroes Bash usam o formato <code class="text-emerald-400">Bash(comando:*)</code> para controle granular.</p>
       </div>
     </section>
 

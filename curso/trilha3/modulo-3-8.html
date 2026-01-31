@@ -420,32 +420,49 @@ Voce e um especialista em seguranca de APIs com foco em:
         Configure hooks para automatizar validacoes e notificacoes.
       </p>
 
+      <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+        <h4 class="font-semibold text-purple-400 mb-4">.claude/settings.json (Configuracao de Hooks)</h4>
+        <div class="bg-dark-900 rounded-lg p-4 font-mono text-xs text-neutral-300 overflow-x-auto">
+<pre>{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [{"type": "command", "command": "./scripts/validate-edit.sh"}]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [{"type": "command", "command": "./scripts/format-and-stage.sh"}]
+      }
+    ]
+  }
+}</pre>
+        </div>
+      </div>
+
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
         <div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
-          <h4 class="font-semibold text-purple-400 mb-4">.claude/hooks/pre-edit.sh</h4>
+          <h4 class="font-semibold text-purple-400 mb-4">scripts/validate-edit.sh (PreToolUse)</h4>
           <div class="bg-dark-900 rounded-lg p-4 font-mono text-xs text-neutral-300 overflow-x-auto">
 <pre>#!/bin/bash
-# Proteger arquivos criticos
+INPUT=$(cat)
+FILE_PATH=$(echo "$INPUT" | jq -r '.tool_input.file_path // empty')
 
-PROTECTED=(
-  "prisma/schema.prisma"
-  ".env"
-  ".env.*"
-  "package-lock.json"
-)
+PROTECTED=(".env" "package-lock.json")
 
 for pattern in "${PROTECTED[@]}"; do
-  if [[ "$CLAUDE_FILE" == $pattern ]]; then
-    echo "PROTEGIDO: $CLAUDE_FILE"
-    echo "Edite manualmente."
-    exit 1
+  if [[ "$FILE_PATH" == *"$pattern"* ]]; then
+    echo "PROTEGIDO: $FILE_PATH" >&2
+    exit 2  # Bloqueia
   fi
 done
 
 # Backup automatico
-if [ -f "$CLAUDE_FILE" ]; then
-  mkdir -p .claude/backups
-  cp "$CLAUDE_FILE" ".claude/backups/$(basename $CLAUDE_FILE).$(date +%s).bak"
+if [ -f "$FILE_PATH" ]; then
+  mkdir -p "$CLAUDE_PROJECT_DIR/.claude/backups"
+  cp "$FILE_PATH" "$CLAUDE_PROJECT_DIR/.claude/backups/$(basename $FILE_PATH).$(date +%s).bak"
 fi
 
 exit 0</pre>
@@ -453,24 +470,24 @@ exit 0</pre>
         </div>
 
         <div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
-          <h4 class="font-semibold text-purple-400 mb-4">.claude/hooks/post-edit.sh</h4>
+          <h4 class="font-semibold text-purple-400 mb-4">scripts/format-and-stage.sh (PostToolUse)</h4>
           <div class="bg-dark-900 rounded-lg p-4 font-mono text-xs text-neutral-300 overflow-x-auto">
 <pre>#!/bin/bash
-# Auto-format e stage
+INPUT=$(cat)
+FILE_PATH=$(echo "$INPUT" | jq -r '.tool_input.file_path // empty')
 
 # Formatar TypeScript
-if [[ "$CLAUDE_FILE" =~ \.tsx?$ ]]; then
-  npx prettier --write "$CLAUDE_FILE" 2>/dev/null
+if [[ "$FILE_PATH" =~ \.tsx?$ ]]; then
+  npx prettier --write "$FILE_PATH" 2>/dev/null
 fi
 
 # Auto-stage
 if git rev-parse --git-dir > /dev/null 2>&1; then
-  git add "$CLAUDE_FILE"
-  echo "Staged: $CLAUDE_FILE"
+  git add "$FILE_PATH"
 fi
 
-# Log de atividade
-echo "$(date): $CLAUDE_ACTION $CLAUDE_FILE" >> .claude/activity.log</pre>
+# Log
+echo "$(date): $FILE_PATH" >> "$CLAUDE_PROJECT_DIR/.claude/activity.log"</pre>
           </div>
         </div>
       </div>
@@ -480,7 +497,8 @@ echo "$(date): $CLAUDE_ACTION $CLAUDE_FILE" >> .claude/activity.log</pre>
           <span class="mr-2">💡</span> Importante
         </h3>
         <p class="text-neutral-300">
-          Torne os scripts executaveis com <code class="bg-dark-700 px-2 py-1 rounded">chmod +x .claude/hooks/*.sh</code>
+          Torne os scripts executaveis com <code class="bg-dark-700 px-2 py-1 rounded">chmod +x scripts/*.sh</code>
+          e instale <code class="bg-dark-700 px-2 py-1 rounded">jq</code> para parsing JSON.
         </p>
       </div>
     </section>
@@ -497,13 +515,15 @@ echo "$(date): $CLAUDE_ACTION $CLAUDE_FILE" >> .claude/activity.log</pre>
       </p>
 
       <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
-        <h4 class="font-semibold text-purple-400 mb-4">.github/workflows/claude-ci.yml</h4>
+        <h4 class="font-semibold text-purple-400 mb-4">.github/workflows/claude-ci.yml (Action Oficial)</h4>
         <div class="bg-dark-900 rounded-lg p-4 font-mono text-xs text-neutral-300 overflow-x-auto">
 <pre>name: Claude CI
 
 on:
   pull_request:
     types: [opened, synchronize]
+  issue_comment:
+    types: [created]
 
 jobs:
   lint-test:
@@ -520,46 +540,25 @@ jobs:
     runs-on: ubuntu-latest
     needs: lint-test
     permissions:
+      contents: read
       pull-requests: write
+      issues: write
+
     steps:
       - uses: actions/checkout@v4
         with: { fetch-depth: 0 }
 
-      - name: Install Claude
-        run: npm install -g @anthropic-ai/claude-code
-
-      - name: Get Diff
-        id: diff
-        run: |
-          DIFF=$(git diff origin/${{ github.base_ref }}...HEAD -- '*.ts' | head -c 10000)
-          echo "diff<<EOF" >> $GITHUB_OUTPUT
-          echo "$DIFF" >> $GITHUB_OUTPUT
-          echo "EOF" >> $GITHUB_OUTPUT
-
-      - name: Claude Review
-        env:
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-        run: |
-          claude --print "Review este diff de PR:
-          ${{ steps.diff.outputs.diff }}
-
-          Use o formato:
-          ## Score: X/10
-          ## Issues
-          ## Aprovado: Sim/Nao" > review.md
-
-      - name: Comment
-        uses: actions/github-script@v7
+      - name: Claude Code Action
+        uses: anthropics/claude-code-action@v1
         with:
-          script: |
-            const fs = require('fs');
-            const review = fs.readFileSync('review.md', 'utf8');
-            github.rest.issues.createComment({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              issue_number: context.issue.number,
-              body: '## 🤖 Claude Review\n\n' + review
-            });</pre>
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          prompt: |
+            Faca code review deste PR.
+            Analise as mudancas e forneca:
+            ## Score: X/10
+            ## Issues Encontradas
+            ## Sugestoes de Melhoria
+            ## Aprovado: Sim/Nao</pre>
         </div>
       </div>
     </section>

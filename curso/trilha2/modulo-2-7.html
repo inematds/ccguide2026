@@ -424,30 +424,31 @@
       </div>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
-        Claude Code pode criar <strong class="text-blue-400">subagentes</strong> para tarefas especializadas,
-        delegando trabalho enquanto mantém supervisao.
+        Claude Code pode delegar trabalho para <strong class="text-blue-400">contextos isolados</strong>,
+        permitindo tarefas especializadas com escopo focado. Isso e feito internamente pelo sistema
+        de agentes, nao por uma ferramenta especifica.
       </p>
 
       <div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6">
         <h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center">
-          <span class="mr-2">🔄</span> Como Funciona
+          <span class="mr-2">🔄</span> Como Funciona a Delegacao
         </h3>
         <ul class="space-y-3 text-neutral-300">
           <li class="flex items-start space-x-2">
             <span class="text-blue-400 mt-1">•</span>
-            <span><strong class="text-white">Agente principal</strong> identifica tarefa complexa</span>
+            <span><strong class="text-white">Tarefas complexas</strong> sao divididas usando Task tools</span>
           </li>
           <li class="flex items-start space-x-2">
             <span class="text-blue-400 mt-1">•</span>
-            <span><strong class="text-white">Cria subagente</strong> com escopo focado</span>
+            <span><strong class="text-white">Cada tarefa</strong> pode ter escopo e contexto focado</span>
           </li>
           <li class="flex items-start space-x-2">
             <span class="text-blue-400 mt-1">•</span>
-            <span><strong class="text-white">Subagente trabalha</strong> em paralelo ou sequencialmente</span>
+            <span><strong class="text-white">Dependencias</strong> garantem ordem de execucao correta</span>
           </li>
           <li class="flex items-start space-x-2">
             <span class="text-blue-400 mt-1">•</span>
-            <span><strong class="text-white">Resultados retornam</strong> ao agente principal</span>
+            <span><strong class="text-white">TaskList</strong> permite acompanhar progresso geral</span>
           </li>
         </ul>
       </div>
@@ -514,8 +515,8 @@
           <div class="flex items-start space-x-3">
             <span class="text-blue-400 mt-1">✓</span>
             <div>
-              <strong class="text-white">Subagentes para delegacao</strong>
-              <span class="text-neutral-400"> - contexto isolado e especializado</span>
+              <strong class="text-white">Delegacao via Task tools</strong>
+              <span class="text-neutral-400"> - organize trabalho complexo</span>
             </div>
           </div>
         </div>

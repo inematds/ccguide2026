@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Claude Code 2026 | Curso Completo</title>
+  <title>Claude Code 2026 | Deep Dive - O Guia Completo</title>
+  <meta name="description" content="O curso mais completo sobre Claude Code em portugues. Domine a CLI da Anthropic do basico ao avancado.">
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -11,21 +12,62 @@
       theme: {
         extend: {
           colors: {
-            primary: '#FACC15',
-            dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' }
+            primary: '#FF6B35',
+            accent: '#00D4FF',
+            dark: { 900: '#0a0f1a', 800: '#111827', 700: '#1f2937', 600: '#374151' }
           }
         }
       }
     }
   </script>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <style>
     body { font-family: 'Inter', sans-serif; }
-    .dark body { background-color: #111827; }
+    .dark body { background-color: #0a0f1a; }
+
+    /* Hero background with overlay */
+    .hero-bg {
+      background: linear-gradient(135deg, rgba(10, 15, 26, 0.85) 0%, rgba(10, 15, 26, 0.7) 50%, rgba(10, 15, 26, 0.9) 100%),
+                  url('assets/img/hero-claude-code.png');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+    }
+
+    /* Glow effects */
+    .glow-orange { box-shadow: 0 0 40px rgba(255, 107, 53, 0.3); }
+    .glow-cyan { box-shadow: 0 0 40px rgba(0, 212, 255, 0.3); }
+    .text-glow { text-shadow: 0 0 30px rgba(255, 107, 53, 0.5); }
+
+    /* Animated gradient border */
+    .gradient-border {
+      background: linear-gradient(135deg, #FF6B35, #00D4FF, #FF6B35);
+      background-size: 200% 200%;
+      animation: gradient-shift 3s ease infinite;
+    }
+    @keyframes gradient-shift {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+
+    /* Card hover effects */
+    .track-card {
+      transition: all 0.3s ease;
+      transform: translateY(0);
+    }
+    .track-card:hover {
+      transform: translateY(-8px);
+    }
 
     /* Light mode overrides */
     html:not(.dark) body {
       background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 50%, #f1f5f9 100%);
+    }
+    html:not(.dark) .hero-bg {
+      background: linear-gradient(135deg, rgba(248, 250, 252, 0.9) 0%, rgba(248, 250, 252, 0.8) 50%, rgba(248, 250, 252, 0.95) 100%),
+                  url('assets/img/hero-claude-code.png');
+      background-size: cover;
+      background-position: center;
     }
     html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
     html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
@@ -42,21 +84,21 @@
 <body class="bg-dark-900 text-neutral-100 min-h-screen">
 
   <!-- NAVIGATION -->
-  <nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+  <nav class="fixed top-0 left-0 right-0 z-50 bg-dark-900/80 backdrop-blur-md border-b border-dark-600/50">
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex justify-between items-center h-14">
-        <!-- Logo + INEMA.CLUB -->
+      <div class="flex justify-between items-center h-16">
         <div class="flex items-center space-x-4">
-          <a href="index.html" class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300">
-            <span class="text-2xl">🤖</span>
-            <span class="font-bold text-lg hidden sm:inline">Claude Code 2026</span>
+          <a href="index.html" class="flex items-center space-x-3">
+            <span class="text-3xl">🤖</span>
+            <div>
+              <span class="font-black text-xl text-primary">CLAUDE CODE</span>
+              <span class="text-neutral-400 text-sm ml-2">2026</span>
+            </div>
           </a>
-          <span class="text-neutral-600">|</span>
-          <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300 text-sm font-medium">INEMA.CLUB</a>
         </div>
 
-        <!-- Theme Toggle -->
-        <div class="flex items-center space-x-2">
+        <div class="flex items-center space-x-4">
+          <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300 text-sm font-semibold hidden sm:block">INEMA.CLUB</a>
           <button id="theme-toggle" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors">
             <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20">
               <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
@@ -71,206 +113,345 @@
   </nav>
 
   <!-- HERO SECTION -->
-  <header class="bg-gradient-to-br from-yellow-900/20 via-dark-800 to-dark-800 py-16 border-b border-dark-600">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-      <div class="mb-6">
-        <span class="text-6xl">🤖</span>
-      </div>
-      <h1 class="text-4xl sm:text-5xl font-bold mb-4">
-        Claude Code <span class="text-primary">2026</span>
-      </h1>
-      <p class="text-xl text-neutral-400 max-w-3xl mx-auto mb-8">
-        O curso mais completo sobre Claude Code em portugues.
-        Domine a CLI da Anthropic do basico ao avancado com
-        <strong class="text-neutral-200">24 modulos</strong> e
-        <strong class="text-neutral-200">144 topicos</strong> praticos.
-      </p>
+  <header class="hero-bg min-h-screen flex items-center justify-center pt-16">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
 
-      <!-- Stats -->
-      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 max-w-2xl mx-auto">
-        <div class="bg-dark-800/50 rounded-lg p-4 border border-dark-600">
-          <div class="text-2xl font-bold text-primary">3</div>
-          <div class="text-sm text-neutral-400">Trilhas</div>
+        <!-- Left: Text Content -->
+        <div class="text-center lg:text-left">
+          <div class="inline-block px-4 py-2 bg-primary/20 rounded-full mb-6">
+            <span class="text-primary font-semibold text-sm">DEEP DIVE 2026</span>
+          </div>
+
+          <h1 class="text-5xl sm:text-6xl lg:text-7xl font-black mb-6 leading-tight">
+            <span class="text-primary text-glow">CLAUDE</span><br>
+            <span class="text-accent">CODE</span>
+          </h1>
+
+          <p class="text-xl sm:text-2xl text-neutral-300 mb-4 font-medium">
+            O Guia Completo para Entender<br class="hidden sm:block"> Como Funciona
+          </p>
+
+          <p class="text-neutral-400 mb-8 max-w-lg mx-auto lg:mx-0">
+            Desmontando para entender como tudo funciona. Do basico ao avancado,
+            domine a CLI mais poderosa para desenvolvimento com IA.
+          </p>
+
+          <!-- Stats inline -->
+          <div class="flex flex-wrap justify-center lg:justify-start gap-6 mb-10">
+            <div class="text-center">
+              <div class="text-3xl font-black text-primary">3</div>
+              <div class="text-xs text-neutral-500 uppercase tracking-wider">Trilhas</div>
+            </div>
+            <div class="text-center">
+              <div class="text-3xl font-black text-accent">24</div>
+              <div class="text-xs text-neutral-500 uppercase tracking-wider">Modulos</div>
+            </div>
+            <div class="text-center">
+              <div class="text-3xl font-black text-primary">144</div>
+              <div class="text-xs text-neutral-500 uppercase tracking-wider">Topicos</div>
+            </div>
+            <div class="text-center">
+              <div class="text-3xl font-black text-accent">~12h</div>
+              <div class="text-xs text-neutral-500 uppercase tracking-wider">Conteudo</div>
+            </div>
+          </div>
+
+          <!-- CTA Buttons -->
+          <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+            <a href="curso/trilha1/index.html" class="inline-flex items-center justify-center px-8 py-4 bg-primary text-white font-bold rounded-xl hover:bg-orange-600 transition-all glow-orange">
+              <span>Comecar Agora</span>
+              <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+              </svg>
+            </a>
+            <a href="#trilhas" class="inline-flex items-center justify-center px-8 py-4 border-2 border-accent text-accent font-bold rounded-xl hover:bg-accent/10 transition-all">
+              <span>Ver Trilhas</span>
+            </a>
+          </div>
         </div>
-        <div class="bg-dark-800/50 rounded-lg p-4 border border-dark-600">
-          <div class="text-2xl font-bold text-primary">24</div>
-          <div class="text-sm text-neutral-400">Modulos</div>
+
+        <!-- Right: Hero Image -->
+        <div class="hidden lg:flex justify-center">
+          <div class="relative">
+            <div class="absolute inset-0 bg-gradient-to-r from-primary/20 to-accent/20 blur-3xl rounded-full"></div>
+            <img src="assets/img/hero-claude-code.png" alt="Claude Code Deep Dive" class="relative w-full max-w-lg rounded-2xl shadow-2xl">
+          </div>
         </div>
-        <div class="bg-dark-800/50 rounded-lg p-4 border border-dark-600">
-          <div class="text-2xl font-bold text-primary">144</div>
-          <div class="text-sm text-neutral-400">Topicos</div>
-        </div>
-        <div class="bg-dark-800/50 rounded-lg p-4 border border-dark-600">
-          <div class="text-2xl font-bold text-primary">~12h</div>
-          <div class="text-sm text-neutral-400">Conteudo</div>
-        </div>
+      </div>
+
+      <!-- Scroll indicator -->
+      <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce hidden lg:block">
+        <svg class="w-6 h-6 text-neutral-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+        </svg>
       </div>
     </div>
   </header>
 
-  <!-- MAIN CONTENT -->
-  <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+  <!-- ANATOMIA SECTION -->
+  <section class="py-20 bg-dark-800/50">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
 
-    <!-- Section Title -->
-    <div class="text-center mb-12">
-      <h2 class="text-2xl font-bold mb-2">Escolha sua Trilha</h2>
-      <p class="text-neutral-400">Cada trilha foi projetada para um nivel de experiencia diferente</p>
-    </div>
+        <!-- Left: Image -->
+        <div class="order-2 lg:order-1">
+          <img src="assets/img/anatomia-claude-code.png" alt="Anatomia do Claude Code" class="w-full max-w-md mx-auto rounded-2xl shadow-2xl border border-dark-600">
+        </div>
 
-    <!-- Trilhas Grid -->
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
+        <!-- Right: Text -->
+        <div class="order-1 lg:order-2 text-center lg:text-left">
+          <h2 class="text-3xl sm:text-4xl font-black mb-6">
+            <span class="text-primary">Anatomia</span> do Claude Code
+          </h2>
+          <p class="text-neutral-400 mb-6 text-lg">
+            Entenda como o Claude Code funciona <strong class="text-white">por dentro</strong>.
+            Do CLI ao Tool Executor, passando pelo gerenciamento de contexto e o poderoso loop
+            <span class="text-accent">Gather → Act → Verify</span>.
+          </p>
 
-      <!-- Trilha 1 - Fundamentos -->
-      <a href="curso/trilha1/index.html" class="group bg-dark-800 rounded-xl border border-dark-600 hover:border-emerald-500/50 transition-all duration-300 overflow-hidden">
-        <div class="bg-gradient-to-br from-emerald-900/30 to-dark-800 p-6">
-          <div class="flex items-center justify-between mb-4">
-            <span class="px-3 py-1 bg-emerald-500/20 text-emerald-400 text-xs font-semibold rounded-full">TRILHA 1</span>
-            <span class="text-emerald-400 text-2xl">🎯</span>
-          </div>
-          <h3 class="text-xl font-bold mb-2 group-hover:text-emerald-400 transition-colors">Fundamentos</h3>
-          <p class="text-neutral-400 text-sm mb-4">Entenda o Claude Code por dentro. Arquitetura, modelo mental e gerenciamento de contexto.</p>
-          <div class="flex items-center justify-between text-sm">
-            <span class="text-neutral-500">8 modulos</span>
-            <span class="text-neutral-500">~4h</span>
-          </div>
-        </div>
-        <div class="px-6 py-4 bg-dark-700/30 border-t border-dark-600">
-          <div class="flex items-center text-emerald-400 text-sm font-medium">
-            <span>Comecar agora</span>
-            <svg class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-            </svg>
-          </div>
-        </div>
-      </a>
-
-      <!-- Trilha 2 - Comandos -->
-      <a href="curso/trilha2/index.html" class="group bg-dark-800 rounded-xl border border-dark-600 hover:border-blue-500/50 transition-all duration-300 overflow-hidden">
-        <div class="bg-gradient-to-br from-blue-900/30 to-dark-800 p-6">
-          <div class="flex items-center justify-between mb-4">
-            <span class="px-3 py-1 bg-blue-500/20 text-blue-400 text-xs font-semibold rounded-full">TRILHA 2</span>
-            <span class="text-blue-400 text-2xl">⚡</span>
-          </div>
-          <h3 class="text-xl font-bold mb-2 group-hover:text-blue-400 transition-colors">Comandos e Ferramentas</h3>
-          <p class="text-neutral-400 text-sm mb-4">Domine cada ferramenta com exemplos praticos. Read, Write, Edit, Glob, Grep, Bash e mais.</p>
-          <div class="flex items-center justify-between text-sm">
-            <span class="text-neutral-500">8 modulos</span>
-            <span class="text-neutral-500">~4h</span>
-          </div>
-        </div>
-        <div class="px-6 py-4 bg-dark-700/30 border-t border-dark-600">
-          <div class="flex items-center text-blue-400 text-sm font-medium">
-            <span>Explorar trilha</span>
-            <svg class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-            </svg>
-          </div>
-        </div>
-      </a>
-
-      <!-- Trilha 3 - Avancado -->
-      <a href="curso/trilha3/index.html" class="group bg-dark-800 rounded-xl border border-dark-600 hover:border-purple-500/50 transition-all duration-300 overflow-hidden">
-        <div class="bg-gradient-to-br from-purple-900/30 to-dark-800 p-6">
-          <div class="flex items-center justify-between mb-4">
-            <span class="px-3 py-1 bg-purple-500/20 text-purple-400 text-xs font-semibold rounded-full">TRILHA 3</span>
-            <span class="text-purple-400 text-2xl">🚀</span>
-          </div>
-          <h3 class="text-xl font-bold mb-2 group-hover:text-purple-400 transition-colors">Projetos Avancados</h3>
-          <p class="text-neutral-400 text-sm mb-4">Construa sistemas completos. Skills, MCP, Hooks, Subagentes e orquestracao multi-agente.</p>
-          <div class="flex items-center justify-between text-sm">
-            <span class="text-neutral-500">8 modulos</span>
-            <span class="text-neutral-500">~4h</span>
-          </div>
-        </div>
-        <div class="px-6 py-4 bg-dark-700/30 border-t border-dark-600">
-          <div class="flex items-center text-purple-400 text-sm font-medium">
-            <span>Nivel avancado</span>
-            <svg class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-            </svg>
-          </div>
-        </div>
-      </a>
-
-    </div>
-
-    <!-- O que voce vai aprender -->
-    <div class="bg-dark-800 rounded-xl border border-dark-600 p-8 mb-12">
-      <h2 class="text-2xl font-bold mb-6 text-center">O que voce vai aprender</h2>
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <div class="flex items-start space-x-3">
-          <span class="text-emerald-400 text-xl">✓</span>
-          <div>
-            <h4 class="font-semibold">Arquitetura Interna</h4>
-            <p class="text-sm text-neutral-400">Entenda como o Claude Code funciona por baixo dos panos</p>
-          </div>
-        </div>
-        <div class="flex items-start space-x-3">
-          <span class="text-emerald-400 text-xl">✓</span>
-          <div>
-            <h4 class="font-semibold">Gerenciamento de Contexto</h4>
-            <p class="text-sm text-neutral-400">Domine a janela de 200K tokens e evite degradacao</p>
-          </div>
-        </div>
-        <div class="flex items-start space-x-3">
-          <span class="text-emerald-400 text-xl">✓</span>
-          <div>
-            <h4 class="font-semibold">Ferramentas Nativas</h4>
-            <p class="text-sm text-neutral-400">Read, Write, Edit, Glob, Grep, Bash com exemplos</p>
-          </div>
-        </div>
-        <div class="flex items-start space-x-3">
-          <span class="text-emerald-400 text-xl">✓</span>
-          <div>
-            <h4 class="font-semibold">CLAUDE.md Eficiente</h4>
-            <p class="text-sm text-neutral-400">Crie arquivos de configuracao que realmente funcionam</p>
-          </div>
-        </div>
-        <div class="flex items-start space-x-3">
-          <span class="text-emerald-400 text-xl">✓</span>
-          <div>
-            <h4 class="font-semibold">Skills e Automacao</h4>
-            <p class="text-sm text-neutral-400">Crie fluxos reutilizaveis e hooks automaticos</p>
-          </div>
-        </div>
-        <div class="flex items-start space-x-3">
-          <span class="text-emerald-400 text-xl">✓</span>
-          <div>
-            <h4 class="font-semibold">Multi-Agente</h4>
-            <p class="text-sm text-neutral-400">Orquestre multiplos agentes trabalhando em paralelo</p>
+          <div class="space-y-4">
+            <div class="flex items-center space-x-3">
+              <span class="w-8 h-8 bg-emerald-500/20 rounded-full flex items-center justify-center text-emerald-400">1</span>
+              <span class="text-neutral-300">Arquitetura e Componentes Internos</span>
+            </div>
+            <div class="flex items-center space-x-3">
+              <span class="w-8 h-8 bg-blue-500/20 rounded-full flex items-center justify-center text-blue-400">2</span>
+              <span class="text-neutral-300">Ferramentas Nativas (Read, Write, Edit...)</span>
+            </div>
+            <div class="flex items-center space-x-3">
+              <span class="w-8 h-8 bg-purple-500/20 rounded-full flex items-center justify-center text-purple-400">3</span>
+              <span class="text-neutral-300">Extensibilidade (Skills, MCP, Hooks)</span>
+            </div>
           </div>
         </div>
       </div>
     </div>
+  </section>
 
-    <!-- CTA -->
-    <div class="text-center">
-      <a href="curso/trilha1/index.html" class="inline-flex items-center px-8 py-4 bg-primary text-dark-900 font-bold rounded-lg hover:bg-yellow-400 transition-colors">
-        <span>Comecar pelo Basico</span>
-        <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
-        </svg>
-      </a>
+  <!-- TRILHAS SECTION -->
+  <section id="trilhas" class="py-20">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+
+      <div class="text-center mb-16">
+        <h2 class="text-3xl sm:text-4xl font-black mb-4">Escolha sua <span class="text-primary">Trilha</span></h2>
+        <p class="text-neutral-400 text-lg max-w-2xl mx-auto">
+          Tres jornadas completas, do basico ao avancado. Cada trilha com 8 modulos e 48 topicos.
+        </p>
+      </div>
+
+      <!-- Trilhas Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+
+        <!-- Trilha 1 - Fundamentos -->
+        <a href="curso/trilha1/index.html" class="track-card group">
+          <div class="gradient-border p-[2px] rounded-2xl">
+            <div class="bg-dark-800 rounded-2xl overflow-hidden h-full">
+              <div class="bg-gradient-to-br from-emerald-900/40 to-dark-800 p-8">
+                <div class="flex items-center justify-between mb-6">
+                  <span class="px-4 py-1.5 bg-emerald-500/20 text-emerald-400 text-xs font-bold rounded-full uppercase tracking-wider">Trilha 1</span>
+                  <span class="text-4xl">🎯</span>
+                </div>
+                <h3 class="text-2xl font-bold mb-3 group-hover:text-emerald-400 transition-colors">Fundamentos</h3>
+                <p class="text-neutral-400 mb-6">Entenda o Claude Code por dentro. Arquitetura, modelo mental, contexto e compaction.</p>
+
+                <div class="flex items-center justify-between text-sm border-t border-dark-600 pt-4">
+                  <div>
+                    <span class="text-emerald-400 font-bold">8</span>
+                    <span class="text-neutral-500 ml-1">modulos</span>
+                  </div>
+                  <div>
+                    <span class="text-emerald-400 font-bold">48</span>
+                    <span class="text-neutral-500 ml-1">topicos</span>
+                  </div>
+                  <div>
+                    <span class="text-emerald-400 font-bold">~4h</span>
+                  </div>
+                </div>
+              </div>
+              <div class="px-8 py-4 bg-emerald-500/10 flex items-center justify-between">
+                <span class="text-emerald-400 font-semibold">Comecar</span>
+                <svg class="w-5 h-5 text-emerald-400 group-hover:translate-x-2 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                </svg>
+              </div>
+            </div>
+          </div>
+        </a>
+
+        <!-- Trilha 2 - Comandos -->
+        <a href="curso/trilha2/index.html" class="track-card group">
+          <div class="gradient-border p-[2px] rounded-2xl">
+            <div class="bg-dark-800 rounded-2xl overflow-hidden h-full">
+              <div class="bg-gradient-to-br from-blue-900/40 to-dark-800 p-8">
+                <div class="flex items-center justify-between mb-6">
+                  <span class="px-4 py-1.5 bg-blue-500/20 text-blue-400 text-xs font-bold rounded-full uppercase tracking-wider">Trilha 2</span>
+                  <span class="text-4xl">⚡</span>
+                </div>
+                <h3 class="text-2xl font-bold mb-3 group-hover:text-blue-400 transition-colors">Comandos e Ferramentas</h3>
+                <p class="text-neutral-400 mb-6">Domine cada ferramenta: Read, Write, Edit, Glob, Grep, Bash, Git e Web Tools.</p>
+
+                <div class="flex items-center justify-between text-sm border-t border-dark-600 pt-4">
+                  <div>
+                    <span class="text-blue-400 font-bold">8</span>
+                    <span class="text-neutral-500 ml-1">modulos</span>
+                  </div>
+                  <div>
+                    <span class="text-blue-400 font-bold">48</span>
+                    <span class="text-neutral-500 ml-1">topicos</span>
+                  </div>
+                  <div>
+                    <span class="text-blue-400 font-bold">~4h</span>
+                  </div>
+                </div>
+              </div>
+              <div class="px-8 py-4 bg-blue-500/10 flex items-center justify-between">
+                <span class="text-blue-400 font-semibold">Explorar</span>
+                <svg class="w-5 h-5 text-blue-400 group-hover:translate-x-2 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                </svg>
+              </div>
+            </div>
+          </div>
+        </a>
+
+        <!-- Trilha 3 - Avancado -->
+        <a href="curso/trilha3/index.html" class="track-card group">
+          <div class="gradient-border p-[2px] rounded-2xl">
+            <div class="bg-dark-800 rounded-2xl overflow-hidden h-full">
+              <div class="bg-gradient-to-br from-purple-900/40 to-dark-800 p-8">
+                <div class="flex items-center justify-between mb-6">
+                  <span class="px-4 py-1.5 bg-purple-500/20 text-purple-400 text-xs font-bold rounded-full uppercase tracking-wider">Trilha 3</span>
+                  <span class="text-4xl">🚀</span>
+                </div>
+                <h3 class="text-2xl font-bold mb-3 group-hover:text-purple-400 transition-colors">Projetos Avancados</h3>
+                <p class="text-neutral-400 mb-6">Skills, MCP, Hooks, Subagentes, CI/CD e orquestracao multi-agente.</p>
+
+                <div class="flex items-center justify-between text-sm border-t border-dark-600 pt-4">
+                  <div>
+                    <span class="text-purple-400 font-bold">8</span>
+                    <span class="text-neutral-500 ml-1">modulos</span>
+                  </div>
+                  <div>
+                    <span class="text-purple-400 font-bold">48</span>
+                    <span class="text-neutral-500 ml-1">topicos</span>
+                  </div>
+                  <div>
+                    <span class="text-purple-400 font-bold">~4h</span>
+                  </div>
+                </div>
+              </div>
+              <div class="px-8 py-4 bg-purple-500/10 flex items-center justify-between">
+                <span class="text-purple-400 font-semibold">Avancado</span>
+                <svg class="w-5 h-5 text-purple-400 group-hover:translate-x-2 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                </svg>
+              </div>
+            </div>
+          </div>
+        </a>
+
+      </div>
     </div>
+  </section>
 
-  </main>
+  <!-- O QUE VOCE VAI APRENDER -->
+  <section class="py-20 bg-dark-800/50">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl sm:text-4xl font-black mb-4">O que voce vai <span class="text-accent">aprender</span></h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="bg-dark-700/50 rounded-xl p-6 border border-dark-600 hover:border-primary/50 transition-colors">
+          <div class="w-12 h-12 bg-primary/20 rounded-xl flex items-center justify-center mb-4">
+            <span class="text-2xl">🧠</span>
+          </div>
+          <h4 class="font-bold text-lg mb-2">Arquitetura Interna</h4>
+          <p class="text-neutral-400 text-sm">Entenda como o Claude Code funciona: CLI, Session Manager, Tool Executor e Permission Layer.</p>
+        </div>
+
+        <div class="bg-dark-700/50 rounded-xl p-6 border border-dark-600 hover:border-accent/50 transition-colors">
+          <div class="w-12 h-12 bg-accent/20 rounded-xl flex items-center justify-center mb-4">
+            <span class="text-2xl">📊</span>
+          </div>
+          <h4 class="font-bold text-lg mb-2">Gerenciamento de Contexto</h4>
+          <p class="text-neutral-400 text-sm">Domine a janela de 200K tokens. Compaction, regra 40-50% e estrategias de otimizacao.</p>
+        </div>
+
+        <div class="bg-dark-700/50 rounded-xl p-6 border border-dark-600 hover:border-emerald-500/50 transition-colors">
+          <div class="w-12 h-12 bg-emerald-500/20 rounded-xl flex items-center justify-center mb-4">
+            <span class="text-2xl">🔧</span>
+          </div>
+          <h4 class="font-bold text-lg mb-2">Ferramentas Nativas</h4>
+          <p class="text-neutral-400 text-sm">Read, Write, Edit, Glob, Grep, Bash - cada ferramenta com sintaxe e exemplos praticos.</p>
+        </div>
+
+        <div class="bg-dark-700/50 rounded-xl p-6 border border-dark-600 hover:border-blue-500/50 transition-colors">
+          <div class="w-12 h-12 bg-blue-500/20 rounded-xl flex items-center justify-center mb-4">
+            <span class="text-2xl">📝</span>
+          </div>
+          <h4 class="font-bold text-lg mb-2">CLAUDE.md Eficiente</h4>
+          <p class="text-neutral-400 text-sm">Crie arquivos de configuracao que realmente funcionam. Estrutura, hierarquia e boas praticas.</p>
+        </div>
+
+        <div class="bg-dark-700/50 rounded-xl p-6 border border-dark-600 hover:border-purple-500/50 transition-colors">
+          <div class="w-12 h-12 bg-purple-500/20 rounded-xl flex items-center justify-center mb-4">
+            <span class="text-2xl">⚡</span>
+          </div>
+          <h4 class="font-bold text-lg mb-2">Skills e Automacao</h4>
+          <p class="text-neutral-400 text-sm">Crie comandos customizados, fluxos reutilizaveis e hooks automaticos para seu workflow.</p>
+        </div>
+
+        <div class="bg-dark-700/50 rounded-xl p-6 border border-dark-600 hover:border-primary/50 transition-colors">
+          <div class="w-12 h-12 bg-primary/20 rounded-xl flex items-center justify-center mb-4">
+            <span class="text-2xl">🤖</span>
+          </div>
+          <h4 class="font-bold text-lg mb-2">Multi-Agente</h4>
+          <p class="text-neutral-400 text-sm">Orquestre multiplos agentes trabalhando em paralelo. Subagentes, MCP e CI/CD com Claude.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA FINAL -->
+  <section class="py-20">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <div class="bg-gradient-to-br from-primary/20 via-dark-800 to-accent/20 rounded-3xl p-12 border border-dark-600">
+        <h2 class="text-3xl sm:text-4xl font-black mb-4">Pronto para dominar o <span class="text-primary">Claude Code</span>?</h2>
+        <p class="text-neutral-400 mb-8 text-lg">Comece agora pela Trilha 1 e construa uma base solida de conhecimento.</p>
+        <a href="curso/trilha1/index.html" class="inline-flex items-center justify-center px-10 py-5 bg-primary text-white font-bold text-lg rounded-xl hover:bg-orange-600 transition-all glow-orange">
+          <span>Iniciar Jornada</span>
+          <svg class="w-6 h-6 ml-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </section>
 
   <!-- FOOTER -->
-  <footer class="border-t border-dark-600 py-8 mt-16">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
-      <p>Claude Code 2026 - Curso criado por <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300">INEMA.CLUB</a></p>
+  <footer class="border-t border-dark-600 py-10">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col sm:flex-row justify-between items-center">
+        <div class="flex items-center space-x-3 mb-4 sm:mb-0">
+          <span class="text-2xl">🤖</span>
+          <span class="font-bold text-primary">Claude Code 2026</span>
+        </div>
+        <p class="text-neutral-500 text-sm">
+          Criado por <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300 font-semibold">INEMA.CLUB</a>
+        </p>
+      </div>
     </div>
   </footer>
 
   <!-- SCRIPTS -->
   <script>
-    // Theme Toggle
     const themeToggle = document.getElementById('theme-toggle');
     const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
     const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
     const html = document.documentElement;
 
-    // Inicializa icone correto
     if (localStorage.getItem('theme') === 'light' || (!localStorage.getItem('theme') && !html.classList.contains('dark'))) {
       themeToggleDarkIcon.classList.remove('hidden');
       html.classList.remove('dark');
@@ -278,12 +459,21 @@
       themeToggleLightIcon.classList.remove('hidden');
     }
 
-    // Click handler
     themeToggle.addEventListener('click', () => {
       themeToggleDarkIcon.classList.toggle('hidden');
       themeToggleLightIcon.classList.toggle('hidden');
       html.classList.toggle('dark');
       localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+    });
+
+    // Smooth scroll for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+          behavior: 'smooth'
+        });
+      });
     });
   </script>
 

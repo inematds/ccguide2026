@@ -202,68 +202,103 @@
       </div>
 
       <p class="text-neutral-300 mb-6 leading-relaxed">
-        A configuracao de servidores MCP e feita no arquivo <strong class="text-purple-400">~/.claude/mcp.json</strong>.
-        Cada servidor precisa de um comando de inicializacao e parametros opcionais.
+        A forma <strong class="text-purple-400">recomendada</strong> de configurar MCP e via CLI.
+        A configuracao e armazenada em locais diferentes dependendo do escopo.
       </p>
 
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">⚠️</span> Importante: Localizacao dos Arquivos
+        </h3>
+        <div class="overflow-x-auto">
+          <table class="w-full text-sm">
+            <thead>
+              <tr class="border-b border-dark-600">
+                <th class="text-left py-2 text-neutral-400">Escopo</th>
+                <th class="text-left py-2 text-neutral-400">Arquivo</th>
+                <th class="text-left py-2 text-neutral-400">Uso</th>
+              </tr>
+            </thead>
+            <tbody class="text-neutral-300">
+              <tr class="border-b border-dark-700">
+                <td class="py-2 text-purple-400">local</td>
+                <td class="py-2 font-mono text-xs">~/.claude.json</td>
+                <td class="py-2">Privado, apenas este projeto</td>
+              </tr>
+              <tr class="border-b border-dark-700">
+                <td class="py-2 text-purple-400">project</td>
+                <td class="py-2 font-mono text-xs">.mcp.json</td>
+                <td class="py-2">Compartilhado via Git</td>
+              </tr>
+              <tr>
+                <td class="py-2 text-purple-400">user</td>
+                <td class="py-2 font-mono text-xs">~/.claude.json</td>
+                <td class="py-2">Todos os projetos</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
       <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
-        <h3 class="text-lg font-semibold text-white mb-4">Estrutura do mcp.json</h3>
+        <h3 class="text-lg font-semibold text-white mb-4">Metodo 1: Via CLI (Recomendado)</h3>
+        <div class="space-y-4">
+          <div class="bg-dark-900 rounded-lg p-4 font-mono text-sm text-neutral-300 overflow-x-auto">
+<pre><span class="text-purple-400"># Adicionar servidor HTTP remoto</span>
+claude mcp add --transport http github https://api.githubcopilot.com/mcp/
+
+<span class="text-purple-400"># Adicionar servidor stdio local</span>
+claude mcp add --transport stdio db -- npx -y @bytebase/dbhub \
+  --dsn "postgresql://user:pass@localhost:5432/mydb"
+
+<span class="text-purple-400"># Listar servidores configurados</span>
+claude mcp list
+
+<span class="text-purple-400"># Remover servidor</span>
+claude mcp remove github
+
+<span class="text-purple-400"># Ver status dentro do Claude Code</span>
+/mcp</pre>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-white mb-4">Metodo 2: Arquivo .mcp.json (Projeto)</h3>
+        <p class="text-neutral-400 text-sm mb-3">Para compartilhar com a equipe via Git, crie <code class="bg-dark-700 px-1 rounded">.mcp.json</code> na raiz do projeto:</p>
         <div class="bg-dark-900 rounded-lg p-4 font-mono text-sm text-neutral-300 overflow-x-auto">
 <pre>{
   "mcpServers": {
-    <span class="text-purple-400">"postgres"</span>: {
-      "command": "npx",
-      "args": ["-y", "@anthropic/mcp-server-postgres"],
-      "env": {
-        "DATABASE_URL": "postgresql://user:pass@localhost:5432/db"
-      }
+    <span class="text-purple-400">"sentry"</span>: {
+      "type": "http",
+      "url": "https://mcp.sentry.dev/mcp"
     },
-    <span class="text-purple-400">"github"</span>: {
+    <span class="text-purple-400">"db-local"</span>: {
+      "type": "stdio",
       "command": "npx",
-      "args": ["-y", "@anthropic/mcp-server-github"],
+      "args": ["-y", "@bytebase/dbhub", "--dsn", "${DATABASE_URL}"],
       "env": {
-        "GITHUB_TOKEN": "ghp_xxxxxxxxxxxx"
+        "DATABASE_URL": "${DATABASE_URL}"
       }
     }
   }
 }</pre>
         </div>
+        <p class="text-neutral-400 text-sm mt-3">Use <code class="bg-dark-700 px-1 rounded">${VAR}</code> para variaveis de ambiente.</p>
       </div>
 
-      <div class="space-y-6 mb-6">
-        <div class="flex items-start space-x-4">
-          <div class="flex-shrink-0 w-12 h-12 rounded-full bg-purple-500/20 flex items-center justify-center">
-            <span class="text-purple-400 font-bold">1</span>
-          </div>
-          <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
-            <h4 class="font-semibold text-white mb-2">Instalar servidor MCP</h4>
-            <p class="text-neutral-400 text-sm mb-3">A maioria roda via npx automaticamente</p>
-            <div class="bg-dark-900 rounded-lg p-3 font-mono text-sm text-purple-400">
-              npx -y @anthropic/mcp-server-postgres --help
-            </div>
-          </div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600">
+          <h4 class="font-semibold text-purple-400 mb-2">--scope local</h4>
+          <p class="text-neutral-400 text-xs">Padrao. Privado, apenas este projeto.</p>
         </div>
-
-        <div class="flex items-start space-x-4">
-          <div class="flex-shrink-0 w-12 h-12 rounded-full bg-purple-500/20 flex items-center justify-center">
-            <span class="text-purple-400 font-bold">2</span>
-          </div>
-          <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
-            <h4 class="font-semibold text-white mb-2">Criar mcp.json</h4>
-            <div class="bg-dark-900 rounded-lg p-3 font-mono text-sm text-purple-400">
-              mkdir -p ~/.claude && touch ~/.claude/mcp.json
-            </div>
-          </div>
+        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600">
+          <h4 class="font-semibold text-purple-400 mb-2">--scope project</h4>
+          <p class="text-neutral-400 text-xs">Salva em .mcp.json para compartilhar.</p>
         </div>
-
-        <div class="flex items-start space-x-4">
-          <div class="flex-shrink-0 w-12 h-12 rounded-full bg-purple-500/20 flex items-center justify-center">
-            <span class="text-purple-400 font-bold">3</span>
-          </div>
-          <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
-            <h4 class="font-semibold text-white mb-2">Reiniciar Claude Code</h4>
-            <p class="text-neutral-400 text-sm">MCP servers sao carregados no inicio da sessao</p>
-          </div>
+        <div class="bg-dark-800 rounded-xl p-4 border border-dark-600">
+          <h4 class="font-semibold text-purple-400 mb-2">--scope user</h4>
+          <p class="text-neutral-400 text-xs">Disponivel em todos os projetos.</p>
         </div>
       </div>
 
@@ -272,8 +307,8 @@
           <span class="mr-2">⚠️</span> Seguranca
         </h3>
         <p class="text-neutral-300">
-          Nunca commite mcp.json com credenciais! Use variaveis de ambiente ou um arquivo
-          .env separado. Adicione mcp.json ao .gitignore.
+          Nunca commite credenciais no .mcp.json! Use variaveis de ambiente com <code class="bg-dark-700 px-1 rounded">${VAR}</code>.
+          Tokens sao armazenados de forma segura pelo Claude Code.
         </p>
       </div>
     </section>
@@ -291,15 +326,21 @@
       </p>
 
       <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
-        <h3 class="text-lg font-semibold text-white mb-4">Configuracao PostgreSQL</h3>
-        <div class="bg-dark-900 rounded-lg p-4 font-mono text-sm text-neutral-300 overflow-x-auto">
+        <h3 class="text-lg font-semibold text-white mb-4">Configuracao via CLI (Recomendado)</h3>
+        <div class="bg-dark-900 rounded-lg p-4 font-mono text-sm text-purple-400 overflow-x-auto">
+<pre>claude mcp add --transport stdio db -- npx -y @bytebase/dbhub \
+  --dsn "postgresql://readonly:pass@localhost:5432/analytics"</pre>
+        </div>
+        <p class="text-neutral-400 text-sm mt-3">Ou via .mcp.json:</p>
+        <div class="bg-dark-900 rounded-lg p-4 font-mono text-sm text-neutral-300 overflow-x-auto mt-2">
 <pre>{
   "mcpServers": {
-    "postgres": {
+    "db": {
+      "type": "stdio",
       "command": "npx",
-      "args": ["-y", "@anthropic/mcp-server-postgres"],
+      "args": ["-y", "@bytebase/dbhub", "--dsn", "${DATABASE_URL}"],
       "env": {
-        "DATABASE_URL": "postgresql://user:password@localhost:5432/mydb"
+        "DATABASE_URL": "${DATABASE_URL}"
       }
     }
   }
@@ -360,21 +401,16 @@
       </p>
 
       <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
-        <h3 class="text-lg font-semibold text-white mb-4">Configuracao GitHub</h3>
-        <div class="bg-dark-900 rounded-lg p-4 font-mono text-sm text-neutral-300 overflow-x-auto">
-<pre>{
-  "mcpServers": {
-    "github": {
-      "command": "npx",
-      "args": ["-y", "@anthropic/mcp-server-github"],
-      "env": {
-        "GITHUB_TOKEN": "ghp_xxxxxxxxxxxxxxxxx"
-      }
-    }
-  }
-}</pre>
+        <h3 class="text-lg font-semibold text-white mb-4">Configuracao via CLI</h3>
+        <div class="bg-dark-900 rounded-lg p-4 font-mono text-sm text-purple-400 overflow-x-auto">
+<pre><span class="text-neutral-400"># GitHub usa servidor HTTP remoto com OAuth</span>
+claude mcp add --transport http github https://api.githubcopilot.com/mcp/
+
+<span class="text-neutral-400"># Depois, autentique dentro do Claude Code:</span>
+/mcp
+<span class="text-neutral-400"># Selecione "Authenticate" para GitHub</span></pre>
         </div>
-        <p class="text-neutral-400 text-sm mt-3">Gere seu token em: github.com/settings/tokens</p>
+        <p class="text-neutral-400 text-sm mt-3">A autenticacao e feita via OAuth - nao precisa de token manual!</p>
       </div>
 
       <div class="bg-gradient-to-br from-purple-900/30 to-dark-800 rounded-xl border border-purple-500/30 p-6 mb-6">
@@ -480,10 +516,11 @@ server.connect(transport);</pre>
         </div>
 
         <div class="bg-dark-800 rounded-xl p-6 border border-dark-600">
-          <h4 class="font-semibold text-white mb-2">3. Registrar no mcp.json</h4>
-          <div class="bg-dark-900 rounded-lg p-3 font-mono text-sm text-neutral-300">
-            "meu-servidor": { "command": "node", "args": ["./mcp-server.js"] }
+          <h4 class="font-semibold text-white mb-2">3. Registrar via CLI</h4>
+          <div class="bg-dark-900 rounded-lg p-3 font-mono text-sm text-purple-400">
+            claude mcp add --transport stdio meu-servidor -- node ./mcp-server.js
           </div>
+          <p class="text-neutral-400 text-sm mt-2">Ou adicione em .mcp.json para compartilhar com a equipe.</p>
         </div>
       </div>
 
@@ -608,8 +645,8 @@ server.connect(transport);</pre>
           <div class="flex items-start space-x-3">
             <span class="text-purple-400 mt-1">✓</span>
             <div>
-              <strong class="text-white">Configuracao via mcp.json</strong>
-              <span class="text-neutral-400"> - defina servidores e credenciais</span>
+              <strong class="text-white">Configure via CLI ou .mcp.json</strong>
+              <span class="text-neutral-400"> - claude mcp add ou arquivo para equipe</span>
             </div>
           </div>
           <div class="flex items-start space-x-3">

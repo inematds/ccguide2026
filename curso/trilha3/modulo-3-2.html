@@ -206,14 +206,33 @@
         <div class="bg-dark-900 rounded-lg p-4 font-mono text-sm text-neutral-300">
 <pre><span class="text-purple-400"># Skills globais (todas as sessoes)</span>
 ~/.claude/skills/
-├── review.md      <span class="text-neutral-500"># /review</span>
-├── commit.md      <span class="text-neutral-500"># /commit</span>
-└── debug.md       <span class="text-neutral-500"># /debug</span>
+├── review/
+│   └── SKILL.md   <span class="text-neutral-500"># /review</span>
+├── commit/
+│   └── SKILL.md   <span class="text-neutral-500"># /commit</span>
+└── debug/
+    └── SKILL.md   <span class="text-neutral-500"># /debug</span>
 
 <span class="text-purple-400"># Skills do projeto (apenas este projeto)</span>
-./claude/skills/
-├── deploy.md      <span class="text-neutral-500"># /deploy</span>
-└── test-e2e.md    <span class="text-neutral-500"># /test-e2e</span></pre>
+.claude/skills/
+├── deploy/
+│   └── SKILL.md   <span class="text-neutral-500"># /deploy</span>
+└── test-e2e/
+    └── SKILL.md   <span class="text-neutral-500"># /test-e2e</span></pre>
+        </div>
+      </div>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">⚠️</span> Importante: Estrutura Correta
+        </h3>
+        <p class="text-neutral-300 mb-3">
+          O nome do <strong class="text-white">diretorio</strong> define o comando slash, NAO o nome do arquivo.
+          O arquivo DEVE se chamar <code class="bg-dark-700 px-2 py-1 rounded text-purple-400">SKILL.md</code> (maiusculo).
+        </p>
+        <div class="bg-dark-900 rounded-lg p-3 font-mono text-sm">
+          <span class="text-emerald-400">✓ Correto:</span> <span class="text-neutral-300">.claude/skills/review/SKILL.md</span><br>
+          <span class="text-red-400">✗ Errado:</span> <span class="text-neutral-300">.claude/skills/review.md</span>
         </div>
       </div>
 
@@ -231,7 +250,7 @@
             </li>
             <li class="flex items-start space-x-2">
               <span class="text-emerald-400">✓</span>
-              <span>Local: <code class="bg-dark-700 px-1 rounded text-xs">~/.claude/skills/</code></span>
+              <span>Local: <code class="bg-dark-700 px-1 rounded text-xs">~/.claude/skills/nome/SKILL.md</code></span>
             </li>
           </ul>
         </div>
@@ -248,7 +267,7 @@
             </li>
             <li class="flex items-start space-x-2">
               <span class="text-purple-400">✓</span>
-              <span>Local: <code class="bg-dark-700 px-1 rounded text-xs">./.claude/skills/</code></span>
+              <span>Local: <code class="bg-dark-700 px-1 rounded text-xs">.claude/skills/nome/SKILL.md</code></span>
             </li>
           </ul>
         </div>
@@ -283,10 +302,11 @@
             <span class="text-purple-400 font-bold">1</span>
           </div>
           <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
-            <h4 class="font-semibold text-white mb-2">Criar o diretorio</h4>
+            <h4 class="font-semibold text-white mb-2">Criar o diretorio do skill</h4>
             <div class="bg-dark-900 rounded-lg p-3 font-mono text-sm text-purple-400">
-              mkdir -p .claude/skills
+              mkdir -p .claude/skills/review
             </div>
+            <p class="text-neutral-400 text-sm mt-2">O nome da pasta define o comando: <code class="bg-dark-700 px-1 rounded">/review</code></p>
           </div>
         </div>
 
@@ -295,7 +315,7 @@
             <span class="text-purple-400 font-bold">2</span>
           </div>
           <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
-            <h4 class="font-semibold text-white mb-2">Criar o arquivo review.md</h4>
+            <h4 class="font-semibold text-white mb-2">Criar o arquivo SKILL.md (dentro da pasta)</h4>
             <div class="bg-dark-900 rounded-lg p-4 font-mono text-xs text-neutral-300 overflow-x-auto">
 <pre><span class="text-purple-400"># Code Review Skill</span>
 
@@ -487,9 +507,12 @@ Ambiente solicitado: $ARGUMENTS</pre>
           <div class="bg-dark-900 rounded-lg p-3 font-mono text-xs text-neutral-300">
 <pre>.claude/
 ├── skills/
-│   ├── review.md
-│   ├── test.md
-│   └── deploy.md
+│   ├── review/
+│   │   └── SKILL.md
+│   ├── test/
+│   │   └── SKILL.md
+│   └── deploy/
+│       └── SKILL.md
 └── README.md  <span class="text-neutral-500"># Documenta os skills</span></pre>
           </div>
         </div>
@@ -510,10 +533,13 @@ Ambiente solicitado: $ARGUMENTS</pre>
 
 ## Criando Novos Skills
 
-1. Crie um arquivo .md em .claude/skills/
-2. Use o template em .claude/skills/_template.md
-3. Teste localmente antes de commitar
-4. Adicione a tabela acima</pre>
+1. Crie uma pasta em .claude/skills/ com o nome do comando
+2. Dentro da pasta, crie o arquivo SKILL.md
+3. Use o template em .claude/skills/_template/SKILL.md
+4. Teste localmente antes de commitar
+5. Adicione a tabela acima
+
+Exemplo: /meu-skill → .claude/skills/meu-skill/SKILL.md</pre>
         </div>
       </div>
 
@@ -607,7 +633,8 @@ Codigo para otimizar: $ARGUMENTS</pre>
         </p>
         <div class="bg-dark-900 rounded-lg p-4 font-mono text-sm text-purple-400">
           <span class="text-neutral-400"># Exemplo: criar skill de traducao</span><br>
-          echo "Traduza para portugues: \$ARGUMENTS" > ~/.claude/skills/pt.md
+          mkdir -p ~/.claude/skills/pt<br>
+          echo "Traduza para portugues: \$ARGUMENTS" > ~/.claude/skills/pt/SKILL.md
         </div>
       </div>
     </section>
@@ -651,8 +678,15 @@ Codigo para otimizar: $ARGUMENTS</pre>
           <div class="flex items-start space-x-3">
             <span class="text-purple-400 mt-1">✓</span>
             <div>
+              <strong class="text-white">Estrutura: pasta/SKILL.md</strong>
+              <span class="text-neutral-400"> - .claude/skills/nome-skill/SKILL.md</span>
+            </div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-purple-400 mt-1">✓</span>
+            <div>
               <strong class="text-white">Compartilhe com a equipe</strong>
-              <span class="text-neutral-400"> - padronize processos via .claude/skills/</span>
+              <span class="text-neutral-400"> - versione no Git com o projeto</span>
             </div>
           </div>
         </div>

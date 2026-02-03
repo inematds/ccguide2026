@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Modulo 9.5: Gerando Skills em Escala | Claude Code 2026</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: { extend: { colors: { primary: '#FACC15', dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' } } } }
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+    html:not(.dark) body { background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 50%, #f1f5f9 100%); }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+  </style>
+</head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen">
+  <nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-14">
+        <div class="flex items-center space-x-4">
+          <a href="../../index.html" class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300"><span class="text-2xl">🤖</span><span class="font-bold text-lg hidden sm:inline">Claude Code 2026</span></a>
+          <span class="text-neutral-600">|</span>
+          <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300 text-sm font-medium">INEMA.CLUB</a>
+        </div>
+        <div class="flex items-center space-x-1 sm:space-x-2">
+          <a href="../trilha1/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors"><span class="sm:hidden">T1</span><span class="hidden sm:inline">Fundamentos</span></a>
+          <a href="../trilha2/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors"><span class="sm:hidden">T2</span><span class="hidden sm:inline">Comandos</span></a>
+          <a href="../trilha3/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors"><span class="sm:hidden">T3</span><span class="hidden sm:inline">Avancado</span></a>
+          <a href="../trilha4/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-amber-400 hover:bg-amber-500/10 transition-colors"><span class="sm:hidden">T4</span><span class="hidden sm:inline">MCP</span></a>
+          <a href="../trilha5/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-teal-400 hover:bg-teal-500/10 transition-colors"><span class="sm:hidden">T5</span><span class="hidden sm:inline">Hooks</span></a>
+          <a href="../trilha6/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-rose-400 hover:bg-rose-500/10 transition-colors"><span class="sm:hidden">T6</span><span class="hidden sm:inline">Agentes</span></a>
+          <a href="../trilha7/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-cyan-400 hover:bg-cyan-500/10 transition-colors"><span class="sm:hidden">T7</span><span class="hidden sm:inline">Prompts</span></a>
+          <a href="../trilha8/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-orange-400 hover:bg-orange-500/10 transition-colors"><span class="sm:hidden">T8</span><span class="hidden sm:inline">Projetos</span></a>
+          <a href="index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-fuchsia-400 bg-fuchsia-500/10"><span class="sm:hidden">T9</span><span class="hidden sm:inline">Skills</span></a>
+          <button id="theme-toggle" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2">
+            <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+            <svg id="theme-toggle-light-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+    <div class="flex items-center space-x-2 text-sm text-neutral-400">
+      <a href="../../index.html" class="hover:text-fuchsia-400">Inicio</a><span>/</span>
+      <a href="index.html" class="hover:text-fuchsia-400">Trilha 9</a><span>/</span>
+      <span class="text-fuchsia-400">Modulo 9.5</span>
+    </div>
+  </nav>
+
+  <header class="bg-gradient-to-br from-fuchsia-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <span class="inline-block px-3 py-1 bg-fuchsia-500/20 text-fuchsia-400 text-xs font-semibold rounded-full mb-4">MODULO 9.5</span>
+      <h1 class="text-3xl sm:text-4xl font-bold mb-4">🚀 Gerando Skills em Escala</h1>
+      <p class="text-lg text-neutral-400 max-w-3xl">De 1 a 100 skills: tecnicas para producao em massa mantendo qualidade, gerenciando tokens e organizando outputs.</p>
+      <div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-fuchsia-400">6</div><div class="text-xs text-neutral-400">Topicos</div></div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-fuchsia-400">30</div><div class="text-xs text-neutral-400">Minutos</div></div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-fuchsia-400">Avancado</div><div class="text-xs text-neutral-400">Nivel</div></div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-fuchsia-400">Pratico</div><div class="text-xs text-neutral-400">Tipo</div></div>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+    <!-- TOPICO 1 -->
+    <section id="topico-1" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-fuchsia-500/20 text-fuchsia-400 font-bold text-xl">1</span>
+        <h2 class="text-2xl font-bold">📈 De 1 a 100 Skills</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">A verdadeira vantagem da fabrica de skills esta em produzir <strong class="text-fuchsia-400">muitos skills rapidamente</strong> sem perder qualidade.</p>
+      <div class="bg-gradient-to-br from-fuchsia-900/30 to-dark-800 rounded-xl border border-fuchsia-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-fuchsia-400 mb-4">Estrategia de Escala</h3>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div class="bg-dark-800/50 rounded-lg p-4 border border-dark-600">
+            <p class="text-2xl font-bold text-fuchsia-400 mb-2">1-3</p>
+            <p class="text-sm text-neutral-300">Skills por sessao para testes iniciais</p>
+          </div>
+          <div class="bg-dark-800/50 rounded-lg p-4 border border-dark-600">
+            <p class="text-2xl font-bold text-fuchsia-400 mb-2">5-10</p>
+            <p class="text-sm text-neutral-300">Skills relacionados em batch</p>
+          </div>
+          <div class="bg-dark-800/50 rounded-lg p-4 border border-dark-600">
+            <p class="text-2xl font-bold text-fuchsia-400 mb-2">20+</p>
+            <p class="text-sm text-neutral-300">Dividir em multiplas sessoes</p>
+          </div>
+        </div>
+      </div>
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6">
+        <h3 class="text-lg font-semibold text-primary mb-3">💡 Dica de Escala</h3>
+        <p class="text-neutral-300">Comece com 1 skill para validar o meta prompt, depois aumente gradualmente. E mais facil corrigir problemas com 3 skills do que com 30.</p>
+      </div>
+    </section>
+
+    <!-- TOPICO 2 -->
+    <section id="topico-2" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-fuchsia-500/20 text-fuchsia-400 font-bold text-xl">2</span>
+        <h2 class="text-2xl font-bold">🪙 Tokens e Context</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">Entender como <strong class="text-fuchsia-400">tokens e janela de contexto</strong> limitam quantos skills podem ser gerados por sessao.</p>
+      <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+        <h4 class="font-semibold text-white mb-4">Limites de Contexto</h4>
+        <ul class="space-y-3 text-neutral-300">
+          <li class="flex items-start space-x-2"><span class="text-fuchsia-400">•</span><span><strong>200K tokens</strong> - janela maxima do Claude</span></li>
+          <li class="flex items-start space-x-2"><span class="text-fuchsia-400">•</span><span><strong>~5-10K tokens</strong> por skill completo</span></li>
+          <li class="flex items-start space-x-2"><span class="text-fuchsia-400">•</span><span><strong>Meta prompt</strong> consome ~2-5K tokens</span></li>
+          <li class="flex items-start space-x-2"><span class="text-fuchsia-400">•</span><span><strong>Pratico:</strong> 10-15 skills por sessao</span></li>
+        </ul>
+      </div>
+      <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+        <h3 class="text-lg font-semibold text-red-400 mb-3">⚠️ Cuidado</h3>
+        <p class="text-neutral-300">Se pedir muitos skills de uma vez, a qualidade dos ultimos tende a cair. Melhor dividir em sessoes do que forcar tudo em uma.</p>
+      </div>
+    </section>
+
+    <!-- TOPICO 3 -->
+    <section id="topico-3" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-fuchsia-500/20 text-fuchsia-400 font-bold text-xl">3</span>
+        <h2 class="text-2xl font-bold">🏷️ Kebab-case Naming</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">A convencao de nomenclatura <strong class="text-fuchsia-400">kebab-case e obrigatoria</strong>. Nomes fora do padrao impedem o skill de funcionar.</p>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+          <h4 class="font-bold text-emerald-400 mb-4">✓ Correto</h4>
+          <ul class="space-y-2 font-mono text-sm text-neutral-300">
+            <li>sales-data-analyzer</li>
+            <li>meeting-notes-extractor</li>
+            <li>pdf-invoice-parser</li>
+            <li>competitor-price-monitor</li>
+          </ul>
+        </div>
+        <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+          <h4 class="font-bold text-red-400 mb-4">✗ Errado</h4>
+          <ul class="space-y-2 font-mono text-sm text-neutral-300 line-through">
+            <li>Sales Data Analyzer</li>
+            <li>meeting_notes_extractor</li>
+            <li>PdfInvoiceParser</li>
+            <li>Competitor Price Monitor</li>
+          </ul>
+        </div>
+      </div>
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6">
+        <h3 class="text-lg font-semibold text-primary mb-3">💡 Inclua no Meta Prompt</h3>
+        <p class="text-neutral-300">Adicione explicitamente: <code class="bg-dark-700 px-2 py-1 rounded">"Skill name MUST use kebab-case ONLY"</code></p>
+      </div>
+    </section>
+
+    <!-- TOPICO 4 -->
+    <section id="topico-4" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-fuchsia-500/20 text-fuchsia-400 font-bold text-xl">4</span>
+        <h2 class="text-2xl font-bold">📁 Folder Structure</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">Mantenha uma <strong class="text-fuchsia-400">estrutura de pastas consistente</strong> para facilitar organizacao e distribuicao.</p>
+      <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+        <h4 class="font-semibold text-white mb-4">Estrutura Padrao</h4>
+        <div class="bg-dark-900 rounded-lg p-4 font-mono text-sm text-neutral-300">
+<pre>generated/
+├── sales-data-analyzer/
+│   ├── SKILL.md
+│   ├── analyze_sales.py
+│   ├── sample_sales.csv
+│   ├── demo-prompt.txt
+│   ├── SETUP.md
+│   └── sales-data-analyzer.zip
+├── meeting-notes-extractor/
+│   ├── SKILL.md
+│   ├── extract_notes.py
+│   └── ...</pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- TOPICO 5 -->
+    <section id="topico-5" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-fuchsia-500/20 text-fuchsia-400 font-bold text-xl">5</span>
+        <h2 class="text-2xl font-bold">📦 Zip Files para Import</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">Claude.ai so aceita skills em formato <strong class="text-fuchsia-400">zip</strong>. Gere o zip automaticamente junto com o skill.</p>
+      <div class="bg-gradient-to-br from-fuchsia-900/30 to-dark-800 rounded-xl border border-fuchsia-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-fuchsia-400 mb-4">Comando de Zip</h3>
+        <div class="bg-dark-900 rounded-lg p-4 font-mono text-sm text-fuchsia-400 mb-4">cd skill-name && zip -r skill-name.zip .</div>
+        <p class="text-neutral-300 text-sm">O SKILL.md deve estar na raiz do zip, nao em uma subpasta.</p>
+      </div>
+      <div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6">
+        <h3 class="text-lg font-semibold text-blue-400 mb-4">📋 Instrua Claude</h3>
+        <p class="text-neutral-300">Adicione no meta prompt: "Create a zip file containing the SKILL.md in the root, not in a subfolder."</p>
+      </div>
+    </section>
+
+    <!-- TOPICO 6 -->
+    <section id="topico-6" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-fuchsia-500/20 text-fuchsia-400 font-bold text-xl">6</span>
+        <h2 class="text-2xl font-bold">✅ Quality Checklist</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">Inclua uma <strong class="text-fuchsia-400">lista de verificacao</strong> que Claude deve seguir antes de finalizar cada skill.</p>
+      <div class="bg-gradient-to-br from-fuchsia-900/30 to-dark-800 rounded-xl border border-fuchsia-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-fuchsia-400 mb-4">Quality Checklist</h3>
+        <ul class="space-y-2 text-neutral-300">
+          <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Skill name usa kebab-case</span></li>
+          <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Description inclui O QUE e QUANDO</span></li>
+          <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Python code e completo e runnable</span></li>
+          <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Sample data e realistico (20-100 rows)</span></li>
+          <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>demo-prompt.txt e curto e claro</span></li>
+          <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>SETUP.md tem instrucoes para todas plataformas</span></li>
+          <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Required libraries estao listadas</span></li>
+          <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Zip file esta pronto</span></li>
+        </ul>
+      </div>
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6">
+        <h3 class="text-lg font-semibold text-primary mb-3">🚀 Proximo Passo</h3>
+        <p class="text-neutral-300">Com skills sendo gerados em escala, no proximo modulo vamos aprofundar em <strong>sample data e testing</strong> para garantir que funcionem perfeitamente.</p>
+      </div>
+    </section>
+
+    <!-- RESUMO -->
+    <section class="mb-12">
+      <div class="bg-gradient-to-br from-fuchsia-900/40 via-dark-800 to-dark-800 rounded-xl border border-fuchsia-500/30 p-8">
+        <h2 class="text-2xl font-bold mb-6 flex items-center"><span class="mr-3">📋</span> Resumo do Modulo</h2>
+        <div class="space-y-4 mb-8">
+          <div class="flex items-start space-x-3"><span class="text-fuchsia-400 mt-1">✓</span><div><strong class="text-white">Escale gradualmente</strong><span class="text-neutral-400"> - de 1 para 3 para 10 skills</span></div></div>
+          <div class="flex items-start space-x-3"><span class="text-fuchsia-400 mt-1">✓</span><div><strong class="text-white">Respeite limites de tokens</strong><span class="text-neutral-400"> - 10-15 skills por sessao</span></div></div>
+          <div class="flex items-start space-x-3"><span class="text-fuchsia-400 mt-1">✓</span><div><strong class="text-white">Kebab-case obrigatorio</strong><span class="text-neutral-400"> - sales-data-analyzer</span></div></div>
+          <div class="flex items-start space-x-3"><span class="text-fuchsia-400 mt-1">✓</span><div><strong class="text-white">Estrutura de pastas consistente</strong><span class="text-neutral-400"> - facilita organizacao</span></div></div>
+          <div class="flex items-start space-x-3"><span class="text-fuchsia-400 mt-1">✓</span><div><strong class="text-white">Quality checklist automatizado</strong><span class="text-neutral-400"> - previne erros</span></div></div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+          <h3 class="font-semibold text-fuchsia-400 mb-2">Proximo Modulo:</h3>
+          <p class="text-neutral-300">9.6 - Sample Data e Testing: Dados de teste eficazes</p>
+        </div>
+        <div class="flex flex-col sm:flex-row gap-4">
+          <a href="modulo-9-4.html" class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors">← Modulo Anterior</a>
+          <a href="modulo-9-6.html" class="flex-1 text-center px-6 py-3 bg-fuchsia-600 text-white rounded-lg font-semibold hover:bg-fuchsia-500 transition-colors">Proximo Modulo →</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="border-t border-dark-600 py-8 mt-16">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+      <p>Claude Code 2026 - Curso criado por <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300">INEMA.CLUB</a></p>
+    </div>
+  </footer>
+
+  <script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    const html = document.documentElement;
+    if (localStorage.getItem('theme') === 'light' || (!localStorage.getItem('theme') && !html.classList.contains('dark'))) { themeToggleDarkIcon.classList.remove('hidden'); html.classList.remove('dark'); } else { themeToggleLightIcon.classList.remove('hidden'); }
+    themeToggle.addEventListener('click', () => { themeToggleDarkIcon.classList.toggle('hidden'); themeToggleLightIcon.classList.toggle('hidden'); html.classList.toggle('dark'); localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light'); });
+  </script>
+</body>
+</html>

@@ -1,0 +1,1710 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trilha 8: QQApp | Claude Code 2026</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: '#FACC15',
+            dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' }
+          }
+        }
+      }
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+    .topic-explanation { display: none; }
+    .topic-explanation.active { display: block; }
+
+    /* Light mode overrides */
+    html:not(.dark) body {
+      background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 50%, #f1f5f9 100%);
+    }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+  </style>
+</head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen">
+
+  <!-- NAVIGATION -->
+  <nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-14">
+        <!-- Logo + INEMA.CLUB -->
+        <div class="flex items-center space-x-4">
+          <a href="../../index.html" class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300">
+            <span class="text-2xl">🤖</span>
+            <span class="font-bold text-lg hidden sm:inline">Claude Code 2026</span>
+          </a>
+          <span class="text-neutral-600">|</span>
+          <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300 text-sm font-medium">INEMA.CLUB</a>
+        </div>
+
+        <!-- Trilhas + Theme Toggle -->
+        <div class="flex items-center space-x-1 sm:space-x-2">
+          <a href="../trilha1/index.html" class="px-2 py-1.5 rounded-lg text-xs font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors">
+            <span class="sm:hidden">T1</span>
+            <span class="hidden sm:inline">Fundamentos</span>
+          </a>
+          <a href="../trilha2/index.html" class="px-2 py-1.5 rounded-lg text-xs font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors">
+            <span class="sm:hidden">T2</span>
+            <span class="hidden sm:inline">Comandos</span>
+          </a>
+          <a href="../trilha3/index.html" class="px-2 py-1.5 rounded-lg text-xs font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors">
+            <span class="sm:hidden">T3</span>
+            <span class="hidden sm:inline">Avancado</span>
+          </a>
+          <a href="../trilha4/index.html" class="px-2 py-1.5 rounded-lg text-xs font-semibold text-neutral-400 hover:text-amber-400 hover:bg-amber-500/10 transition-colors">
+            <span class="sm:hidden">T4</span>
+            <span class="hidden sm:inline">MiniCurso</span>
+          </a>
+          <a href="../trilha5/index.html" class="px-2 py-1.5 rounded-lg text-xs font-semibold text-neutral-400 hover:text-teal-400 hover:bg-teal-500/10 transition-colors">
+            <span class="sm:hidden">T5</span>
+            <span class="hidden sm:inline">95CC</span>
+          </a>
+          <a href="../trilha6/index.html" class="px-2 py-1.5 rounded-lg text-xs font-semibold text-neutral-400 hover:text-rose-400 hover:bg-rose-500/10 transition-colors">
+            <span class="sm:hidden">T6</span>
+            <span class="hidden sm:inline">BeginCC</span>
+          </a>
+          <a href="../trilha7/index.html" class="px-2 py-1.5 rounded-lg text-xs font-semibold text-neutral-400 hover:text-cyan-400 hover:bg-cyan-500/10 transition-colors">
+            <span class="sm:hidden">T7</span>
+            <span class="hidden sm:inline">AICode</span>
+          </a>
+          <a href="index.html" class="px-2 py-1.5 rounded-lg text-xs font-semibold text-lime-400 bg-lime-500/10">
+            <span class="sm:hidden">T8</span>
+            <span class="hidden sm:inline">QQApp</span>
+          </a>
+          <a href="../trilha9/index.html" class="px-2 py-1.5 rounded-lg text-xs font-semibold text-neutral-400 hover:text-orange-400 hover:bg-orange-500/10 transition-colors">
+            <span class="sm:hidden">T9</span>
+            <span class="hidden sm:inline">MCPMaster</span>
+          </a>
+
+          <!-- Theme Toggle -->
+          <button id="theme-toggle" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2">
+            <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+            </svg>
+            <svg id="theme-toggle-light-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HEADER -->
+  <header class="bg-gradient-to-br from-lime-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <span class="inline-block px-3 py-1 bg-lime-500/20 text-lime-400 text-xs font-semibold rounded-full mb-4">
+        TRILHA 8
+      </span>
+      <h1 class="text-3xl sm:text-4xl font-bold mb-4">🌐 QQApp - n8n para Web Apps</h1>
+      <p class="text-lg text-neutral-400 max-w-3xl">
+        Aprenda a transformar qualquer workflow n8n em uma aplicacao web completa usando Claude Code.
+        Do setup inicial ao deploy em producao com Vercel, cobrindo seguranca e boas praticas.
+      </p>
+
+      <!-- Stats Grid -->
+      <div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-lime-400">8</div>
+          <div class="text-xs text-neutral-400">Modulos</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-lime-400">48</div>
+          <div class="text-xs text-neutral-400">Topicos</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-lime-400">~5h</div>
+          <div class="text-xs text-neutral-400">Duracao</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-lime-400">Avancado</div>
+          <div class="text-xs text-neutral-400">Nivel</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN CONTENT -->
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+    <!-- Navegacao Rapida -->
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
+      <a href="modulo-8-1.html" class="bg-dark-800 rounded-lg p-4 border border-dark-600 hover:border-lime-500/50 transition-colors">
+        <span class="text-lime-400 font-bold">8.1</span>
+        <p class="text-sm text-neutral-300 mt-1">Ambiente Dev</p>
+      </a>
+      <a href="modulo-8-2.html" class="bg-dark-800 rounded-lg p-4 border border-dark-600 hover:border-lime-500/50 transition-colors">
+        <span class="text-lime-400 font-bold">8.2</span>
+        <p class="text-sm text-neutral-300 mt-1">CLAUDE.md</p>
+      </a>
+      <a href="modulo-8-3.html" class="bg-dark-800 rounded-lg p-4 border border-dark-600 hover:border-lime-500/50 transition-colors">
+        <span class="text-lime-400 font-bold">8.3</span>
+        <p class="text-sm text-neutral-300 mt-1">MCP e Skills</p>
+      </a>
+      <a href="modulo-8-4.html" class="bg-dark-800 rounded-lg p-4 border border-dark-600 hover:border-lime-500/50 transition-colors">
+        <span class="text-lime-400 font-bold">8.4</span>
+        <p class="text-sm text-neutral-300 mt-1">Analisando n8n</p>
+      </a>
+      <a href="modulo-8-5.html" class="bg-dark-800 rounded-lg p-4 border border-dark-600 hover:border-lime-500/50 transition-colors">
+        <span class="text-lime-400 font-bold">8.5</span>
+        <p class="text-sm text-neutral-300 mt-1">Front-end</p>
+      </a>
+      <a href="modulo-8-6.html" class="bg-dark-800 rounded-lg p-4 border border-dark-600 hover:border-lime-500/50 transition-colors">
+        <span class="text-lime-400 font-bold">8.6</span>
+        <p class="text-sm text-neutral-300 mt-1">GitHub</p>
+      </a>
+      <a href="modulo-8-7.html" class="bg-dark-800 rounded-lg p-4 border border-dark-600 hover:border-lime-500/50 transition-colors">
+        <span class="text-lime-400 font-bold">8.7</span>
+        <p class="text-sm text-neutral-300 mt-1">Deploy Vercel</p>
+      </a>
+      <a href="modulo-8-8.html" class="bg-dark-800 rounded-lg p-4 border border-dark-600 hover:border-lime-500/50 transition-colors">
+        <span class="text-lime-400 font-bold">8.8</span>
+        <p class="text-sm text-neutral-300 mt-1">Seguranca</p>
+      </a>
+    </div>
+
+    <!-- Divisor -->
+    <div class="flex items-center mb-8">
+      <div class="flex-1 border-t border-dark-600"></div>
+      <span class="px-4 text-neutral-500 text-sm">Conteudo Detalhado</span>
+      <div class="flex-1 border-t border-dark-600"></div>
+    </div>
+
+    <!-- MODULO 8.1 -->
+    <div class="bg-dark-800 rounded-xl border border-dark-600 mb-6">
+      <div class="p-6 border-b border-dark-600">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-lime-400 font-bold">8.1</span>
+          <span class="text-xs text-neutral-500">~35 min</span>
+        </div>
+        <h3 class="text-2xl font-bold mb-2">🖥️ Ambiente de Desenvolvimento</h3>
+        <p class="text-neutral-400 text-sm">Configure VS Code com Claude Code para criar web apps a partir de workflows n8n de forma eficiente.</p>
+      </div>
+
+      <div class="divide-y divide-dark-600">
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-lime-500/20 text-lime-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+            <span class="text-lg">💻</span>
+            <div>
+              <span class="font-medium">VS Code Setup</span>
+              <span class="text-neutral-500 text-sm ml-2">- IDE preferido para Claude Code</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-lime-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">VS Code e a IDE recomendada para trabalhar com Claude Code devido a sua interface limpa e integracao nativa com extensoes.</p>
+              </div>
+              <div>
+                <span class="text-lime-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Uma IDE bem configurada elimina fricao e permite focar no desenvolvimento ao inves de ferramentas.</p>
+              </div>
+              <div>
+                <span class="text-lime-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Visual Studio Code, workspace, extensoes, terminal integrado, explorer de arquivos.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-lime-500/20 text-lime-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+            <span class="text-lg">🔌</span>
+            <div>
+              <span class="font-medium">Claude Code Extension</span>
+              <span class="text-neutral-500 text-sm ml-2">- Instalando a extensao oficial</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-lime-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">A extensao oficial Claude Code para VS Code que permite conversar com o agente diretamente na IDE sem usar terminal.</p>
+              </div>
+              <div>
+                <span class="text-lime-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">A extensao oferece interface visual mais amigavel que o terminal, ideal para quem esta comecando.</p>
+              </div>
+              <div>
+                <span class="text-lime-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Extensions marketplace, Claude Code install, sign in, Anthropic account.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-lime-500/20 text-lime-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+            <span class="text-lg">📁</span>
+            <div>
+              <span class="font-medium">Estrutura de Projetos</span>
+              <span class="text-neutral-500 text-sm ml-2">- Organizando pastas e arquivos</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-lime-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">A organizacao de pastas para projetos n8n-to-app, separando front-end, configuracoes e documentacao.</p>
+              </div>
+              <div>
+                <span class="text-lime-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Uma estrutura clara facilita a navegacao de Claude e evita confusao em projetos grandes.</p>
+              </div>
+              <div>
+                <span class="text-lime-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Folder structure, open folder, blank project, workspace organization.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-lime-500/20 text-lime-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+            <span class="text-lg">🗂️</span>
+            <div>
+              <span class="font-medium">File Explorer</span>
+              <span class="text-neutral-500 text-sm ml-2">- Navegando pelos arquivos</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-lime-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">O painel lateral do VS Code que mostra todos os arquivos e pastas do projeto em tempo real.</p>
+              </div>
+              <div>
+                <span class="text-lime-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Ver os arquivos sendo criados e modificados por Claude em tempo real aumenta a confianca no processo.</p>
+              </div>
+              <div>
+                <span class="text-lime-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">File tree, new file, refresh, real-time updates, collapse/expand.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-lime-500/20 text-lime-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+            <span class="text-lg">🪟</span>
+            <div>
+              <span class="font-medium">Multiplas Sessoes</span>
+              <span class="text-neutral-500 text-sm ml-2">- Gerenciando contextos paralelos</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-lime-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">A capacidade de ter varios arquivos e conversas abertas simultaneamente no VS Code.</p>
+              </div>
+              <div>
+                <span class="text-lime-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Trabalhar com multiplos arquivos permite comparar codigo e acompanhar mudancas em tempo real.</p>
+              </div>
+              <div>
+                <span class="text-lime-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Split editor, tabs, side by side, multi-file editing.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-lime-500/20 text-lime-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+            <span class="text-lg">✨</span>
+            <div>
+              <span class="font-medium">Interface Limpa</span>
+              <span class="text-neutral-500 text-sm ml-2">- Configurando o visual</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-lime-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Configuracoes de interface para manter apenas o essencial visivel, evitando distracao.</p>
+              </div>
+              <div>
+                <span class="text-lime-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Uma interface minimalista reduz carga cognitiva e permite focar no que realmente importa.</p>
+              </div>
+              <div>
+                <span class="text-lime-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Hide panels, zen mode, clean workspace, focus mode.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+        <a href="modulo-8-1.html" class="px-4 py-2 text-sm bg-lime-600 hover:bg-lime-500 text-white rounded-lg transition-colors">
+          Ver Modulo Completo
+        </a>
+      </div>
+    </div>
+
+    <!-- MODULO 8.2 -->
+    <div class="bg-dark-800 rounded-xl border border-dark-600 mb-6">
+      <div class="p-6 border-b border-dark-600">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-lime-400 font-bold">8.2</span>
+          <span class="text-xs text-neutral-500">~40 min</span>
+        </div>
+        <h3 class="text-2xl font-bold mb-2">📝 CLAUDE.md e System Prompt</h3>
+        <p class="text-neutral-400 text-sm">Configure o arquivo CLAUDE.md para guiar Claude Code em projetos de conversao n8n para web apps.</p>
+      </div>
+
+      <div class="divide-y divide-dark-600">
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-lime-500/20 text-lime-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+            <span class="text-lg">📄</span>
+            <div>
+              <span class="font-medium">Criar claude.md</span>
+              <span class="text-neutral-500 text-sm ml-2">- O arquivo de sistema</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-lime-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">O arquivo claude.md funciona como system prompt para o projeto, definindo objetivos e contexto.</p>
+              </div>
+              <div>
+                <span class="text-lime-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Um bom claude.md elimina explicacoes repetitivas e garante consistencia nas respostas.</p>
+              </div>
+              <div>
+                <span class="text-lime-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">System prompt, project context, new file, markdown format.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-lime-500/20 text-lime-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+            <span class="text-lg">🔵</span>
+            <div>
+              <span class="font-medium">Plan Mode para Setup</span>
+              <span class="text-neutral-500 text-sm ml-2">- Modo de planejamento</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-lime-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">O plan mode (azul) faz Claude pensar mais e fazer perguntas antes de executar qualquer acao.</p>
+              </div>
+              <div>
+                <span class="text-lime-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Ideal para setup inicial pois permite refinar requisitos antes de comecar a codificar.</p>
+              </div>
+              <div>
+                <span class="text-lime-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Plan mode, blue mode, thinking mode, brainstorm, no execution.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-lime-500/20 text-lime-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+            <span class="text-lg">❓</span>
+            <div>
+              <span class="font-medium">Clarification Questions</span>
+              <span class="text-neutral-500 text-sm ml-2">- Claude pergunta antes de agir</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-lime-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Perguntas que Claude faz para esclarecer requisitos como estrutura preferida, repos e styling.</p>
+              </div>
+              <div>
+                <span class="text-lime-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Responder bem as perguntas evita retrabalho e garante que o resultado atenda expectativas.</p>
+              </div>
+              <div>
+                <span class="text-lime-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Workflow structure, project structure, repo strategy, styling preferences.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-lime-500/20 text-lime-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+            <span class="text-lg">⚡</span>
+            <div>
+              <span class="font-medium">Auto-accept Changes</span>
+              <span class="text-neutral-500 text-sm ml-2">- Bypass permissions</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-lime-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">O modo bypass (laranja) aceita mudancas automaticamente sem pedir confirmacao a cada acao.</p>
+              </div>
+              <div>
+                <span class="text-lime-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Acelera drasticamente o desenvolvimento quando voce confia no que Claude esta fazendo.</p>
+              </div>
+              <div>
+                <span class="text-lime-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Bypass permissions, auto-accept, dangerously skip permissions setting.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-lime-500/20 text-lime-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+            <span class="text-lg">🔄</span>
+            <div>
+              <span class="font-medium">Projeto n8n para App</span>
+              <span class="text-neutral-500 text-sm ml-2">- Definindo o objetivo</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-lime-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">A definicao clara no claude.md de que o projeto converte workflows n8n em aplicacoes web.</p>
+              </div>
+              <div>
+                <span class="text-lime-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Um objetivo bem definido guia todas as decisoes de Claude durante o desenvolvimento.</p>
+              </div>
+              <div>
+                <span class="text-lime-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">n8n to app, workflow conversion, front-end building, deployment.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-lime-500/20 text-lime-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+            <span class="text-lg">📋</span>
+            <div>
+              <span class="font-medium">Guidelines Claras</span>
+              <span class="text-neutral-500 text-sm ml-2">- Regras e padroes</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-lime-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Regras e padroes documentados no claude.md como CSS preferido, estrutura de repos e tecnologias.</p>
+              </div>
+              <div>
+                <span class="text-lime-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Guidelines claras garantem consistencia mesmo quando Claude toma decisoes autonomas.</p>
+              </div>
+              <div>
+                <span class="text-lime-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Tailwind CSS, separate repos, concise file, lean documentation.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+        <a href="modulo-8-2.html" class="px-4 py-2 text-sm bg-lime-600 hover:bg-lime-500 text-white rounded-lg transition-colors">
+          Ver Modulo Completo
+        </a>
+      </div>
+    </div>
+
+    <!-- MODULO 8.3 -->
+    <div class="bg-dark-800 rounded-xl border border-dark-600 mb-6">
+      <div class="p-6 border-b border-dark-600">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-lime-400 font-bold">8.3</span>
+          <span class="text-xs text-neutral-500">~45 min</span>
+        </div>
+        <h3 class="text-2xl font-bold mb-2">🔗 MCP Servers e Skills</h3>
+        <p class="text-neutral-400 text-sm">Conecte Claude Code ao n8n MCP Server e instale skills para construir workflows e front-ends.</p>
+      </div>
+
+      <div class="divide-y divide-dark-600">
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-lime-500/20 text-lime-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+            <span class="text-lg">🔧</span>
+            <div>
+              <span class="font-medium">n8n MCP Server</span>
+              <span class="text-neutral-500 text-sm ml-2">- Conectando ao n8n</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-lime-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">O n8n MCP Server da acesso a Claude para ler, criar e editar workflows na sua instancia n8n.</p>
+              </div>
+              <div>
+                <span class="text-lime-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Sem o MCP, Claude nao consegue ver seus workflows nem fazer alteracoes no n8n.</p>
+              </div>
+              <div>
+                <span class="text-lime-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">czlonkowski/n8n-mcp, n8n URL, n8n API key, workflow access.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-lime-500/20 text-lime-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+            <span class="text-lg">🐙</span>
+            <div>
+              <span class="font-medium">GitHub MCP</span>
+              <span class="text-neutral-500 text-sm ml-2">- Integracao com repositorios</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-lime-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">O GitHub MCP permite que Claude faca push de codigo diretamente para seus repositorios.</p>
+              </div>
+              <div>
+                <span class="text-lime-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Automatiza o fluxo de versionamento sem precisar de comandos git manuais.</p>
+              </div>
+              <div>
+                <span class="text-lime-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">GitHub MCP URL, repository access, push changes, version control.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-lime-500/20 text-lime-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+            <span class="text-lg">📚</span>
+            <div>
+              <span class="font-medium">Skills Installation</span>
+              <span class="text-neutral-500 text-sm ml-2">- Instalando conhecimento</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-lime-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Skills sao pacotes de conhecimento que ensinam Claude sobre tecnologias especificas como n8n.</p>
+              </div>
+              <div>
+                <span class="text-lime-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Skills transformam Claude em especialista instantaneo na tecnologia que voce precisa.</p>
+              </div>
+              <div>
+                <span class="text-lime-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">n8n-skills, front-end-skills, skill repo URL, install commands.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-lime-500/20 text-lime-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+            <span class="text-lg">🌍</span>
+            <div>
+              <span class="font-medium">Global vs Project Skills</span>
+              <span class="text-neutral-500 text-sm ml-2">- Escopo de instalacao</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-lime-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Skills podem ser instalados globalmente (todos projetos) ou apenas no projeto atual.</p>
+              </div>
+              <div>
+                <span class="text-lime-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Global skills evitam reinstalacao, project skills isolam conhecimento especifico.</p>
+              </div>
+              <div>
+                <span class="text-lime-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Global installation, project scope, skill visibility, reusability.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-lime-500/20 text-lime-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+            <span class="text-lg">📁</span>
+            <div>
+              <span class="font-medium">MCP JSON Config</span>
+              <span class="text-neutral-500 text-sm ml-2">- Arquivo de configuracao</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-lime-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">O arquivo MCP JSON armazena configuracoes de todos os MCP servers conectados ao projeto.</p>
+              </div>
+              <div>
+                <span class="text-lime-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Entender o arquivo permite debugar conexoes e adicionar novos servers manualmente.</p>
+              </div>
+              <div>
+                <span class="text-lime-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">mcp.json, server configuration, API keys storage, restart required.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-lime-500/20 text-lime-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+            <span class="text-lg">🔐</span>
+            <div>
+              <span class="font-medium">Credentials Security</span>
+              <span class="text-neutral-500 text-sm ml-2">- Protegendo senhas</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-lime-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">O MCP JSON contem credenciais sensiveis que nao devem ser compartilhadas ou versionadas.</p>
+              </div>
+              <div>
+                <span class="text-lime-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Expor credenciais pode dar acesso total ao seu n8n e GitHub a terceiros.</p>
+              </div>
+              <div>
+                <span class="text-lime-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Local storage only, gitignore, credential rotation, env files.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+        <a href="modulo-8-3.html" class="px-4 py-2 text-sm bg-lime-600 hover:bg-lime-500 text-white rounded-lg transition-colors">
+          Ver Modulo Completo
+        </a>
+      </div>
+    </div>
+
+    <!-- MODULO 8.4 -->
+    <div class="bg-dark-800 rounded-xl border border-dark-600 mb-6">
+      <div class="p-6 border-b border-dark-600">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-lime-400 font-bold">8.4</span>
+          <span class="text-xs text-neutral-500">~40 min</span>
+        </div>
+        <h3 class="text-2xl font-bold mb-2">🔍 Analisando Workflows n8n</h3>
+        <p class="text-neutral-400 text-sm">Claude audita e otimiza workflows n8n para prepara-los para conexao com front-ends web.</p>
+      </div>
+
+      <div class="divide-y divide-dark-600">
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-lime-500/20 text-lime-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+            <span class="text-lg">🔎</span>
+            <div>
+              <span class="font-medium">Claude Audita Workflow</span>
+              <span class="text-neutral-500 text-sm ml-2">- Analise automatica</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-lime-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Claude examina um workflow n8n existente e identifica o que precisa mudar para virar web app.</p>
+              </div>
+              <div>
+                <span class="text-lime-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">A auditoria automatica economiza horas de analise manual e identifica problemas escondidos.</p>
+              </div>
+              <div>
+                <span class="text-lime-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Workflow analysis, trigger identification, data flow mapping, optimization plan.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-lime-500/20 text-lime-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+            <span class="text-lg">🔄</span>
+            <div>
+              <span class="font-medium">Chat Trigger para Webhook</span>
+              <span class="text-neutral-500 text-sm ml-2">- Mudando o trigger</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-lime-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Substituir Chat Trigger por Webhook para permitir que front-ends externos enviem dados ao workflow.</p>
+              </div>
+              <div>
+                <span class="text-lime-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Chat Trigger so funciona no n8n, Webhook permite conexao de qualquer aplicacao externa.</p>
+              </div>
+              <div>
+                <span class="text-lime-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Webhook node, POST request, endpoint URL, trigger replacement.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-lime-500/20 text-lime-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+            <span class="text-lg">🔢</span>
+            <div>
+              <span class="font-medium">Base64 Conversions</span>
+              <span class="text-neutral-500 text-sm ml-2">- Tratando arquivos</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-lime-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Quando o front-end envia imagens via webhook, elas chegam em Base64 e precisam ser convertidas.</p>
+              </div>
+              <div>
+                <span class="text-lime-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Sem conversao, imagens e arquivos nao funcionam corretamente no workflow.</p>
+              </div>
+              <div>
+                <span class="text-lime-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Base64 encoding, image conversion, binary data, file handling.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-lime-500/20 text-lime-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+            <span class="text-lg">⚠️</span>
+            <div>
+              <span class="font-medium">Error Handling Branches</span>
+              <span class="text-neutral-500 text-sm ml-2">- Tratando erros</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-lime-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Adicionar branches de erro para que falhas sejam comunicadas ao front-end ao inves de travar.</p>
+              </div>
+              <div>
+                <span class="text-lime-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Sem tratamento de erro, usuarios ficam esperando infinitamente sem feedback.</p>
+              </div>
+              <div>
+                <span class="text-lime-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Continue on error, error output, error message routing, graceful failure.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-lime-500/20 text-lime-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+            <span class="text-lg">📝</span>
+            <div>
+              <span class="font-medium">Variable Updates</span>
+              <span class="text-neutral-500 text-sm ml-2">- Atualizando referencias</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-lime-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Quando o trigger muda, todas as variaveis que referenciam dados de entrada precisam ser atualizadas.</p>
+              </div>
+              <div>
+                <span class="text-lime-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Variaveis quebradas sao a causa mais comum de workflows falharem apos mudancas.</p>
+              </div>
+              <div>
+                <span class="text-lime-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">$json.body, variable paths, input source change, node-by-node update.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-lime-500/20 text-lime-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+            <span class="text-lg">🚀</span>
+            <div>
+              <span class="font-medium">Publish Workflow</span>
+              <span class="text-neutral-500 text-sm ml-2">- Ativando o workflow</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-lime-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Publicar o workflow para que o endpoint webhook fique disponivel para receber requisicoes.</p>
+              </div>
+              <div>
+                <span class="text-lime-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Workflows nao publicados nao respondem a webhooks, causando erros de conexao.</p>
+              </div>
+              <div>
+                <span class="text-lime-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Activate workflow, publish, webhook URL active, production ready.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+        <a href="modulo-8-4.html" class="px-4 py-2 text-sm bg-lime-600 hover:bg-lime-500 text-white rounded-lg transition-colors">
+          Ver Modulo Completo
+        </a>
+      </div>
+    </div>
+
+    <!-- MODULO 8.5 -->
+    <div class="bg-dark-800 rounded-xl border border-dark-600 mb-6">
+      <div class="p-6 border-b border-dark-600">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-lime-400 font-bold">8.5</span>
+          <span class="text-xs text-neutral-500">~45 min</span>
+        </div>
+        <h3 class="text-2xl font-bold mb-2">🎨 Construindo Front-end</h3>
+        <p class="text-neutral-400 text-sm">Crie interfaces web profissionais e gamificadas usando Claude Code e teste em localhost.</p>
+      </div>
+
+      <div class="divide-y divide-dark-600">
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-lime-500/20 text-lime-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+            <span class="text-lg">🔵</span>
+            <div>
+              <span class="font-medium">Plan Mode para Design</span>
+              <span class="text-neutral-500 text-sm ml-2">- Planejando a interface</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-lime-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Usar plan mode para definir cores, layout e features antes de comecar a codar o front-end.</p>
+              </div>
+              <div>
+                <span class="text-lime-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Planejar antes evita refatoracoes caras e garante que o design atenda expectativas.</p>
+              </div>
+              <div>
+                <span class="text-lime-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Dark mode, minimalistic, professional, color scheme, brand aesthetic.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-lime-500/20 text-lime-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+            <span class="text-lg">✅</span>
+            <div>
+              <span class="font-medium">To-do Lists</span>
+              <span class="text-neutral-500 text-sm ml-2">- Claude organiza tarefas</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-lime-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Claude cria listas de tarefas automaticas para manter o progresso visivel durante o desenvolvimento.</p>
+              </div>
+              <div>
+                <span class="text-lime-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">To-do lists ajudam a acompanhar onde Claude esta e intervir se algo sair do rumo.</p>
+              </div>
+              <div>
+                <span class="text-lime-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Task tracking, progress visibility, model focus, completion status.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-lime-500/20 text-lime-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+            <span class="text-lg">🎮</span>
+            <div>
+              <span class="font-medium">Gamification Features</span>
+              <span class="text-neutral-500 text-sm ml-2">- Adicionando engajamento</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-lime-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Elementos como pontos, niveis e conquistas que incentivam usuarios a usar o app mais.</p>
+              </div>
+              <div>
+                <span class="text-lime-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Gamificacao aumenta retencao e torna apps mais viciantes de usar.</p>
+              </div>
+              <div>
+                <span class="text-lime-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Points system, level up, message count, roadmap, achievements.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-lime-500/20 text-lime-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+            <span class="text-lg">🏠</span>
+            <div>
+              <span class="font-medium">Local Host Testing</span>
+              <span class="text-neutral-500 text-sm ml-2">- Testando localmente</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-lime-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Rodar o app em localhost para testar antes de publicar, acessivel apenas na sua maquina.</p>
+              </div>
+              <div>
+                <span class="text-lime-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Testar local evita expor bugs em producao e permite iteracao rapida.</p>
+              </div>
+              <div>
+                <span class="text-lime-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">localhost:3000, local environment, private testing, dev server.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-lime-500/20 text-lime-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+            <span class="text-lg">🔧</span>
+            <div>
+              <span class="font-medium">Iterative Fixes</span>
+              <span class="text-neutral-500 text-sm ml-2">- Corrigindo problemas</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-lime-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Processo de encontrar bugs, reportar a Claude e ter correcoes aplicadas rapidamente.</p>
+              </div>
+              <div>
+                <span class="text-lime-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Iteracao rapida e a chave para entregar apps funcionais em pouco tempo.</p>
+              </div>
+              <div>
+                <span class="text-lime-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Bug reporting, natural language fixes, quick iteration, continuous improvement.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-lime-500/20 text-lime-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+            <span class="text-lg">📸</span>
+            <div>
+              <span class="font-medium">Screenshot Debugging</span>
+              <span class="text-neutral-500 text-sm ml-2">- Debug visual</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-lime-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Enviar screenshots de erros para Claude entender visualmente o que esta errado.</p>
+              </div>
+              <div>
+                <span class="text-lime-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Screenshots comunicam problemas visuais muito melhor que descricoes em texto.</p>
+              </div>
+              <div>
+                <span class="text-lime-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Visual debugging, paste screenshot, error visualization, UI issues.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+        <a href="modulo-8-5.html" class="px-4 py-2 text-sm bg-lime-600 hover:bg-lime-500 text-white rounded-lg transition-colors">
+          Ver Modulo Completo
+        </a>
+      </div>
+    </div>
+
+    <!-- MODULO 8.6 -->
+    <div class="bg-dark-800 rounded-xl border border-dark-600 mb-6">
+      <div class="p-6 border-b border-dark-600">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-lime-400 font-bold">8.6</span>
+          <span class="text-xs text-neutral-500">~35 min</span>
+        </div>
+        <h3 class="text-2xl font-bold mb-2">🐙 GitHub Integration</h3>
+        <p class="text-neutral-400 text-sm">Configure GitHub para versionar seu codigo e permitir deploy automatico com Vercel.</p>
+      </div>
+
+      <div class="divide-y divide-dark-600">
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-lime-500/20 text-lime-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+            <span class="text-lg">📦</span>
+            <div>
+              <span class="font-medium">Criar Repositorio</span>
+              <span class="text-neutral-500 text-sm ml-2">- Novo repo no GitHub</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-lime-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Um repositorio GitHub e o lar do codigo do seu app, onde todas as versoes sao guardadas.</p>
+              </div>
+              <div>
+                <span class="text-lime-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Repositorios permitem versionamento, colaboracao e integracao com servicos de deploy.</p>
+              </div>
+              <div>
+                <span class="text-lime-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">New repository, public/private, repo name, create repository.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-lime-500/20 text-lime-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+            <span class="text-lg">⬆️</span>
+            <div>
+              <span class="font-medium">Push Code</span>
+              <span class="text-neutral-500 text-sm ml-2">- Enviando codigo</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-lime-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Push e o ato de enviar codigo local para o repositorio remoto no GitHub.</p>
+              </div>
+              <div>
+                <span class="text-lime-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Push e como voce faz seu codigo sair da maquina local e ficar disponivel online.</p>
+              </div>
+              <div>
+                <span class="text-lime-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">git push, remote origin, upload code, sync with GitHub.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-lime-500/20 text-lime-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+            <span class="text-lg">📜</span>
+            <div>
+              <span class="font-medium">Commits e Versions</span>
+              <span class="text-neutral-500 text-sm ml-2">- Historico de mudancas</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-lime-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Cada commit e um snapshot do codigo, permitindo ver historico e reverter se necessario.</p>
+              </div>
+              <div>
+                <span class="text-lime-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Commits permitem voltar atras se algo quebrar e entender o que mudou quando.</p>
+              </div>
+              <div>
+                <span class="text-lime-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Commit history, version control, code snapshots, rollback.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-lime-500/20 text-lime-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+            <span class="text-lg">🔑</span>
+            <div>
+              <span class="font-medium">Personal Access Token</span>
+              <span class="text-neutral-500 text-sm ml-2">- Autenticacao GitHub</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-lime-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Token de acesso pessoal que permite Claude fazer operacoes no GitHub em seu nome.</p>
+              </div>
+              <div>
+                <span class="text-lime-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Sem token, Claude nao consegue fazer push nem criar repositorios automaticamente.</p>
+              </div>
+              <div>
+                <span class="text-lime-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Fine-grained token, developer settings, permissions, token expiration.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-lime-500/20 text-lime-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+            <span class="text-lg">🤖</span>
+            <div>
+              <span class="font-medium">Git Commands via Claude</span>
+              <span class="text-neutral-500 text-sm ml-2">- Automatizando git</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-lime-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Claude pode executar comandos git por voce, eliminando necessidade de memorizar sintaxe.</p>
+              </div>
+              <div>
+                <span class="text-lime-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Deixar Claude fazer git libera voce para focar no que realmente importa.</p>
+              </div>
+              <div>
+                <span class="text-lime-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Natural language git, auto commit, auto push, MCP integration.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-lime-500/20 text-lime-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+            <span class="text-lg">🔄</span>
+            <div>
+              <span class="font-medium">Code Versioning</span>
+              <span class="text-neutral-500 text-sm ml-2">- Gerenciando versoes</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-lime-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Sistema de controle de versao que permite manter multiplas versoes do codigo organizadas.</p>
+              </div>
+              <div>
+                <span class="text-lime-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Versionamento e essencial para trabalho profissional e colaboracao em equipe.</p>
+              </div>
+              <div>
+                <span class="text-lime-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Version history, branches, main branch, feature branches.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+        <a href="modulo-8-6.html" class="px-4 py-2 text-sm bg-lime-600 hover:bg-lime-500 text-white rounded-lg transition-colors">
+          Ver Modulo Completo
+        </a>
+      </div>
+    </div>
+
+    <!-- MODULO 8.7 -->
+    <div class="bg-dark-800 rounded-xl border border-dark-600 mb-6">
+      <div class="p-6 border-b border-dark-600">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-lime-400 font-bold">8.7</span>
+          <span class="text-xs text-neutral-500">~40 min</span>
+        </div>
+        <h3 class="text-2xl font-bold mb-2">🚀 Deploy com Vercel</h3>
+        <p class="text-neutral-400 text-sm">Publique seu app na web com Vercel, configure dominio e ambiente de producao.</p>
+      </div>
+
+      <div class="divide-y divide-dark-600">
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-lime-500/20 text-lime-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+            <span class="text-lg">⚙️</span>
+            <div>
+              <span class="font-medium">Vercel Setup</span>
+              <span class="text-neutral-500 text-sm ml-2">- Configurando conta</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-lime-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Vercel e uma plataforma de deploy que hospeda apps web e sincroniza automaticamente com GitHub.</p>
+              </div>
+              <div>
+                <span class="text-lime-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Vercel torna deploy tao simples quanto fazer push - mudancas vao ao ar em segundos.</p>
+              </div>
+              <div>
+                <span class="text-lime-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Vercel account, project creation, GitHub connection, dashboard.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-lime-500/20 text-lime-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+            <span class="text-lg">📥</span>
+            <div>
+              <span class="font-medium">Import Repo</span>
+              <span class="text-neutral-500 text-sm ml-2">- Importando do GitHub</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-lime-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Importar um repositorio GitHub para Vercel para iniciar o processo de deploy automatico.</p>
+              </div>
+              <div>
+                <span class="text-lime-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">A importacao conecta seu codigo ao pipeline de deploy com um clique.</p>
+              </div>
+              <div>
+                <span class="text-lime-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Import git repository, select repo, project settings, deploy button.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-lime-500/20 text-lime-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+            <span class="text-lg">🔐</span>
+            <div>
+              <span class="font-medium">Environment Variables</span>
+              <span class="text-neutral-500 text-sm ml-2">- Variaveis de ambiente</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-lime-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Variaveis de ambiente armazenam valores sensiveis como URLs de webhook de forma segura.</p>
+              </div>
+              <div>
+                <span class="text-lime-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Env vars protegem credenciais de ficarem expostas no codigo publico.</p>
+              </div>
+              <div>
+                <span class="text-lime-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Environment variables, key-value pairs, production secrets, settings.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-lime-500/20 text-lime-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+            <span class="text-lg">🔗</span>
+            <div>
+              <span class="font-medium">Webhook Hardcode vs Env</span>
+              <span class="text-neutral-500 text-sm ml-2">- Onde guardar URLs</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-lime-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Decisao entre colocar URL do webhook direto no codigo (simples) ou em env var (seguro).</p>
+              </div>
+              <div>
+                <span class="text-lime-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Entender trade-offs ajuda a escolher a abordagem certa para cada situacao.</p>
+              </div>
+              <div>
+                <span class="text-lime-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Hardcoded URL, environment variable, security vs simplicity, public exposure.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-lime-500/20 text-lime-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+            <span class="text-lg">🌐</span>
+            <div>
+              <span class="font-medium">Domain Configuration</span>
+              <span class="text-neutral-500 text-sm ml-2">- Configurando dominio</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-lime-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Conectar um dominio personalizado ao app ao inves de usar o subdominio vercel.app padrao.</p>
+              </div>
+              <div>
+                <span class="text-lime-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Dominios personalizados dao aparencia profissional e sao mais faceis de lembrar.</p>
+              </div>
+              <div>
+                <span class="text-lime-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Custom domain, DNS records, A record, domain transfer, vercel.app.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-lime-500/20 text-lime-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+            <span class="text-lg">🔄</span>
+            <div>
+              <span class="font-medium">Auto-deploy on Push</span>
+              <span class="text-neutral-500 text-sm ml-2">- Deploy automatico</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-lime-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Vercel detecta mudancas no GitHub e automaticamente faz redeploy do app em segundos.</p>
+              </div>
+              <div>
+                <span class="text-lime-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Auto-deploy elimina passos manuais e garante que producao sempre reflete o codigo mais recente.</p>
+              </div>
+              <div>
+                <span class="text-lime-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Continuous deployment, auto rebuild, GitHub sync, instant updates.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+        <a href="modulo-8-7.html" class="px-4 py-2 text-sm bg-lime-600 hover:bg-lime-500 text-white rounded-lg transition-colors">
+          Ver Modulo Completo
+        </a>
+      </div>
+    </div>
+
+    <!-- MODULO 8.8 -->
+    <div class="bg-dark-800 rounded-xl border border-dark-600 mb-6">
+      <div class="p-6 border-b border-dark-600">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-lime-400 font-bold">8.8</span>
+          <span class="text-xs text-neutral-500">~35 min</span>
+        </div>
+        <h3 class="text-2xl font-bold mb-2">🔒 Security e Best Practices</h3>
+        <p class="text-neutral-400 text-sm">Garanta que seu app esta seguro com revisao de credenciais e boas praticas de producao.</p>
+      </div>
+
+      <div class="divide-y divide-dark-600">
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-lime-500/20 text-lime-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+            <span class="text-lg">🔍</span>
+            <div>
+              <span class="font-medium">/security Review</span>
+              <span class="text-neutral-500 text-sm ml-2">- Auditoria de seguranca</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-lime-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Comando para Claude analisar todo o codigo em busca de vulnerabilidades e credenciais expostas.</p>
+              </div>
+              <div>
+                <span class="text-lime-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Revisao de seguranca automatica encontra problemas que voce pode ter esquecido.</p>
+              </div>
+              <div>
+                <span class="text-lime-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Security audit, vulnerability scan, credential check, code review.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-lime-500/20 text-lime-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+            <span class="text-lg">⚠️</span>
+            <div>
+              <span class="font-medium">Credentials Exposed</span>
+              <span class="text-neutral-500 text-sm ml-2">- Credenciais vazadas</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-lime-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Situacao onde API keys ou tokens ficam visiveis em codigo publico no GitHub.</p>
+              </div>
+              <div>
+                <span class="text-lime-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Credenciais expostas podem ser exploradas por bots em minutos apos o push.</p>
+              </div>
+              <div>
+                <span class="text-lime-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Public exposure, API key leak, webhook URL visible, immediate risk.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-lime-500/20 text-lime-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+            <span class="text-lg">📁</span>
+            <div>
+              <span class="font-medium">MCP JSON Local</span>
+              <span class="text-neutral-500 text-sm ml-2">- Arquivo local apenas</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-lime-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">O arquivo MCP JSON com credenciais existe apenas localmente e nunca deve ir para GitHub.</p>
+              </div>
+              <div>
+                <span class="text-lime-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Entender que credenciais locais estao seguras alivia preocupacao desnecessaria.</p>
+              </div>
+              <div>
+                <span class="text-lime-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Local storage, not in repo, gitignore, machine-only access.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-lime-500/20 text-lime-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+            <span class="text-lg">🔄</span>
+            <div>
+              <span class="font-medium">Rotating Tokens</span>
+              <span class="text-neutral-500 text-sm ml-2">- Renovando credenciais</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-lime-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Pratica de trocar tokens e API keys periodicamente ou apos possivel exposicao.</p>
+              </div>
+              <div>
+                <span class="text-lime-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Rotacao de tokens limita o dano caso uma credencial seja comprometida.</p>
+              </div>
+              <div>
+                <span class="text-lime-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Token rotation, credential refresh, expiration policy, security hygiene.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-lime-500/20 text-lime-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+            <span class="text-lg">🛡️</span>
+            <div>
+              <span class="font-medium">Production Safety</span>
+              <span class="text-neutral-500 text-sm ml-2">- Seguranca em producao</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-lime-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Conjunto de praticas para garantir que apps em producao nao sejam abusados ou hackeados.</p>
+              </div>
+              <div>
+                <span class="text-lime-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Apps inseguros podem gerar custos inesperados ou comprometer dados de usuarios.</p>
+              </div>
+              <div>
+                <span class="text-lime-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Rate limiting, authentication, webhook security, abuse prevention.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-lime-500/20 text-lime-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+            <span class="text-lg">🔁</span>
+            <div>
+              <span class="font-medium">Continuous Iteration</span>
+              <span class="text-neutral-500 text-sm ml-2">- Melhoria continua</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-lime-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Processo de continuar melhorando o app apos o lancamento inicial com feedback real.</p>
+              </div>
+              <div>
+                <span class="text-lime-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Apps de sucesso sao resultado de iteracao continua, nao de perfeicao inicial.</p>
+              </div>
+              <div>
+                <span class="text-lime-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Feature iteration, user feedback, continuous improvement, agile development.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+        <a href="modulo-8-8.html" class="px-4 py-2 text-sm bg-lime-600 hover:bg-lime-500 text-white rounded-lg transition-colors">
+          Ver Modulo Completo
+        </a>
+      </div>
+    </div>
+
+    <!-- Navegacao -->
+    <div class="flex flex-col sm:flex-row gap-4 mt-12">
+      <a href="../trilha7/index.html" class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors">
+        ← Trilha Anterior: AICode
+      </a>
+      <a href="../trilha9/index.html" class="flex-1 text-center px-6 py-3 bg-lime-600 text-white rounded-lg font-semibold hover:bg-lime-500 transition-colors">
+        Proxima Trilha: MCPMaster →
+      </a>
+    </div>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-dark-600 py-8 mt-16">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+      <p>Claude Code 2026 - Guia Completo em Portugues</p>
+    </div>
+  </footer>
+
+  <!-- SCRIPTS -->
+  <script>
+    function toggleTopic(button) {
+      const topicItem = button.closest('.topic-item');
+      const explanation = topicItem.querySelector('.topic-explanation');
+      const moduleCard = button.closest('.bg-dark-800');
+
+      // Fecha outros topicos do mesmo modulo
+      moduleCard.querySelectorAll('.topic-explanation.active').forEach(exp => {
+        if (exp !== explanation) {
+          exp.classList.remove('active');
+        }
+      });
+
+      // Toggle do topico atual
+      explanation.classList.toggle('active');
+    }
+
+    // Theme Toggle
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    const html = document.documentElement;
+
+    // Inicializa icone correto
+    if (localStorage.getItem('theme') === 'light' || (!localStorage.getItem('theme') && !html.classList.contains('dark'))) {
+      themeToggleDarkIcon.classList.remove('hidden');
+      html.classList.remove('dark');
+    } else {
+      themeToggleLightIcon.classList.remove('hidden');
+    }
+
+    // Click handler
+    themeToggle.addEventListener('click', () => {
+      themeToggleDarkIcon.classList.toggle('hidden');
+      themeToggleLightIcon.classList.toggle('hidden');
+      html.classList.toggle('dark');
+      localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+    });
+  </script>
+
+</body>
+</html>

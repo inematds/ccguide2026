@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Modulo 8.8: Security e Best Practices | Claude Code 2026</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: '#FACC15',
+            dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' }
+          }
+        }
+      }
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+
+    /* Light mode overrides */
+    html:not(.dark) body {
+      background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 50%, #f1f5f9 100%);
+    }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+  </style>
+</head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen">
+
+  <!-- NAVIGATION -->
+  <nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-14">
+        <div class="flex items-center space-x-4">
+          <a href="../../index.html" class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300">
+            <span class="text-2xl">🤖</span>
+            <span class="font-bold text-lg hidden sm:inline">Claude Code 2026</span>
+          </a>
+          <span class="text-neutral-600">|</span>
+          <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300 text-sm font-medium">INEMA.CLUB</a>
+        </div>
+
+        <div class="flex items-center space-x-1 sm:space-x-2">
+          <a href="../trilha1/index.html" class="px-2 py-1.5 rounded-lg text-xs font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors">
+            <span class="sm:hidden">T1</span>
+            <span class="hidden sm:inline">Fundamentos</span>
+          </a>
+          <a href="../trilha2/index.html" class="px-2 py-1.5 rounded-lg text-xs font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors">
+            <span class="sm:hidden">T2</span>
+            <span class="hidden sm:inline">Comandos</span>
+          </a>
+          <a href="../trilha3/index.html" class="px-2 py-1.5 rounded-lg text-xs font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors">
+            <span class="sm:hidden">T3</span>
+            <span class="hidden sm:inline">Avancado</span>
+          </a>
+          <a href="../trilha4/index.html" class="px-2 py-1.5 rounded-lg text-xs font-semibold text-neutral-400 hover:text-amber-400 hover:bg-amber-500/10 transition-colors">
+            <span class="sm:hidden">T4</span>
+            <span class="hidden sm:inline">MiniCurso</span>
+          </a>
+          <a href="../trilha5/index.html" class="px-2 py-1.5 rounded-lg text-xs font-semibold text-neutral-400 hover:text-teal-400 hover:bg-teal-500/10 transition-colors">
+            <span class="sm:hidden">T5</span>
+            <span class="hidden sm:inline">95CC</span>
+          </a>
+          <a href="../trilha6/index.html" class="px-2 py-1.5 rounded-lg text-xs font-semibold text-neutral-400 hover:text-rose-400 hover:bg-rose-500/10 transition-colors">
+            <span class="sm:hidden">T6</span>
+            <span class="hidden sm:inline">BeginCC</span>
+          </a>
+          <a href="../trilha7/index.html" class="px-2 py-1.5 rounded-lg text-xs font-semibold text-neutral-400 hover:text-cyan-400 hover:bg-cyan-500/10 transition-colors">
+            <span class="sm:hidden">T7</span>
+            <span class="hidden sm:inline">AICode</span>
+          </a>
+          <a href="index.html" class="px-2 py-1.5 rounded-lg text-xs font-semibold text-lime-400 bg-lime-500/10">
+            <span class="sm:hidden">T8</span>
+            <span class="hidden sm:inline">QQApp</span>
+          </a>
+          <a href="../trilha9/index.html" class="px-2 py-1.5 rounded-lg text-xs font-semibold text-neutral-400 hover:text-orange-400 hover:bg-orange-500/10 transition-colors">
+            <span class="sm:hidden">T9</span>
+            <span class="hidden sm:inline">MCPMaster</span>
+          </a>
+
+          <button id="theme-toggle" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2">
+            <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+            </svg>
+            <svg id="theme-toggle-light-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- BREADCRUMB -->
+  <nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+    <div class="flex items-center space-x-2 text-sm text-neutral-400">
+      <a href="../../index.html" class="hover:text-lime-400">Inicio</a>
+      <span>/</span>
+      <a href="index.html" class="hover:text-lime-400">Trilha 8</a>
+      <span>/</span>
+      <span class="text-lime-400">Modulo 8.8</span>
+    </div>
+  </nav>
+
+  <!-- HEADER -->
+  <header class="bg-gradient-to-br from-lime-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <span class="inline-block px-3 py-1 bg-lime-500/20 text-lime-400 text-xs font-semibold rounded-full mb-4">
+        MODULO 8.8
+      </span>
+      <h1 class="text-3xl sm:text-4xl font-bold mb-4">🔒 Security e Best Practices</h1>
+      <p class="text-lg text-neutral-400 max-w-3xl">
+        Proteja seu app e mantenha boas praticas de seguranca.
+        Aprenda a fazer security review, rotacionar tokens e iterar com seguranca.
+      </p>
+
+      <div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-lime-400">6</div>
+          <div class="text-xs text-neutral-400">Topicos</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-lime-400">40</div>
+          <div class="text-xs text-neutral-400">Minutos</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-lime-400">Avancado</div>
+          <div class="text-xs text-neutral-400">Nivel</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-lime-400">Pratico</div>
+          <div class="text-xs text-neutral-400">Tipo</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN CONTENT -->
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+    <!-- TOPICO 1 -->
+    <section id="topico-1" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-lime-500/20 text-lime-400 font-bold text-xl">1</span>
+        <h2 class="text-2xl font-bold">🔍 /security review</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        O comando <strong class="text-lime-400">/security</strong> no Claude Code faz uma analise
+        completa do codigo em busca de vulnerabilidades e problemas de seguranca.
+      </p>
+
+      <div class="bg-gradient-to-br from-lime-900/30 to-dark-800 rounded-xl border border-lime-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-lime-400 mb-4 flex items-center">
+          <span class="mr-2">🎯</span> O que e?
+        </h3>
+        <ul class="space-y-2 text-neutral-300">
+          <li class="flex items-start space-x-2">
+            <span class="text-lime-400 mt-1">•</span>
+            <span>Comando slash que aciona revisao de seguranca</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-lime-400 mt-1">•</span>
+            <span>Claude analisa o codigo buscando vulnerabilidades</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-lime-400 mt-1">•</span>
+            <span>Identifica secrets expostos, SQL injection, XSS</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-lime-400 mt-1">•</span>
+            <span>Sugere correcoes para cada problema encontrado</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">💡</span> Por que aprender?
+        </h3>
+        <p class="text-neutral-300">
+          Security review antes do deploy pode evitar dores de cabeca.
+          Melhor prevenir vulnerabilidades do que corrigir depois de um ataque.
+        </p>
+      </div>
+
+      <div class="mt-6 bg-dark-800 rounded-xl border border-dark-600 p-6">
+        <h3 class="text-lg font-semibold text-white mb-4 flex items-center">
+          <span class="mr-2">📚</span> Conceitos-chave
+        </h3>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div class="bg-dark-700 rounded-lg p-4">
+            <h4 class="font-semibold text-lime-400 mb-2">/security</h4>
+            <p class="text-sm text-neutral-400">Comando para iniciar review</p>
+          </div>
+          <div class="bg-dark-700 rounded-lg p-4">
+            <h4 class="font-semibold text-lime-400 mb-2">OWASP Top 10</h4>
+            <p class="text-sm text-neutral-400">Vulnerabilidades mais comuns</p>
+          </div>
+          <div class="bg-dark-700 rounded-lg p-4">
+            <h4 class="font-semibold text-lime-400 mb-2">Remediacoes</h4>
+            <p class="text-sm text-neutral-400">Correcoes sugeridas por Claude</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TOPICO 2 -->
+    <section id="topico-2" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-lime-500/20 text-lime-400 font-bold text-xl">2</span>
+        <h2 class="text-2xl font-bold">🚨 Credentials Exposed</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        <strong class="text-lime-400">Credenciais expostas</strong> e um dos erros mais graves em seguranca.
+        Tokens, senhas e API keys nunca devem estar no codigo.
+      </p>
+
+      <div class="bg-gradient-to-br from-lime-900/30 to-dark-800 rounded-xl border border-lime-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-lime-400 mb-4 flex items-center">
+          <span class="mr-2">🎯</span> O que e?
+        </h3>
+        <ul class="space-y-2 text-neutral-300">
+          <li class="flex items-start space-x-2">
+            <span class="text-lime-400 mt-1">•</span>
+            <span>Secrets visiveis no codigo-fonte ou historico git</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-lime-400 mt-1">•</span>
+            <span>Bots escaneiam GitHub em busca de tokens expostos</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-lime-400 mt-1">•</span>
+            <span>Pode levar a invasoes, roubo de dados, custos</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-lime-400 mt-1">•</span>
+            <span>Mesmo deletando, historico git mantem o secret</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-red-400 mb-3 flex items-center">
+          <span class="mr-2">🚨</span> Perigo Real
+        </h3>
+        <p class="text-neutral-300">
+          Se voce commitou um token por engano, considere-o comprometido.
+          Rotacione imediatamente, mesmo que tenha deletado o arquivo.
+        </p>
+      </div>
+
+      <div class="mt-6 bg-dark-800 rounded-xl border border-dark-600 p-6">
+        <h3 class="text-lg font-semibold text-white mb-4 flex items-center">
+          <span class="mr-2">📚</span> Conceitos-chave
+        </h3>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div class="bg-dark-700 rounded-lg p-4">
+            <h4 class="font-semibold text-lime-400 mb-2">.gitignore</h4>
+            <p class="text-sm text-neutral-400">Excluir arquivos sensiveis</p>
+          </div>
+          <div class="bg-dark-700 rounded-lg p-4">
+            <h4 class="font-semibold text-lime-400 mb-2">Secret Scanning</h4>
+            <p class="text-sm text-neutral-400">GitHub alerta sobre leaks</p>
+          </div>
+          <div class="bg-dark-700 rounded-lg p-4">
+            <h4 class="font-semibold text-lime-400 mb-2">git filter-branch</h4>
+            <p class="text-sm text-neutral-400">Remover do historico (complexo)</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TOPICO 3 -->
+    <section id="topico-3" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-lime-500/20 text-lime-400 font-bold text-xl">3</span>
+        <h2 class="text-2xl font-bold">📁 MCP JSON Local</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        O arquivo <strong class="text-lime-400">mcp.json</strong> pode conter tokens e URLs sensiveis.
+        Deve permanecer local e nunca ser commitado no repositorio.
+      </p>
+
+      <div class="bg-gradient-to-br from-lime-900/30 to-dark-800 rounded-xl border border-lime-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-lime-400 mb-4 flex items-center">
+          <span class="mr-2">🎯</span> O que e?
+        </h3>
+        <ul class="space-y-2 text-neutral-300">
+          <li class="flex items-start space-x-2">
+            <span class="text-lime-400 mt-1">•</span>
+            <span>Arquivo de configuracao dos MCPs do Claude Code</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-lime-400 mt-1">•</span>
+            <span>Pode conter API keys e tokens de servicos</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-lime-400 mt-1">•</span>
+            <span>Deve estar listado no .gitignore</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-lime-400 mt-1">•</span>
+            <span>Cada desenvolvedor tem seu mcp.json local</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">💡</span> Por que aprender?
+        </h3>
+        <p class="text-neutral-300">
+          MCP JSON e configuracao pessoal. Compartilhar expoe suas credenciais
+          de servicos como n8n, databases e APIs externas.
+        </p>
+      </div>
+
+      <div class="mt-6 bg-dark-800 rounded-xl border border-dark-600 p-6">
+        <h3 class="text-lg font-semibold text-white mb-4 flex items-center">
+          <span class="mr-2">📚</span> Conceitos-chave
+        </h3>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div class="bg-dark-700 rounded-lg p-4">
+            <h4 class="font-semibold text-lime-400 mb-2">mcp.json</h4>
+            <p class="text-sm text-neutral-400">Config local dos MCPs</p>
+          </div>
+          <div class="bg-dark-700 rounded-lg p-4">
+            <h4 class="font-semibold text-lime-400 mb-2">.gitignore</h4>
+            <p class="text-sm text-neutral-400">Adicionar mcp.json aqui</p>
+          </div>
+          <div class="bg-dark-700 rounded-lg p-4">
+            <h4 class="font-semibold text-lime-400 mb-2">mcp.example.json</h4>
+            <p class="text-sm text-neutral-400">Template sem secrets para repo</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TOPICO 4 -->
+    <section id="topico-4" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-lime-500/20 text-lime-400 font-bold text-xl">4</span>
+        <h2 class="text-2xl font-bold">🔄 Rotating Tokens</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        <strong class="text-lime-400">Rotacao de tokens</strong> e a pratica de trocar credenciais
+        periodicamente ou apos suspeita de comprometimento.
+      </p>
+
+      <div class="bg-gradient-to-br from-lime-900/30 to-dark-800 rounded-xl border border-lime-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-lime-400 mb-4 flex items-center">
+          <span class="mr-2">🎯</span> O que e?
+        </h3>
+        <ul class="space-y-2 text-neutral-300">
+          <li class="flex items-start space-x-2">
+            <span class="text-lime-400 mt-1">•</span>
+            <span>Gerar novo token e invalidar o antigo</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-lime-400 mt-1">•</span>
+            <span>Limita o tempo de exposicao em caso de leak</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-lime-400 mt-1">•</span>
+            <span>Deve ser feito imediatamente apos comprometimento</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-lime-400 mt-1">•</span>
+            <span>Algumas empresas rotacionam tokens periodicamente</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">💡</span> Por que aprender?
+        </h3>
+        <p class="text-neutral-300">
+          Se um token vazou, rotacionar e a unica forma de fechar a porta.
+          Token exposto = token comprometido, sempre.
+        </p>
+      </div>
+
+      <div class="mt-6 bg-dark-800 rounded-xl border border-dark-600 p-6">
+        <h3 class="text-lg font-semibold text-white mb-4 flex items-center">
+          <span class="mr-2">📚</span> Conceitos-chave
+        </h3>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div class="bg-dark-700 rounded-lg p-4">
+            <h4 class="font-semibold text-lime-400 mb-2">Regenerar Token</h4>
+            <p class="text-sm text-neutral-400">Criar novo nas settings do servico</p>
+          </div>
+          <div class="bg-dark-700 rounded-lg p-4">
+            <h4 class="font-semibold text-lime-400 mb-2">Atualizar Envs</h4>
+            <p class="text-sm text-neutral-400">Trocar em todas as plataformas</p>
+          </div>
+          <div class="bg-dark-700 rounded-lg p-4">
+            <h4 class="font-semibold text-lime-400 mb-2">Revogar Antigo</h4>
+            <p class="text-sm text-neutral-400">Invalidar token comprometido</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TOPICO 5 -->
+    <section id="topico-5" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-lime-500/20 text-lime-400 font-bold text-xl">5</span>
+        <h2 class="text-2xl font-bold">🛡️ Production Safety</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        <strong class="text-lime-400">Seguranca em producao</strong> envolve todas as praticas para
+        manter seu app seguro quando esta no ar e acessivel publicamente.
+      </p>
+
+      <div class="bg-gradient-to-br from-lime-900/30 to-dark-800 rounded-xl border border-lime-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-lime-400 mb-4 flex items-center">
+          <span class="mr-2">🎯</span> O que e?
+        </h3>
+        <ul class="space-y-2 text-neutral-300">
+          <li class="flex items-start space-x-2">
+            <span class="text-lime-400 mt-1">•</span>
+            <span>HTTPS obrigatorio para toda comunicacao</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-lime-400 mt-1">•</span>
+            <span>Headers de seguranca configurados (CSP, HSTS)</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-lime-400 mt-1">•</span>
+            <span>Rate limiting para prevenir abuso</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-lime-400 mt-1">•</span>
+            <span>Monitoramento de erros e acessos suspeitos</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">💡</span> Por que aprender?
+        </h3>
+        <p class="text-neutral-300">
+          App em producao e alvo real. Diferente de localhost, atacantes
+          podem encontrar e explorar vulnerabilidades.
+        </p>
+      </div>
+
+      <div class="mt-6 bg-dark-800 rounded-xl border border-dark-600 p-6">
+        <h3 class="text-lg font-semibold text-white mb-4 flex items-center">
+          <span class="mr-2">📚</span> Conceitos-chave
+        </h3>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div class="bg-dark-700 rounded-lg p-4">
+            <h4 class="font-semibold text-lime-400 mb-2">HTTPS</h4>
+            <p class="text-sm text-neutral-400">Comunicacao criptografada</p>
+          </div>
+          <div class="bg-dark-700 rounded-lg p-4">
+            <h4 class="font-semibold text-lime-400 mb-2">CORS</h4>
+            <p class="text-sm text-neutral-400">Controlar origens permitidas</p>
+          </div>
+          <div class="bg-dark-700 rounded-lg p-4">
+            <h4 class="font-semibold text-lime-400 mb-2">Input Validation</h4>
+            <p class="text-sm text-neutral-400">Validar toda entrada do usuario</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TOPICO 6 -->
+    <section id="topico-6" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-lime-500/20 text-lime-400 font-bold text-xl">6</span>
+        <h2 class="text-2xl font-bold">🔁 Continuous Iteration</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        <strong class="text-lime-400">Iteracao continua</strong> significa melhorar constantemente
+        seu app, incluindo seguranca, em ciclos regulares de desenvolvimento.
+      </p>
+
+      <div class="bg-gradient-to-br from-lime-900/30 to-dark-800 rounded-xl border border-lime-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-lime-400 mb-4 flex items-center">
+          <span class="mr-2">🎯</span> O que e?
+        </h3>
+        <ul class="space-y-2 text-neutral-300">
+          <li class="flex items-start space-x-2">
+            <span class="text-lime-400 mt-1">•</span>
+            <span>Mentalidade de melhoria constante</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-lime-400 mt-1">•</span>
+            <span>Revisar seguranca a cada nova feature</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-lime-400 mt-1">•</span>
+            <span>Atualizar dependencias regularmente</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-lime-400 mt-1">•</span>
+            <span>Monitorar e responder a incidentes</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">💡</span> Por que aprender?
+        </h3>
+        <p class="text-neutral-300">
+          Seguranca nao e um checkbox, e um processo. Ameacas evoluem,
+          seu app deve evoluir junto.
+        </p>
+      </div>
+
+      <div class="mt-6 bg-dark-800 rounded-xl border border-dark-600 p-6">
+        <h3 class="text-lg font-semibold text-white mb-4 flex items-center">
+          <span class="mr-2">📚</span> Conceitos-chave
+        </h3>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div class="bg-dark-700 rounded-lg p-4">
+            <h4 class="font-semibold text-lime-400 mb-2">npm audit</h4>
+            <p class="text-sm text-neutral-400">Checar vulnerabilidades em deps</p>
+          </div>
+          <div class="bg-dark-700 rounded-lg p-4">
+            <h4 class="font-semibold text-lime-400 mb-2">Dependabot</h4>
+            <p class="text-sm text-neutral-400">Atualizacoes automaticas</p>
+          </div>
+          <div class="bg-dark-700 rounded-lg p-4">
+            <h4 class="font-semibold text-lime-400 mb-2">Security Sprints</h4>
+            <p class="text-sm text-neutral-400">Ciclos dedicados a seguranca</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- RESUMO -->
+    <section class="mb-12">
+      <div class="bg-gradient-to-br from-lime-900/40 via-dark-800 to-dark-800 rounded-xl border border-lime-500/30 p-8">
+        <h2 class="text-2xl font-bold mb-6 flex items-center">
+          <span class="mr-3">📋</span> Resumo do Modulo
+        </h2>
+
+        <div class="space-y-4 mb-8">
+          <div class="flex items-start space-x-3">
+            <span class="text-lime-400 mt-1">✓</span>
+            <div>
+              <strong class="text-white">/security review</strong>
+              <span class="text-neutral-400"> - Claude analisa codigo por vulnerabilidades</span>
+            </div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-lime-400 mt-1">✓</span>
+            <div>
+              <strong class="text-white">Credentials Exposed</strong>
+              <span class="text-neutral-400"> - Nunca commitar secrets no codigo</span>
+            </div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-lime-400 mt-1">✓</span>
+            <div>
+              <strong class="text-white">MCP JSON Local</strong>
+              <span class="text-neutral-400"> - Manter configuracao fora do repo</span>
+            </div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-lime-400 mt-1">✓</span>
+            <div>
+              <strong class="text-white">Rotating Tokens</strong>
+              <span class="text-neutral-400"> - Trocar credenciais comprometidas</span>
+            </div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-lime-400 mt-1">✓</span>
+            <div>
+              <strong class="text-white">Production Safety</strong>
+              <span class="text-neutral-400"> - HTTPS, headers, rate limiting</span>
+            </div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-lime-400 mt-1">✓</span>
+            <div>
+              <strong class="text-white">Continuous Iteration</strong>
+              <span class="text-neutral-400"> - Seguranca e processo continuo</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6 mb-8">
+          <h3 class="text-lg font-semibold text-emerald-400 mb-3 flex items-center">
+            <span class="mr-2">🎉</span> Parabens!
+          </h3>
+          <p class="text-neutral-300">
+            Voce concluiu a <strong>Trilha 8 - QQApp</strong>! Agora voce sabe criar web apps
+            completos com Claude Code, desde o ambiente ate deploy seguro em producao.
+          </p>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-4">
+          <a href="modulo-8-7.html" class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors">
+            ← Modulo Anterior
+          </a>
+          <a href="index.html" class="flex-1 text-center px-6 py-3 bg-lime-600 text-white rounded-lg font-semibold hover:bg-lime-500 transition-colors">
+            Voltar para Trilha 8
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-dark-600 py-8 mt-16">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+      <p>Claude Code 2026 - Guia Completo em Portugues</p>
+    </div>
+  </footer>
+
+  <!-- SCRIPTS -->
+  <script>
+    // Theme Toggle
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    const html = document.documentElement;
+
+    if (localStorage.getItem('theme') === 'light' || (!localStorage.getItem('theme') && !html.classList.contains('dark'))) {
+      themeToggleDarkIcon.classList.remove('hidden');
+      html.classList.remove('dark');
+    } else {
+      themeToggleLightIcon.classList.remove('hidden');
+    }
+
+    themeToggle.addEventListener('click', () => {
+      themeToggleDarkIcon.classList.toggle('hidden');
+      themeToggleLightIcon.classList.toggle('hidden');
+      html.classList.toggle('dark');
+      localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+    });
+  </script>
+
+</body>
+</html>

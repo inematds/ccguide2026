@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Modulo 8.2: CLAUDE.md e System Prompt | Claude Code 2026</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: '#FACC15',
+            dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' }
+          }
+        }
+      }
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+    html:not(.dark) body { background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 50%, #f1f5f9 100%); }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+  </style>
+</head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen">
+
+  <!-- NAVIGATION -->
+  <nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-14">
+        <div class="flex items-center space-x-4">
+          <a href="../../index.html" class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300">
+            <span class="text-2xl">🤖</span>
+            <span class="font-bold text-lg hidden sm:inline">Claude Code 2026</span>
+          </a>
+          <span class="text-neutral-600">|</span>
+          <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300 text-sm font-medium">INEMA.CLUB</a>
+        </div>
+        <div class="flex items-center space-x-1 sm:space-x-2">
+          <a href="../trilha1/index.html" class="px-2 py-1.5 rounded-lg text-xs font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors"><span class="sm:hidden">T1</span><span class="hidden sm:inline">Fundamentos</span></a>
+          <a href="../trilha2/index.html" class="px-2 py-1.5 rounded-lg text-xs font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors"><span class="sm:hidden">T2</span><span class="hidden sm:inline">Comandos</span></a>
+          <a href="../trilha3/index.html" class="px-2 py-1.5 rounded-lg text-xs font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors"><span class="sm:hidden">T3</span><span class="hidden sm:inline">Avancado</span></a>
+          <a href="../trilha4/index.html" class="px-2 py-1.5 rounded-lg text-xs font-semibold text-neutral-400 hover:text-amber-400 hover:bg-amber-500/10 transition-colors"><span class="sm:hidden">T4</span><span class="hidden sm:inline">MiniCurso</span></a>
+          <a href="../trilha5/index.html" class="px-2 py-1.5 rounded-lg text-xs font-semibold text-neutral-400 hover:text-teal-400 hover:bg-teal-500/10 transition-colors"><span class="sm:hidden">T5</span><span class="hidden sm:inline">95CC</span></a>
+          <a href="../trilha6/index.html" class="px-2 py-1.5 rounded-lg text-xs font-semibold text-neutral-400 hover:text-rose-400 hover:bg-rose-500/10 transition-colors"><span class="sm:hidden">T6</span><span class="hidden sm:inline">BeginCC</span></a>
+          <a href="../trilha7/index.html" class="px-2 py-1.5 rounded-lg text-xs font-semibold text-neutral-400 hover:text-cyan-400 hover:bg-cyan-500/10 transition-colors"><span class="sm:hidden">T7</span><span class="hidden sm:inline">AICode</span></a>
+          <a href="index.html" class="px-2 py-1.5 rounded-lg text-xs font-semibold text-lime-400 bg-lime-500/10"><span class="sm:hidden">T8</span><span class="hidden sm:inline">QQApp</span></a>
+          <a href="../trilha9/index.html" class="px-2 py-1.5 rounded-lg text-xs font-semibold text-neutral-400 hover:text-orange-400 hover:bg-orange-500/10 transition-colors"><span class="sm:hidden">T9</span><span class="hidden sm:inline">MCPMaster</span></a>
+          <button id="theme-toggle" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2">
+            <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+            <svg id="theme-toggle-light-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- BREADCRUMB -->
+  <nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+    <div class="flex items-center space-x-2 text-sm text-neutral-400">
+      <a href="../../index.html" class="hover:text-lime-400">Inicio</a>
+      <span>/</span>
+      <a href="index.html" class="hover:text-lime-400">Trilha 8</a>
+      <span>/</span>
+      <span class="text-lime-400">Modulo 8.2</span>
+    </div>
+  </nav>
+
+  <!-- HEADER -->
+  <header class="bg-gradient-to-br from-lime-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <span class="inline-block px-3 py-1 bg-lime-500/20 text-lime-400 text-xs font-semibold rounded-full mb-4">MODULO 8.2</span>
+      <h1 class="text-3xl sm:text-4xl font-bold mb-4">📝 CLAUDE.md e System Prompt</h1>
+      <p class="text-lg text-neutral-400 max-w-3xl">Configure o arquivo CLAUDE.md para guiar Claude Code em projetos de conversao n8n para web apps. Um system prompt bem escrito elimina repeticoes e garante consistencia.</p>
+      <div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-lime-400">6</div><div class="text-xs text-neutral-400">Topicos</div></div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-lime-400">40</div><div class="text-xs text-neutral-400">Minutos</div></div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-lime-400">Avancado</div><div class="text-xs text-neutral-400">Nivel</div></div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-lime-400">Pratico</div><div class="text-xs text-neutral-400">Tipo</div></div>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN CONTENT -->
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+    <!-- TOPICO 1 -->
+    <section id="topico-1" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-lime-500/20 text-lime-400 font-bold text-xl">1</span>
+        <h2 class="text-2xl font-bold">📄 Criar claude.md</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">O arquivo <strong class="text-lime-400">claude.md</strong> funciona como system prompt para o projeto. Ele define o que estamos fazendo, quais tecnologias usar e quais regras seguir.</p>
+      <div class="bg-gradient-to-br from-lime-900/30 to-dark-800 rounded-xl border border-lime-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-lime-400 mb-4 flex items-center"><span class="mr-2">📋</span> Exemplo de claude.md para n8n-to-app</h3>
+        <div class="bg-dark-900 rounded-lg p-4 font-mono text-sm text-neutral-300">
+          <pre>
+# Projeto: n8n to Web App
+
+## Objetivo
+Transformar workflows n8n em aplicacoes web funcionais.
+
+## Processo
+1. Analisar workflow n8n via MCP
+2. Otimizar para conexao com front-end
+3. Construir interface web
+4. Testar localmente
+5. Deploy via Vercel
+
+## Tecnologias
+- Front-end: Tailwind CSS
+- Repos: Separados por app
+- Deploy: Vercel + GitHub
+
+## MCP Servers
+- n8n MCP (czlonkowski/n8n-mcp)
+- GitHub MCP
+
+## Regras
+- Perguntar antes de fazer mudancas grandes
+- Manter arquivos concisos
+- Documentar decisoes importantes
+          </pre>
+        </div>
+      </div>
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> Dica Pratica</h3>
+        <p class="text-neutral-300">Voce pode pedir para Claude ajudar a escrever o claude.md! Use plan mode e descreva o que quer fazer - ele fara perguntas e criara o arquivo.</p>
+      </div>
+    </section>
+
+    <!-- TOPICO 2 -->
+    <section id="topico-2" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-lime-500/20 text-lime-400 font-bold text-xl">2</span>
+        <h2 class="text-2xl font-bold">🔵 Plan Mode para Setup</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">O <strong class="text-lime-400">plan mode</strong> (azul) faz Claude pensar mais antes de agir. Ele faz perguntas, propoe planos e so executa quando voce aprovar.</p>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+        <div class="bg-dark-800 rounded-xl border border-blue-500/30 p-6">
+          <div class="flex items-center mb-4"><span class="text-2xl mr-3">🔵</span><h4 class="font-bold text-blue-400">Plan Mode</h4></div>
+          <p class="text-neutral-400 text-sm">Pensa e pergunta antes de agir. Ideal para setup inicial e planejamento.</p>
+        </div>
+        <div class="bg-dark-800 rounded-xl border border-orange-500/30 p-6">
+          <div class="flex items-center mb-4"><span class="text-2xl mr-3">🟠</span><h4 class="font-bold text-orange-400">Bypass Mode</h4></div>
+          <p class="text-neutral-400 text-sm">Executa sem confirmar cada acao. Bom para tarefas de confianca.</p>
+        </div>
+        <div class="bg-dark-800 rounded-xl border border-gray-500/30 p-6">
+          <div class="flex items-center mb-4"><span class="text-2xl mr-3">⚪</span><h4 class="font-bold text-white">Auto Mode</h4></div>
+          <p class="text-neutral-400 text-sm">Aceita tudo automaticamente. Use com cuidado!</p>
+        </div>
+      </div>
+      <div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6">
+        <h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center"><span class="mr-2">📊</span> Quando usar Plan Mode</h3>
+        <ul class="space-y-2 text-neutral-300">
+          <li><strong>Setup inicial:</strong> Configurando novo projeto</li>
+          <li><strong>Arquitetura:</strong> Decidindo estrutura do app</li>
+          <li><strong>Integracao:</strong> Conectando MCPs e skills</li>
+          <li><strong>Mudancas grandes:</strong> Refatoracoes significativas</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- TOPICO 3 -->
+    <section id="topico-3" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-lime-500/20 text-lime-400 font-bold text-xl">3</span>
+        <h2 class="text-2xl font-bold">❓ Clarification Questions</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">Em plan mode, Claude faz <strong class="text-lime-400">perguntas de esclarecimento</strong> antes de agir. Responda com clareza para obter resultados melhores.</p>
+      <div class="bg-gradient-to-br from-lime-900/30 to-dark-800 rounded-xl border border-lime-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-lime-400 mb-4">Perguntas Tipicas</h3>
+        <div class="space-y-4">
+          <div class="bg-dark-800 rounded-lg p-4">
+            <p class="text-blue-400 font-semibold mb-2">Claude pergunta:</p>
+            <p class="text-neutral-300 text-sm">"Qual a estrutura tipica dos workflows que voce quer converter?"</p>
+            <p class="text-lime-400 font-semibold mt-3 mb-2">Boa resposta:</p>
+            <p class="text-neutral-300 text-sm">"Variados triggers - alguns com chat trigger, outros com webhooks. Maioria usa AI agents."</p>
+          </div>
+          <div class="bg-dark-800 rounded-lg p-4">
+            <p class="text-blue-400 font-semibold mb-2">Claude pergunta:</p>
+            <p class="text-neutral-300 text-sm">"Prefere um repo por app ou todos no mesmo repo?"</p>
+            <p class="text-lime-400 font-semibold mt-3 mb-2">Boa resposta:</p>
+            <p class="text-neutral-300 text-sm">"Repos separados - facilita deploy individual e controle de versao."</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TOPICO 4 -->
+    <section id="topico-4" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-lime-500/20 text-lime-400 font-bold text-xl">4</span>
+        <h2 class="text-2xl font-bold">⚡ Auto-accept Changes</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">O modo <strong class="text-lime-400">bypass permissions</strong> aceita mudancas automaticamente. Isso acelera muito o desenvolvimento quando voce confia no que Claude esta fazendo.</p>
+      <div class="space-y-6 mb-6">
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-12 h-12 rounded-full bg-lime-500/20 flex items-center justify-center"><span class="text-lime-400 font-bold">1</span></div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+            <h4 class="font-semibold text-white mb-2">Habilitar nas Settings</h4>
+            <p class="text-neutral-300 text-sm">Abra settings do VS Code, busque "claude code" e marque "Allow dangerously skip permissions"</p>
+          </div>
+        </div>
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-12 h-12 rounded-full bg-lime-500/20 flex items-center justify-center"><span class="text-lime-400 font-bold">2</span></div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+            <h4 class="font-semibold text-white mb-2">Selecionar Bypass Mode</h4>
+            <p class="text-neutral-300 text-sm">No chat do Claude Code, clique no modo e selecione "Bypass permissions" (laranja)</p>
+          </div>
+        </div>
+      </div>
+      <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+        <h3 class="text-lg font-semibold text-red-400 mb-3 flex items-center"><span class="mr-2">⚠️</span> Atencao</h3>
+        <p class="text-neutral-300">Bypass mode executa comandos sem confirmacao. Sempre acompanhe o que Claude esta fazendo e esteja pronto para interromper se necessario.</p>
+      </div>
+    </section>
+
+    <!-- TOPICO 5 -->
+    <section id="topico-5" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-lime-500/20 text-lime-400 font-bold text-xl">5</span>
+        <h2 class="text-2xl font-bold">🔄 Projeto n8n para App</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">No claude.md, defina claramente que o <strong class="text-lime-400">objetivo e converter workflows n8n em apps</strong>. Isso guia todas as decisoes de Claude.</p>
+      <div class="bg-gradient-to-br from-lime-900/30 to-dark-800 rounded-xl border border-lime-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-lime-400 mb-4">Fluxo do Projeto</h3>
+        <div class="grid grid-cols-1 md:grid-cols-5 gap-4 text-center">
+          <div class="bg-dark-800 rounded-lg p-4"><span class="text-2xl">🔍</span><p class="text-sm text-neutral-300 mt-2">Analisar n8n</p></div>
+          <div class="bg-dark-800 rounded-lg p-4"><span class="text-2xl">🔧</span><p class="text-sm text-neutral-300 mt-2">Otimizar</p></div>
+          <div class="bg-dark-800 rounded-lg p-4"><span class="text-2xl">🎨</span><p class="text-sm text-neutral-300 mt-2">Front-end</p></div>
+          <div class="bg-dark-800 rounded-lg p-4"><span class="text-2xl">🧪</span><p class="text-sm text-neutral-300 mt-2">Testar</p></div>
+          <div class="bg-dark-800 rounded-lg p-4"><span class="text-2xl">🚀</span><p class="text-sm text-neutral-300 mt-2">Deploy</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TOPICO 6 -->
+    <section id="topico-6" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-lime-500/20 text-lime-400 font-bold text-xl">6</span>
+        <h2 class="text-2xl font-bold">📋 Guidelines Claras</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">Documente <strong class="text-lime-400">regras e padroes</strong> no claude.md. Isso garante consistencia mesmo quando Claude toma decisoes autonomas.</p>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+          <h4 class="font-bold text-emerald-400 mb-4">Incluir no claude.md</h4>
+          <ul class="space-y-3 text-neutral-300 text-sm">
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>CSS framework preferido (Tailwind)</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Estrategia de repos (separados)</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Plataforma de deploy (Vercel)</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>MCPs e Skills a usar</span></li>
+          </ul>
+        </div>
+        <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+          <h4 class="font-bold text-red-400 mb-4">Evitar</h4>
+          <ul class="space-y-3 text-neutral-300 text-sm">
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Arquivos muito longos</span></li>
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Instrucoes vagas</span></li>
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Contradições</span></li>
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Detalhes irrelevantes</span></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- RESUMO -->
+    <section class="mb-12">
+      <div class="bg-gradient-to-br from-lime-900/40 via-dark-800 to-dark-800 rounded-xl border border-lime-500/30 p-8">
+        <h2 class="text-2xl font-bold mb-6 flex items-center"><span class="mr-3">📋</span> Resumo do Modulo</h2>
+        <div class="space-y-4 mb-8">
+          <div class="flex items-start space-x-3"><span class="text-lime-400 mt-1">✓</span><div><strong class="text-white">claude.md e o system prompt</strong><span class="text-neutral-400"> - Define contexto e regras do projeto</span></div></div>
+          <div class="flex items-start space-x-3"><span class="text-lime-400 mt-1">✓</span><div><strong class="text-white">Plan mode para setup</strong><span class="text-neutral-400"> - Claude pergunta antes de agir</span></div></div>
+          <div class="flex items-start space-x-3"><span class="text-lime-400 mt-1">✓</span><div><strong class="text-white">Clarification questions</strong><span class="text-neutral-400"> - Respostas claras geram resultados melhores</span></div></div>
+          <div class="flex items-start space-x-3"><span class="text-lime-400 mt-1">✓</span><div><strong class="text-white">Bypass mode acelera</strong><span class="text-neutral-400"> - Quando voce confia no processo</span></div></div>
+          <div class="flex items-start space-x-3"><span class="text-lime-400 mt-1">✓</span><div><strong class="text-white">Objetivo claro</strong><span class="text-neutral-400"> - n8n para web app bem definido</span></div></div>
+          <div class="flex items-start space-x-3"><span class="text-lime-400 mt-1">✓</span><div><strong class="text-white">Guidelines documentadas</strong><span class="text-neutral-400"> - Consistencia nas decisoes autonomas</span></div></div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+          <h3 class="font-semibold text-lime-400 mb-2">Proximo Modulo:</h3>
+          <p class="text-neutral-300">8.3 - MCP Servers e Skills</p>
+        </div>
+        <div class="flex flex-col sm:flex-row gap-4">
+          <a href="modulo-8-1.html" class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors">← Modulo Anterior</a>
+          <a href="modulo-8-3.html" class="flex-1 text-center px-6 py-3 bg-lime-600 text-white rounded-lg font-semibold hover:bg-lime-500 transition-colors">Proximo Modulo →</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="border-t border-dark-600 py-8 mt-16">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+      <p>Claude Code 2026 - Guia Completo em Portugues</p>
+    </div>
+  </footer>
+
+  <script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    const html = document.documentElement;
+    if (localStorage.getItem('theme') === 'light' || (!localStorage.getItem('theme') && !html.classList.contains('dark'))) {
+      themeToggleDarkIcon.classList.remove('hidden');
+      html.classList.remove('dark');
+    } else {
+      themeToggleLightIcon.classList.remove('hidden');
+    }
+    themeToggle.addEventListener('click', () => {
+      themeToggleDarkIcon.classList.toggle('hidden');
+      themeToggleLightIcon.classList.toggle('hidden');
+      html.classList.toggle('dark');
+      localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+    });
+  </script>
+</body>
+</html>

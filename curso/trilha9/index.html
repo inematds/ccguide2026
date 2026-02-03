@@ -1,0 +1,1705 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trilha 9: Fabrica de Skills | Claude Code 2026</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: '#FACC15',
+            dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' }
+          }
+        }
+      }
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+    .topic-explanation { display: none; }
+    .topic-explanation.active { display: block; }
+
+    /* Light mode overrides */
+    html:not(.dark) body {
+      background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 50%, #f1f5f9 100%);
+    }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+  </style>
+</head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen">
+
+  <!-- NAVIGATION -->
+  <nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-14">
+        <!-- Logo + INEMA.CLUB -->
+        <div class="flex items-center space-x-4">
+          <a href="../../index.html" class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300">
+            <span class="text-2xl">🤖</span>
+            <span class="font-bold text-lg hidden sm:inline">Claude Code 2026</span>
+          </a>
+          <span class="text-neutral-600">|</span>
+          <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300 text-sm font-medium">INEMA.CLUB</a>
+        </div>
+
+        <!-- Trilhas + Theme Toggle -->
+        <div class="flex items-center space-x-1 sm:space-x-2">
+          <a href="../trilha1/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors">
+            <span class="sm:hidden">T1</span>
+            <span class="hidden sm:inline">Fundamentos</span>
+          </a>
+          <a href="../trilha2/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors">
+            <span class="sm:hidden">T2</span>
+            <span class="hidden sm:inline">Comandos</span>
+          </a>
+          <a href="../trilha3/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors">
+            <span class="sm:hidden">T3</span>
+            <span class="hidden sm:inline">Avancado</span>
+          </a>
+          <a href="../trilha4/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-amber-400 hover:bg-amber-500/10 transition-colors">
+            <span class="sm:hidden">T4</span>
+            <span class="hidden sm:inline">MCP</span>
+          </a>
+          <a href="../trilha5/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-teal-400 hover:bg-teal-500/10 transition-colors">
+            <span class="sm:hidden">T5</span>
+            <span class="hidden sm:inline">Hooks</span>
+          </a>
+          <a href="../trilha6/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-rose-400 hover:bg-rose-500/10 transition-colors">
+            <span class="sm:hidden">T6</span>
+            <span class="hidden sm:inline">Agentes</span>
+          </a>
+          <a href="../trilha7/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-cyan-400 hover:bg-cyan-500/10 transition-colors">
+            <span class="sm:hidden">T7</span>
+            <span class="hidden sm:inline">Prompts</span>
+          </a>
+          <a href="../trilha8/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-orange-400 hover:bg-orange-500/10 transition-colors">
+            <span class="sm:hidden">T8</span>
+            <span class="hidden sm:inline">Projetos</span>
+          </a>
+          <a href="index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-fuchsia-400 bg-fuchsia-500/10">
+            <span class="sm:hidden">T9</span>
+            <span class="hidden sm:inline">Skills</span>
+          </a>
+
+          <!-- Theme Toggle -->
+          <button id="theme-toggle" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2">
+            <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+            </svg>
+            <svg id="theme-toggle-light-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HEADER -->
+  <header class="bg-gradient-to-br from-fuchsia-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <span class="inline-block px-3 py-1 bg-fuchsia-500/20 text-fuchsia-400 text-xs font-semibold rounded-full mb-4">
+        TRILHA 9
+      </span>
+      <h1 class="text-3xl sm:text-4xl font-bold mb-4">🏭 Fabrica de Skills</h1>
+      <p class="text-lg text-neutral-400 max-w-3xl">
+        Domine a arte de criar skills customizados em escala. Aprenda a construir sua propria fabrica de skills
+        usando meta prompts, templates e automacao para produzir dezenas ou centenas de skills de alta qualidade.
+      </p>
+
+      <!-- Stats Grid -->
+      <div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-fuchsia-400">8</div>
+          <div class="text-xs text-neutral-400">Modulos</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-fuchsia-400">48</div>
+          <div class="text-xs text-neutral-400">Topicos</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-fuchsia-400">~4h</div>
+          <div class="text-xs text-neutral-400">Duracao</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-fuchsia-400">Avancado</div>
+          <div class="text-xs text-neutral-400">Nivel</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN CONTENT -->
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+    <!-- Navegacao Rapida -->
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
+      <a href="modulo-9-1.html" class="bg-dark-800 rounded-lg p-4 border border-dark-600 hover:border-fuchsia-500/50 transition-colors">
+        <span class="text-fuchsia-400 font-bold">9.1</span>
+        <p class="text-sm text-neutral-300 mt-1">Intro Skills</p>
+      </a>
+      <a href="modulo-9-2.html" class="bg-dark-800 rounded-lg p-4 border border-dark-600 hover:border-fuchsia-500/50 transition-colors">
+        <span class="text-fuchsia-400 font-bold">9.2</span>
+        <p class="text-sm text-neutral-300 mt-1">Anatomia</p>
+      </a>
+      <a href="modulo-9-3.html" class="bg-dark-800 rounded-lg p-4 border border-dark-600 hover:border-fuchsia-500/50 transition-colors">
+        <span class="text-fuchsia-400 font-bold">9.3</span>
+        <p class="text-sm text-neutral-300 mt-1">Factory Setup</p>
+      </a>
+      <a href="modulo-9-4.html" class="bg-dark-800 rounded-lg p-4 border border-dark-600 hover:border-fuchsia-500/50 transition-colors">
+        <span class="text-fuchsia-400 font-bold">9.4</span>
+        <p class="text-sm text-neutral-300 mt-1">Meta Prompts</p>
+      </a>
+      <a href="modulo-9-5.html" class="bg-dark-800 rounded-lg p-4 border border-dark-600 hover:border-fuchsia-500/50 transition-colors">
+        <span class="text-fuchsia-400 font-bold">9.5</span>
+        <p class="text-sm text-neutral-300 mt-1">Skills em Escala</p>
+      </a>
+      <a href="modulo-9-6.html" class="bg-dark-800 rounded-lg p-4 border border-dark-600 hover:border-fuchsia-500/50 transition-colors">
+        <span class="text-fuchsia-400 font-bold">9.6</span>
+        <p class="text-sm text-neutral-300 mt-1">Sample Data</p>
+      </a>
+      <a href="modulo-9-7.html" class="bg-dark-800 rounded-lg p-4 border border-dark-600 hover:border-fuchsia-500/50 transition-colors">
+        <span class="text-fuchsia-400 font-bold">9.7</span>
+        <p class="text-sm text-neutral-300 mt-1">Deployment</p>
+      </a>
+      <a href="modulo-9-8.html" class="bg-dark-800 rounded-lg p-4 border border-dark-600 hover:border-fuchsia-500/50 transition-colors">
+        <span class="text-fuchsia-400 font-bold">9.8</span>
+        <p class="text-sm text-neutral-300 mt-1">Sua Fabrica</p>
+      </a>
+    </div>
+
+    <!-- Divisor -->
+    <div class="flex items-center mb-8">
+      <div class="flex-1 border-t border-dark-600"></div>
+      <span class="px-4 text-neutral-500 text-sm">Conteudo Detalhado</span>
+      <div class="flex-1 border-t border-dark-600"></div>
+    </div>
+
+    <!-- MODULO 9.1 -->
+    <div class="bg-dark-800 rounded-xl border border-dark-600 mb-6">
+      <div class="p-6 border-b border-dark-600">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-fuchsia-400 font-bold">9.1</span>
+          <span class="text-xs text-neutral-500">~30 min</span>
+        </div>
+        <h3 class="text-2xl font-bold mb-2">🎯 Introducao aos Skills</h3>
+        <p class="text-neutral-400 text-sm">O que sao Claude Skills, como se comparam ao MCP, e quando usar cada abordagem para estender as capacidades do Claude.</p>
+      </div>
+
+      <div class="divide-y divide-dark-600">
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-fuchsia-500/20 text-fuchsia-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+            <span class="text-lg">🧩</span>
+            <div>
+              <span class="font-medium">O que sao Claude Skills</span>
+              <span class="text-neutral-500 text-sm ml-2">- Definicao e proposito</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-fuchsia-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Skills sao pacotes de instrucoes e codigo que ensinam Claude a realizar tarefas especificas de forma consistente e padronizada.</p>
+              </div>
+              <div>
+                <span class="text-fuchsia-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Skills permitem encapsular conhecimento especializado e reutiliza-lo em multiplas sessoes e projetos.</p>
+              </div>
+              <div>
+                <span class="text-fuchsia-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">SKILL.md, capabilities, prompts estruturados, reutilizacao, padronizacao.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-fuchsia-500/20 text-fuchsia-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+            <span class="text-lg">⚖️</span>
+            <div>
+              <span class="font-medium">Skills vs MCP</span>
+              <span class="text-neutral-500 text-sm ml-2">- Diferencas fundamentais</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-fuchsia-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Comparacao entre Skills (instrucoes e padroes) e MCP (ferramentas externas e APIs) como formas de estender Claude.</p>
+              </div>
+              <div>
+                <span class="text-fuchsia-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Escolher a abordagem correta evita complexidade desnecessaria e maximiza eficiencia.</p>
+              </div>
+              <div>
+                <span class="text-fuchsia-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Skills = instrucoes, MCP = ferramentas, quando usar cada um, complementaridade.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-fuchsia-500/20 text-fuchsia-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+            <span class="text-lg">🎯</span>
+            <div>
+              <span class="font-medium">Quando usar Skills</span>
+              <span class="text-neutral-500 text-sm ml-2">- Casos de uso ideais</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-fuchsia-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Identificacao dos cenarios onde skills sao a melhor solucao: analise de dados, geracao de relatorios, automacao de tarefas repetitivas.</p>
+              </div>
+              <div>
+                <span class="text-fuchsia-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Saber quando usar skills evita over-engineering e garante que voce esta usando a ferramenta certa.</p>
+              </div>
+              <div>
+                <span class="text-fuchsia-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Tarefas repetitivas, padronizacao, consistencia de output, knowledge encapsulation.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-fuchsia-500/20 text-fuchsia-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+            <span class="text-lg">🌐</span>
+            <div>
+              <span class="font-medium">Claude.ai vs Claude Code</span>
+              <span class="text-neutral-500 text-sm ml-2">- Ambientes de uso</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-fuchsia-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Skills funcionam tanto no Claude.ai (browser) quanto no Claude Code (CLI), com pequenas diferencas de implementacao.</p>
+              </div>
+              <div>
+                <span class="text-fuchsia-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Entender as diferencas permite criar skills portaveis que funcionam em ambos os ambientes.</p>
+              </div>
+              <div>
+                <span class="text-fuchsia-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Upload via browser, ~/.claude/skills/, project skills, portabilidade.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-fuchsia-500/20 text-fuchsia-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+            <span class="text-lg">⚙️</span>
+            <div>
+              <span class="font-medium">Capabilities Section</span>
+              <span class="text-neutral-500 text-sm ml-2">- Configuracao no Claude.ai</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-fuchsia-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">A secao Capabilities no Claude.ai onde voce pode fazer upload e gerenciar seus skills customizados.</p>
+              </div>
+              <div>
+                <span class="text-fuchsia-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">E a forma mais simples de testar e usar skills sem precisar de terminal ou CLI.</p>
+              </div>
+              <div>
+                <span class="text-fuchsia-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Settings, Upload Skill, zip files, ativacao, desativacao.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-fuchsia-500/20 text-fuchsia-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+            <span class="text-lg">💎</span>
+            <div>
+              <span class="font-medium">Beneficios Praticos</span>
+              <span class="text-neutral-500 text-sm ml-2">- ROI de skills</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-fuchsia-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Os ganhos concretos de produtividade, consistencia e qualidade que skills bem projetados proporcionam.</p>
+              </div>
+              <div>
+                <span class="text-fuchsia-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Entender o valor justifica o investimento de tempo em criar uma fabrica de skills.</p>
+              </div>
+              <div>
+                <span class="text-fuchsia-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Tempo economizado, consistencia de output, compartilhamento com equipes, escalabilidade.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+        <a href="modulo-9-1.html" class="px-4 py-2 text-sm bg-fuchsia-600 hover:bg-fuchsia-500 text-white rounded-lg transition-colors">
+          Ver Modulo Completo
+        </a>
+      </div>
+    </div>
+
+    <!-- MODULO 9.2 -->
+    <div class="bg-dark-800 rounded-xl border border-dark-600 mb-6">
+      <div class="p-6 border-b border-dark-600">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-fuchsia-400 font-bold">9.2</span>
+          <span class="text-xs text-neutral-500">~30 min</span>
+        </div>
+        <h3 class="text-2xl font-bold mb-2">🔬 Anatomia de um Skill</h3>
+        <p class="text-neutral-400 text-sm">Estrutura detalhada de um skill: SKILL.md, YAML frontmatter, Python files opcionais e todos os componentes necessarios.</p>
+      </div>
+
+      <div class="divide-y divide-dark-600">
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-fuchsia-500/20 text-fuchsia-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+            <span class="text-lg">📄</span>
+            <div>
+              <span class="font-medium">Estrutura SKILL.md</span>
+              <span class="text-neutral-500 text-sm ml-2">- O arquivo principal</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-fuchsia-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">O arquivo SKILL.md e o coracao de todo skill - contem metadados, instrucoes e exemplos de codigo.</p>
+              </div>
+              <div>
+                <span class="text-fuchsia-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Dominar a estrutura do SKILL.md e essencial para criar skills funcionais e bem documentados.</p>
+              </div>
+              <div>
+                <span class="text-fuchsia-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Markdown, frontmatter YAML, secoes obrigatorias, exemplos de uso.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-fuchsia-500/20 text-fuchsia-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+            <span class="text-lg">📋</span>
+            <div>
+              <span class="font-medium">YAML Frontmatter</span>
+              <span class="text-neutral-500 text-sm ml-2">- Metadados do skill</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-fuchsia-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">O bloco YAML no inicio do SKILL.md que define name, description e outros metadados essenciais.</p>
+              </div>
+              <div>
+                <span class="text-fuchsia-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">O frontmatter e usado pelo Claude para identificar quando ativar o skill - descricao ruim = skill nao ativado.</p>
+              </div>
+              <div>
+                <span class="text-fuchsia-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">--- delimitadores, name: kebab-case, description: triggers e keywords.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-fuchsia-500/20 text-fuchsia-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+            <span class="text-lg">🏷️</span>
+            <div>
+              <span class="font-medium">Name e Description</span>
+              <span class="text-neutral-500 text-sm ml-2">- Campos criticos</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-fuchsia-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Name deve ser kebab-case (sales-data-analyzer) e description deve incluir O QUE faz E QUANDO usar.</p>
+              </div>
+              <div>
+                <span class="text-fuchsia-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Estes campos determinam se Claude vai reconhecer e ativar seu skill corretamente.</p>
+              </div>
+              <div>
+                <span class="text-fuchsia-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Kebab-case naming, keywords de ativacao, contexto de uso, especificidade.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-fuchsia-500/20 text-fuchsia-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+            <span class="text-lg">🐍</span>
+            <div>
+              <span class="font-medium">Python Files Opcionais</span>
+              <span class="text-neutral-500 text-sm ml-2">- Codigo executavel</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-fuchsia-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Scripts Python que acompanham o skill para tarefas que exigem processamento de dados, geracao de arquivos, etc.</p>
+              </div>
+              <div>
+                <span class="text-fuchsia-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Nem todo skill precisa de Python - saber quando incluir evita complexidade desnecessaria.</p>
+              </div>
+              <div>
+                <span class="text-fuchsia-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Funcoes auxiliares, processamento de dados, geracao de outputs, bibliotecas necessarias.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-fuchsia-500/20 text-fuchsia-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+            <span class="text-lg">📊</span>
+            <div>
+              <span class="font-medium">Sample Data</span>
+              <span class="text-neutral-500 text-sm ml-2">- Dados de teste</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-fuchsia-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Arquivos CSV, JSON ou TXT de exemplo que permitem testar o skill imediatamente apos instalacao.</p>
+              </div>
+              <div>
+                <span class="text-fuchsia-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Sample data bem estruturado facilita testes e serve como documentacao do formato esperado.</p>
+              </div>
+              <div>
+                <span class="text-fuchsia-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">20-100 linhas, dados realisticos, headers descritivos, edge cases.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-fuchsia-500/20 text-fuchsia-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+            <span class="text-lg">💬</span>
+            <div>
+              <span class="font-medium">Demo Prompts</span>
+              <span class="text-neutral-500 text-sm ml-2">- Como invocar o skill</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-fuchsia-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Arquivo demo-prompt.txt com exemplos de como usuarios devem invocar o skill no chat.</p>
+              </div>
+              <div>
+                <span class="text-fuchsia-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Demo prompts facilitam a adocao do skill e servem como documentacao pratica.</p>
+              </div>
+              <div>
+                <span class="text-fuchsia-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Formato natural, mencao do nome do skill, exemplos copy-paste.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+        <a href="modulo-9-2.html" class="px-4 py-2 text-sm bg-fuchsia-600 hover:bg-fuchsia-500 text-white rounded-lg transition-colors">
+          Ver Modulo Completo
+        </a>
+      </div>
+    </div>
+
+    <!-- MODULO 9.3 -->
+    <div class="bg-dark-800 rounded-xl border border-dark-600 mb-6">
+      <div class="p-6 border-b border-dark-600">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-fuchsia-400 font-bold">9.3</span>
+          <span class="text-xs text-neutral-500">~30 min</span>
+        </div>
+        <h3 class="text-2xl font-bold mb-2">🏗️ Skills Factory Setup</h3>
+        <p class="text-neutral-400 text-sm">Configure sua propria fabrica de skills usando documentacao, exemplos do GitHub e o comando /init para criar o ambiente perfeito.</p>
+      </div>
+
+      <div class="divide-y divide-dark-600">
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-fuchsia-500/20 text-fuchsia-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+            <span class="text-lg">📁</span>
+            <div>
+              <span class="font-medium">Criar Pasta skills-factory</span>
+              <span class="text-neutral-500 text-sm ml-2">- Estrutura inicial</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-fuchsia-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Um projeto dedicado que servira como sua fabrica de producao de skills em escala.</p>
+              </div>
+              <div>
+                <span class="text-fuchsia-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Ter um ambiente organizado e essencial para produzir skills de forma sistematica e eficiente.</p>
+              </div>
+              <div>
+                <span class="text-fuchsia-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Pasta dedicada, separacao de concerns, organizacao de assets, versionamento.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-fuchsia-500/20 text-fuchsia-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+            <span class="text-lg">🔥</span>
+            <div>
+              <span class="font-medium">Documentacao Firecrawl</span>
+              <span class="text-neutral-500 text-sm ml-2">- Extraindo docs oficiais</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-fuchsia-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Usar Firecrawl ou ferramenta similar para converter a documentacao oficial de skills em markdown formatado para LLMs.</p>
+              </div>
+              <div>
+                <span class="text-fuchsia-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Ter a documentacao oficial no contexto permite que Claude gere skills seguindo as melhores praticas.</p>
+              </div>
+              <div>
+                <span class="text-fuchsia-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Web scraping, markdown conversion, firecrawl.dev, documentacao local.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-fuchsia-500/20 text-fuchsia-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+            <span class="text-lg">📦</span>
+            <div>
+              <span class="font-medium">Exemplos do GitHub</span>
+              <span class="text-neutral-500 text-sm ml-2">- Skills de referencia</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-fuchsia-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Baixar skills de exemplo do repositorio oficial da Anthropic para usar como templates e referencias.</p>
+              </div>
+              <div>
+                <span class="text-fuchsia-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Exemplos reais mostram padroes e best practices que podem ser replicados em seus skills.</p>
+              </div>
+              <div>
+                <span class="text-fuchsia-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">GitHub raw files, download direto, estrutura de pastas, SKILL.md exemplos.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-fuchsia-500/20 text-fuchsia-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+            <span class="text-lg">🚀</span>
+            <div>
+              <span class="font-medium">Comando /init</span>
+              <span class="text-neutral-500 text-sm ml-2">- Inicializacao automatica</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-fuchsia-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">O comando /init faz Claude analisar todo o conteudo da pasta e gerar um CLAUDE.md com seu entendimento.</p>
+              </div>
+              <div>
+                <span class="text-fuchsia-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">/init e o passo critico que faz Claude absorver a documentacao e exemplos de skills.</p>
+              </div>
+              <div>
+                <span class="text-fuchsia-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Inicializacao de sessao, geracao de CLAUDE.md, contexto automatico, upskilling.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-fuchsia-500/20 text-fuchsia-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+            <span class="text-lg">📝</span>
+            <div>
+              <span class="font-medium">Claude.md Automatico</span>
+              <span class="text-neutral-500 text-sm ml-2">- Centro de comando</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-fuchsia-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">O arquivo CLAUDE.md gerado automaticamente que resume todo o conhecimento sobre criacao de skills.</p>
+              </div>
+              <div>
+                <span class="text-fuchsia-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Este arquivo sera o guia de referencia de Claude para todas as proximas sessoes de geracao de skills.</p>
+              </div>
+              <div>
+                <span class="text-fuchsia-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Sumario de aprendizado, estrutura de skills, best practices documentadas.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-fuchsia-500/20 text-fuchsia-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+            <span class="text-lg">🧠</span>
+            <div>
+              <span class="font-medium">Upskill da Sessao</span>
+              <span class="text-neutral-500 text-sm ml-2">- Claude aprendeu</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-fuchsia-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Apos /init, Claude esta "treinado" com todo o conhecimento necessario para criar skills de alta qualidade.</p>
+              </div>
+              <div>
+                <span class="text-fuchsia-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Verificar que o upskill funcionou garante que as proximas geracoes serao corretas.</p>
+              </div>
+              <div>
+                <span class="text-fuchsia-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Verificacao de aprendizado, teste de conhecimento, pronto para geracao.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+        <a href="modulo-9-3.html" class="px-4 py-2 text-sm bg-fuchsia-600 hover:bg-fuchsia-500 text-white rounded-lg transition-colors">
+          Ver Modulo Completo
+        </a>
+      </div>
+    </div>
+
+    <!-- MODULO 9.4 -->
+    <div class="bg-dark-800 rounded-xl border border-dark-600 mb-6">
+      <div class="p-6 border-b border-dark-600">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-fuchsia-400 font-bold">9.4</span>
+          <span class="text-xs text-neutral-500">~30 min</span>
+        </div>
+        <h3 class="text-2xl font-bold mb-2">🎨 Meta Prompts</h3>
+        <p class="text-neutral-400 text-sm">Crie prompts que geram prompts - a tecnica de prompt engineering para producao em massa de skills consistentes.</p>
+      </div>
+
+      <div class="divide-y divide-dark-600">
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-fuchsia-500/20 text-fuchsia-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+            <span class="text-lg">🎭</span>
+            <div>
+              <span class="font-medium">Prompt Engineer Role</span>
+              <span class="text-neutral-500 text-sm ml-2">- Assumindo o papel</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-fuchsia-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Instruir Claude a assumir o papel de um prompt engineer expert especializado em criar skills.</p>
+              </div>
+              <div>
+                <span class="text-fuchsia-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Role prompting melhora significativamente a qualidade e consistencia das geracoes.</p>
+              </div>
+              <div>
+                <span class="text-fuchsia-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Role assignment, expertise simulation, consistent persona, quality focus.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-fuchsia-500/20 text-fuchsia-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+            <span class="text-lg">📐</span>
+            <div>
+              <span class="font-medium">Template para Skills</span>
+              <span class="text-neutral-500 text-sm ml-2">- Estrutura padrao</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-fuchsia-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Um template detalhado que define exatamente como cada skill deve ser estruturado e formatado.</p>
+              </div>
+              <div>
+                <span class="text-fuchsia-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Templates garantem consistencia entre skills e reduzem erros de formatacao.</p>
+              </div>
+              <div>
+                <span class="text-fuchsia-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">SKILL.md template, secoes obrigatorias, formatacao padrao, exemplos inclusos.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-fuchsia-500/20 text-fuchsia-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+            <span class="text-lg">🎛️</span>
+            <div>
+              <span class="font-medium">Variables Controlaveis</span>
+              <span class="text-neutral-500 text-sm ml-2">- Parametros de entrada</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-fuchsia-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Variaveis no final do meta prompt que permitem customizar: industria, quantidade, complexidade, etc.</p>
+              </div>
+              <div>
+                <span class="text-fuchsia-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Variaveis transformam um prompt fixo em uma ferramenta flexivel e reutilizavel.</p>
+              </div>
+              <div>
+                <span class="text-fuchsia-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">SKILL_TYPE, NUM_SKILLS, COMPANY_CONTEXT, BRAND_COLORS, SPECIFIC_REQUIREMENTS.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-fuchsia-500/20 text-fuchsia-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+            <span class="text-lg">🤔</span>
+            <div>
+              <span class="font-medium">Plan Mode para Design</span>
+              <span class="text-neutral-500 text-sm ml-2">- Planejando antes de executar</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-fuchsia-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Usar Shift+Tab para ativar plan mode e fazer Claude propor um plano antes de gerar os skills.</p>
+              </div>
+              <div>
+                <span class="text-fuchsia-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Plan mode permite alinhar expectativas e corrigir rumos antes de gastar tokens na geracao.</p>
+              </div>
+              <div>
+                <span class="text-fuchsia-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Shift+Tab, planejamento antes de execucao, validacao de abordagem, economia de tokens.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-fuchsia-500/20 text-fuchsia-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+            <span class="text-lg">❓</span>
+            <div>
+              <span class="font-medium">Clarification Questions</span>
+              <span class="text-neutral-500 text-sm ml-2">- Claude pergunta antes</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-fuchsia-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Incentivar Claude a fazer perguntas de esclarecimento antes de gerar para garantir alinhamento.</p>
+              </div>
+              <div>
+                <span class="text-fuchsia-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Perguntas previas evitam retrabralho e garantem que os skills atendam exatamente suas necessidades.</p>
+              </div>
+              <div>
+                <span class="text-fuchsia-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Ambiguidades, requisitos implicitos, confirmacao de entendimento, iteracao rapida.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-fuchsia-500/20 text-fuchsia-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+            <span class="text-lg">📤</span>
+            <div>
+              <span class="font-medium">Output Format</span>
+              <span class="text-neutral-500 text-sm ml-2">- Estrutura da saida</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-fuchsia-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Especificacao detalhada de como os skills gerados devem ser formatados e organizados.</p>
+              </div>
+              <div>
+                <span class="text-fuchsia-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Output format consistente facilita importacao automatica e organizacao dos skills gerados.</p>
+              </div>
+              <div>
+                <span class="text-fuchsia-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Pasta por skill, arquivos obrigatorios, sumario final, comandos de instalacao.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+        <a href="modulo-9-4.html" class="px-4 py-2 text-sm bg-fuchsia-600 hover:bg-fuchsia-500 text-white rounded-lg transition-colors">
+          Ver Modulo Completo
+        </a>
+      </div>
+    </div>
+
+    <!-- MODULO 9.5 -->
+    <div class="bg-dark-800 rounded-xl border border-dark-600 mb-6">
+      <div class="p-6 border-b border-dark-600">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-fuchsia-400 font-bold">9.5</span>
+          <span class="text-xs text-neutral-500">~30 min</span>
+        </div>
+        <h3 class="text-2xl font-bold mb-2">🚀 Gerando Skills em Escala</h3>
+        <p class="text-neutral-400 text-sm">De 1 a 100 skills: tecnicas para producao em massa mantendo qualidade, gerenciando tokens e organizando outputs.</p>
+      </div>
+
+      <div class="divide-y divide-dark-600">
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-fuchsia-500/20 text-fuchsia-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+            <span class="text-lg">📈</span>
+            <div>
+              <span class="font-medium">De 1 a 100 Skills</span>
+              <span class="text-neutral-500 text-sm ml-2">- Escalando a producao</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-fuchsia-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Estrategias para escalar a geracao de skills de forma eficiente sem perder qualidade.</p>
+              </div>
+              <div>
+                <span class="text-fuchsia-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">A verdadeira vantagem da fabrica esta em produzir muitos skills rapidamente.</p>
+              </div>
+              <div>
+                <span class="text-fuchsia-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Batch generation, iteracao em lotes, quality control em escala.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-fuchsia-500/20 text-fuchsia-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+            <span class="text-lg">🪙</span>
+            <div>
+              <span class="font-medium">Tokens e Context</span>
+              <span class="text-neutral-500 text-sm ml-2">- Gerenciando limites</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-fuchsia-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Entender como tokens e janela de contexto limitam quantos skills podem ser gerados por sessao.</p>
+              </div>
+              <div>
+                <span class="text-fuchsia-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Gerenciar tokens evita erros de contexto e otimiza custos de geracao.</p>
+              </div>
+              <div>
+                <span class="text-fuchsia-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">200K context window, tokens por skill, sessoes separadas, custo otimizado.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-fuchsia-500/20 text-fuchsia-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+            <span class="text-lg">🏷️</span>
+            <div>
+              <span class="font-medium">Kebab-case Naming</span>
+              <span class="text-neutral-500 text-sm ml-2">- Convencao obrigatoria</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-fuchsia-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">A convencao de nomenclatura obrigatoria: sales-data-analyzer, nao Sales_Data_Analyzer.</p>
+              </div>
+              <div>
+                <span class="text-fuchsia-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Nomes fora do padrao impedem o skill de ser reconhecido e importado corretamente.</p>
+              </div>
+              <div>
+                <span class="text-fuchsia-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Lowercase, hifens, sem espacos, sem underscores, sem camelCase.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-fuchsia-500/20 text-fuchsia-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+            <span class="text-lg">📁</span>
+            <div>
+              <span class="font-medium">Folder Structure</span>
+              <span class="text-neutral-500 text-sm ml-2">- Organizacao de arquivos</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-fuchsia-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Estrutura de pastas padrao: uma pasta por skill contendo SKILL.md, demo-prompt.txt, SETUP.md, dados.</p>
+              </div>
+              <div>
+                <span class="text-fuchsia-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Estrutura consistente facilita manutencao, distribuicao e importacao dos skills.</p>
+              </div>
+              <div>
+                <span class="text-fuchsia-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">skill-name/, SKILL.md, *.py, sample_data.csv, demo-prompt.txt.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-fuchsia-500/20 text-fuchsia-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+            <span class="text-lg">📦</span>
+            <div>
+              <span class="font-medium">Zip Files para Import</span>
+              <span class="text-neutral-500 text-sm ml-2">- Empacotamento</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-fuchsia-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Claude.ai so aceita skills em formato zip - cada skill precisa ser zipado para upload.</p>
+              </div>
+              <div>
+                <span class="text-fuchsia-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Gerar o zip automaticamente junto com o skill economiza tempo e evita erros manuais.</p>
+              </div>
+              <div>
+                <span class="text-fuchsia-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">zip -r skill-name.zip ., SKILL.md no root, estrutura interna correta.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-fuchsia-500/20 text-fuchsia-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+            <span class="text-lg">✅</span>
+            <div>
+              <span class="font-medium">Quality Checklist</span>
+              <span class="text-neutral-500 text-sm ml-2">- Verificacao de qualidade</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-fuchsia-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Lista de verificacao que Claude deve seguir antes de finalizar cada skill gerado.</p>
+              </div>
+              <div>
+                <span class="text-fuchsia-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Checklist automatizado previne erros comuns e garante qualidade consistente.</p>
+              </div>
+              <div>
+                <span class="text-fuchsia-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Kebab-case verificado, description completa, Python runnable, dados realisticos.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+        <a href="modulo-9-5.html" class="px-4 py-2 text-sm bg-fuchsia-600 hover:bg-fuchsia-500 text-white rounded-lg transition-colors">
+          Ver Modulo Completo
+        </a>
+      </div>
+    </div>
+
+    <!-- MODULO 9.6 -->
+    <div class="bg-dark-800 rounded-xl border border-dark-600 mb-6">
+      <div class="p-6 border-b border-dark-600">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-fuchsia-400 font-bold">9.6</span>
+          <span class="text-xs text-neutral-500">~30 min</span>
+        </div>
+        <h3 class="text-2xl font-bold mb-2">📊 Sample Data e Testing</h3>
+        <p class="text-neutral-400 text-sm">Crie dados de teste realisticos que demonstram o valor do skill e permitem validacao imediata apos instalacao.</p>
+      </div>
+
+      <div class="divide-y divide-dark-600">
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-fuchsia-500/20 text-fuchsia-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+            <span class="text-lg">📋</span>
+            <div>
+              <span class="font-medium">CSV Realistico</span>
+              <span class="text-neutral-500 text-sm ml-2">- Dados criveis</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-fuchsia-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Arquivos CSV com dados que parecem reais: nomes de empresas, datas, valores monetarios criveis.</p>
+              </div>
+              <div>
+                <span class="text-fuchsia-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Dados realisticos facilitam demonstracoes e ajudam usuarios a entender o formato esperado.</p>
+              </div>
+              <div>
+                <span class="text-fuchsia-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Nomes plausives, datas YYYY-MM-DD, valores com decimais, headers descritivos.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-fuchsia-500/20 text-fuchsia-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+            <span class="text-lg">💬</span>
+            <div>
+              <span class="font-medium">demo-prompt.txt</span>
+              <span class="text-neutral-500 text-sm ml-2">- Prompt de exemplo</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-fuchsia-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Arquivo com exemplos de prompts que usuarios podem copiar para testar o skill imediatamente.</p>
+              </div>
+              <div>
+                <span class="text-fuchsia-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Demo prompts reduzem friccao de adocao e servem como documentacao pratica.</p>
+              </div>
+              <div>
+                <span class="text-fuchsia-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">"Hey Claude, I just added the X skill...", copy-paste ready, linguagem natural.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-fuchsia-500/20 text-fuchsia-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+            <span class="text-lg">📖</span>
+            <div>
+              <span class="font-medium">SETUP.md</span>
+              <span class="text-neutral-500 text-sm ml-2">- Guia de instalacao</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-fuchsia-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Documentacao de instalacao para Claude.ai (browser), Claude Code (CLI) e API.</p>
+              </div>
+              <div>
+                <span class="text-fuchsia-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">SETUP.md permite que qualquer pessoa instale e use o skill independentemente.</p>
+              </div>
+              <div>
+                <span class="text-fuchsia-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Instrucoes multi-plataforma, pre-requisitos, quick start, troubleshooting.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-fuchsia-500/20 text-fuchsia-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+            <span class="text-lg">📏</span>
+            <div>
+              <span class="font-medium">20-100 Rows</span>
+              <span class="text-neutral-500 text-sm ml-2">- Tamanho ideal</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-fuchsia-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">O tamanho ideal de dados de teste: suficiente para demonstrar variedade, pequeno o bastante para ser rapido.</p>
+              </div>
+              <div>
+                <span class="text-fuchsia-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Dados muito pequenos nao demonstram o skill; muito grandes desperdicam tokens e tempo.</p>
+              </div>
+              <div>
+                <span class="text-fuchsia-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Balance entre cobertura e eficiencia, variedade de cenarios, representatividade.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-fuchsia-500/20 text-fuchsia-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+            <span class="text-lg">🔀</span>
+            <div>
+              <span class="font-medium">Edge Cases</span>
+              <span class="text-neutral-500 text-sm ml-2">- Casos limite</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-fuchsia-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Incluir dados que testam limites: valores negativos, campos vazios, formatos variados.</p>
+              </div>
+              <div>
+                <span class="text-fuchsia-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Edge cases garantem que o skill funciona robustamente com dados do mundo real.</p>
+              </div>
+              <div>
+                <span class="text-fuchsia-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Valores nulos, formatos inconsistentes, outliers, cenarios extremos.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-fuchsia-500/20 text-fuchsia-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+            <span class="text-lg">📐</span>
+            <div>
+              <span class="font-medium">Proper Formatting</span>
+              <span class="text-neutral-500 text-sm ml-2">- Formatacao correta</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-fuchsia-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Padroes de formatacao: datas ISO, moedas com simbolo, numeros sem separador de milhar nos dados.</p>
+              </div>
+              <div>
+                <span class="text-fuchsia-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Formatacao consistente evita erros de parsing e serve como referencia para usuarios.</p>
+              </div>
+              <div>
+                <span class="text-fuchsia-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">ISO 8601 dates, UTF-8 encoding, consistent delimiters, proper escaping.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+        <a href="modulo-9-6.html" class="px-4 py-2 text-sm bg-fuchsia-600 hover:bg-fuchsia-500 text-white rounded-lg transition-colors">
+          Ver Modulo Completo
+        </a>
+      </div>
+    </div>
+
+    <!-- MODULO 9.7 -->
+    <div class="bg-dark-800 rounded-xl border border-dark-600 mb-6">
+      <div class="p-6 border-b border-dark-600">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-fuchsia-400 font-bold">9.7</span>
+          <span class="text-xs text-neutral-500">~30 min</span>
+        </div>
+        <h3 class="text-2xl font-bold mb-2">🚢 Deployment de Skills</h3>
+        <p class="text-neutral-400 text-sm">Instale skills no Claude.ai, Claude Code ou via API. Entenda a diferenca entre skills globais e de projeto.</p>
+      </div>
+
+      <div class="divide-y divide-dark-600">
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-fuchsia-500/20 text-fuchsia-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+            <span class="text-lg">🌐</span>
+            <div>
+              <span class="font-medium">Claude.ai Upload</span>
+              <span class="text-neutral-500 text-sm ml-2">- Via browser</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-fuchsia-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Upload de skills via Settings > Capabilities no Claude.ai usando arquivo zip.</p>
+              </div>
+              <div>
+                <span class="text-fuchsia-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">E a forma mais simples de testar skills sem precisar de terminal ou configuracao.</p>
+              </div>
+              <div>
+                <span class="text-fuchsia-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Settings, Capabilities, Upload Skill, drag and drop, ativacao.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-fuchsia-500/20 text-fuchsia-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+            <span class="text-lg">📁</span>
+            <div>
+              <span class="font-medium">~/.claude/skills/</span>
+              <span class="text-neutral-500 text-sm ml-2">- Diretorio global</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-fuchsia-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Diretorio onde skills globais sao armazenados no Claude Code, disponiveis em todos os projetos.</p>
+              </div>
+              <div>
+                <span class="text-fuchsia-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Skills globais economizam tempo ao estarem disponiveis automaticamente em qualquer projeto.</p>
+              </div>
+              <div>
+                <span class="text-fuchsia-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Home directory, cp -r skill-name ~/.claude/skills/, persistencia global.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-fuchsia-500/20 text-fuchsia-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+            <span class="text-lg">📂</span>
+            <div>
+              <span class="font-medium">Project Skills</span>
+              <span class="text-neutral-500 text-sm ml-2">- Skills de projeto</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-fuchsia-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Skills armazenados em .claude/skills/ dentro de um projeto especifico, versionados com o codigo.</p>
+              </div>
+              <div>
+                <span class="text-fuchsia-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Project skills permitem compartilhar skills especificos com a equipe via Git.</p>
+              </div>
+              <div>
+                <span class="text-fuchsia-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">.claude/skills/, versionamento Git, compartilhamento de equipe, projeto-especifico.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-fuchsia-500/20 text-fuchsia-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+            <span class="text-lg">🔌</span>
+            <div>
+              <span class="font-medium">API Endpoint</span>
+              <span class="text-neutral-500 text-sm ml-2">- Integracao programatica</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-fuchsia-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Endpoint /v1/skills da API Anthropic para upload e gerenciamento programatico de skills.</p>
+              </div>
+              <div>
+                <span class="text-fuchsia-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">API permite automacao completa do ciclo de vida de skills em producao.</p>
+              </div>
+              <div>
+                <span class="text-fuchsia-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">REST API, /v1/skills, autenticacao, automacao, CI/CD.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-fuchsia-500/20 text-fuchsia-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+            <span class="text-lg">🌍</span>
+            <div>
+              <span class="font-medium">Global vs Local</span>
+              <span class="text-neutral-500 text-sm ml-2">- Quando usar cada um</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-fuchsia-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Criterios para decidir entre instalar skill globalmente ou apenas em projetos especificos.</p>
+              </div>
+              <div>
+                <span class="text-fuchsia-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Escolha correta evita conflitos e mantem organizacao limpa.</p>
+              </div>
+              <div>
+                <span class="text-fuchsia-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Skills genericos = global, skills especificos = local, precedencia de projeto.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-fuchsia-500/20 text-fuchsia-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+            <span class="text-lg">⚡</span>
+            <div>
+              <span class="font-medium">Quick Start</span>
+              <span class="text-neutral-500 text-sm ml-2">- Inicio rapido</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-fuchsia-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Sequencia minima de comandos para ir de skill gerado a skill funcionando em producao.</p>
+              </div>
+              <div>
+                <span class="text-fuchsia-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Quick start documenta o caminho mais rapido para valor, essencial para adocao.</p>
+              </div>
+              <div>
+                <span class="text-fuchsia-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">3 passos: instalar, carregar dados, invocar com demo prompt.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+        <a href="modulo-9-7.html" class="px-4 py-2 text-sm bg-fuchsia-600 hover:bg-fuchsia-500 text-white rounded-lg transition-colors">
+          Ver Modulo Completo
+        </a>
+      </div>
+    </div>
+
+    <!-- MODULO 9.8 -->
+    <div class="bg-dark-800 rounded-xl border border-dark-600 mb-6">
+      <div class="p-6 border-b border-dark-600">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-fuchsia-400 font-bold">9.8</span>
+          <span class="text-xs text-neutral-500">~30 min</span>
+        </div>
+        <h3 class="text-2xl font-bold mb-2">🏭 Criando sua Fabrica</h3>
+        <p class="text-neutral-400 text-sm">Personalize sua fabrica para seu dominio: skills especificos de industria, branding, requisitos unicos e compartilhamento com equipes.</p>
+      </div>
+
+      <div class="divide-y divide-dark-600">
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-fuchsia-500/20 text-fuchsia-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+            <span class="text-lg">🎛️</span>
+            <div>
+              <span class="font-medium">Customizacao Avancada</span>
+              <span class="text-neutral-500 text-sm ml-2">- Ajustes finos</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-fuchsia-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Tecnicas avancadas para ajustar o meta prompt e templates para suas necessidades especificas.</p>
+              </div>
+              <div>
+                <span class="text-fuchsia-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Customizacao transforma uma fabrica generica em uma maquina de producao sob medida.</p>
+              </div>
+              <div>
+                <span class="text-fuchsia-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Variaveis adicionais, templates customizados, regras de estilo, outputs especificos.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-fuchsia-500/20 text-fuchsia-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+            <span class="text-lg">🏢</span>
+            <div>
+              <span class="font-medium">Industry-specific Skills</span>
+              <span class="text-neutral-500 text-sm ml-2">- Skills de nicho</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-fuchsia-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Skills especializados para industrias especificas: financas, saude, e-commerce, SaaS, etc.</p>
+              </div>
+              <div>
+                <span class="text-fuchsia-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Skills de nicho resolvem problemas reais e tem maior valor percebido pela equipe.</p>
+              </div>
+              <div>
+                <span class="text-fuchsia-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Dominio de conhecimento, jargao da industria, workflows especificos, compliance.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-fuchsia-500/20 text-fuchsia-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+            <span class="text-lg">🎨</span>
+            <div>
+              <span class="font-medium">Brand Colors</span>
+              <span class="text-neutral-500 text-sm ml-2">- Identidade visual</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-fuchsia-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Incluir cores da marca nos skills para que outputs (graficos, relatorios) sigam a identidade visual.</p>
+              </div>
+              <div>
+                <span class="text-fuchsia-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Outputs com branding correto parecem profissionais e economizam ajustes manuais.</p>
+              </div>
+              <div>
+                <span class="text-fuchsia-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Hex codes, paletas de cor, Matplotlib/Plotly themes, templates Office.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-fuchsia-500/20 text-fuchsia-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+            <span class="text-lg">📋</span>
+            <div>
+              <span class="font-medium">Specific Requirements</span>
+              <span class="text-neutral-500 text-sm ml-2">- Requisitos unicos</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-fuchsia-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Requisitos especificos: bibliotecas obrigatorias, formatos de arquivo, estruturas de dados.</p>
+              </div>
+              <div>
+                <span class="text-fuchsia-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Especificar requisitos evita retrabralho e garante compatibilidade com sistemas existentes.</p>
+              </div>
+              <div>
+                <span class="text-fuchsia-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Plotly vs Matplotlib, Excel vs CSV, integracao com sistemas, restricoes tecnicas.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-fuchsia-500/20 text-fuchsia-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+            <span class="text-lg">👥</span>
+            <div>
+              <span class="font-medium">Sharing com Teams</span>
+              <span class="text-neutral-500 text-sm ml-2">- Distribuicao interna</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-fuchsia-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Estrategias para compartilhar skills com colegas: Git, drives compartilhados, documentacao interna.</p>
+              </div>
+              <div>
+                <span class="text-fuchsia-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Skills compartilhados multiplicam o valor - um bom skill ajuda toda a equipe.</p>
+              </div>
+              <div>
+                <span class="text-fuchsia-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Repositorio de skills, versionamento, documentacao de uso, onboarding.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-fuchsia-500/20 text-fuchsia-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+            <span class="text-lg">🔄</span>
+            <div>
+              <span class="font-medium">Iteracao Continua</span>
+              <span class="text-neutral-500 text-sm ml-2">- Melhoria constante</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-fuchsia-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Processo de feedback e melhoria continua: coletar uso, identificar gaps, atualizar skills.</p>
+              </div>
+              <div>
+                <span class="text-fuchsia-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Skills melhoram com uso real - feedback e atualizacoes constantes maximizam valor.</p>
+              </div>
+              <div>
+                <span class="text-fuchsia-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Coleta de feedback, metricas de uso, versionamento semantico, changelog.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+        <a href="modulo-9-8.html" class="px-4 py-2 text-sm bg-fuchsia-600 hover:bg-fuchsia-500 text-white rounded-lg transition-colors">
+          Ver Modulo Completo
+        </a>
+      </div>
+    </div>
+
+    <!-- Navegacao -->
+    <div class="flex flex-col sm:flex-row gap-4 mt-12">
+      <a href="../trilha8/index.html" class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors">
+        ← Trilha 8: Projetos
+      </a>
+      <a href="../../index.html" class="flex-1 text-center px-6 py-3 bg-fuchsia-600 text-white rounded-lg font-semibold hover:bg-fuchsia-500 transition-colors">
+        Voltar ao Inicio
+      </a>
+    </div>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-dark-600 py-8 mt-16">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+      <p>Claude Code 2026 - Curso criado por <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300">INEMA.CLUB</a></p>
+    </div>
+  </footer>
+
+  <!-- SCRIPTS -->
+  <script>
+    function toggleTopic(button) {
+      const topicItem = button.closest('.topic-item');
+      const explanation = topicItem.querySelector('.topic-explanation');
+      const moduleCard = button.closest('.bg-dark-800');
+
+      moduleCard.querySelectorAll('.topic-explanation.active').forEach(exp => {
+        if (exp !== explanation) {
+          exp.classList.remove('active');
+        }
+      });
+
+      explanation.classList.toggle('active');
+    }
+
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    const html = document.documentElement;
+
+    if (localStorage.getItem('theme') === 'light' || (!localStorage.getItem('theme') && !html.classList.contains('dark'))) {
+      themeToggleDarkIcon.classList.remove('hidden');
+      html.classList.remove('dark');
+    } else {
+      themeToggleLightIcon.classList.remove('hidden');
+    }
+
+    themeToggle.addEventListener('click', () => {
+      themeToggleDarkIcon.classList.toggle('hidden');
+      themeToggleLightIcon.classList.toggle('hidden');
+      html.classList.toggle('dark');
+      localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+    });
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Modulo 7.8: Workflow Completo | Claude Code 2026</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: '#FACC15',
+            dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' }
+          }
+        }
+      }
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+
+    /* Light mode overrides */
+    html:not(.dark) body {
+      background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 50%, #f1f5f9 100%);
+    }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+  </style>
+</head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen">
+
+  <!-- NAVIGATION -->
+  <nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-14">
+        <div class="flex items-center space-x-4">
+          <a href="../../index.html" class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300">
+            <span class="text-2xl">🤖</span>
+            <span class="font-bold text-lg hidden sm:inline">Claude Code 2026</span>
+          </a>
+          <span class="text-neutral-600">|</span>
+          <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300 text-sm font-medium">INEMA.CLUB</a>
+        </div>
+
+        <div class="flex items-center space-x-1 sm:space-x-2">
+          <a href="../trilha1/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors">
+            <span class="sm:hidden">T1</span>
+            <span class="hidden sm:inline">Fundamentos</span>
+          </a>
+          <a href="../trilha2/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors">
+            <span class="sm:hidden">T2</span>
+            <span class="hidden sm:inline">Comandos</span>
+          </a>
+          <a href="../trilha3/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors">
+            <span class="sm:hidden">T3</span>
+            <span class="hidden sm:inline">Avancado</span>
+          </a>
+          <a href="../trilha4/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-amber-400 hover:bg-amber-500/10 transition-colors">
+            <span class="sm:hidden">T4</span>
+            <span class="hidden sm:inline">Customizacao</span>
+          </a>
+          <a href="../trilha5/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-teal-400 hover:bg-teal-500/10 transition-colors">
+            <span class="sm:hidden">T5</span>
+            <span class="hidden sm:inline">MCP</span>
+          </a>
+          <a href="../trilha6/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-rose-400 hover:bg-rose-500/10 transition-colors">
+            <span class="sm:hidden">T6</span>
+            <span class="hidden sm:inline">Workflow</span>
+          </a>
+          <a href="index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-cyan-400 bg-cyan-500/10">
+            <span class="sm:hidden">T7</span>
+            <span class="hidden sm:inline">God Mode</span>
+          </a>
+          <a href="../trilha8/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-orange-400 hover:bg-orange-500/10 transition-colors">
+            <span class="sm:hidden">T8</span>
+            <span class="hidden sm:inline">Prompts</span>
+          </a>
+          <a href="../trilha9/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-pink-400 hover:bg-pink-500/10 transition-colors">
+            <span class="sm:hidden">T9</span>
+            <span class="hidden sm:inline">Projeto</span>
+          </a>
+
+          <button id="theme-toggle" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2">
+            <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+            </svg>
+            <svg id="theme-toggle-light-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- BREADCRUMB -->
+  <nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+    <div class="flex items-center space-x-2 text-sm text-neutral-400">
+      <a href="../../index.html" class="hover:text-cyan-400">Inicio</a>
+      <span>/</span>
+      <a href="index.html" class="hover:text-cyan-400">Trilha 7</a>
+      <span>/</span>
+      <span class="text-cyan-400">Modulo 7.8</span>
+    </div>
+  </nav>
+
+  <!-- HEADER -->
+  <header class="bg-gradient-to-br from-cyan-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <span class="inline-block px-3 py-1 bg-cyan-500/20 text-cyan-400 text-xs font-semibold rounded-full mb-4">
+        MODULO 7.8
+      </span>
+      <h1 class="text-3xl sm:text-4xl font-bold mb-4">Workflow Completo</h1>
+      <p class="text-lg text-neutral-400 max-w-3xl">
+        Integre todos os conceitos aprendidos em um workflow pratico e adaptavel.
+        Saiba quando usar cada abordagem e como combina-las para maxima eficiencia.
+      </p>
+
+      <div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-cyan-400">6</div>
+          <div class="text-xs text-neutral-400">Topicos</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-cyan-400">45</div>
+          <div class="text-xs text-neutral-400">Minutos</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-cyan-400">Avancado</div>
+          <div class="text-xs text-neutral-400">Nivel</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-cyan-400">Sintese</div>
+          <div class="text-xs text-neutral-400">Tipo</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN CONTENT -->
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+    <!-- TOPICO 1 -->
+    <section id="topico-1" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-cyan-500/20 text-cyan-400 font-bold text-xl">1</span>
+        <h2 class="text-2xl font-bold">Integrando os 3 Cenarios</h2>
+      </div>
+
+      <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-cyan-400 mb-3">O que e</h3>
+        <p class="text-neutral-300 leading-relaxed">
+          Os tres cenarios - <strong class="text-white">True Parallel</strong>, <strong class="text-white">Phased Parallel</strong>, e <strong class="text-white">Relay Race</strong> - nao sao mutuamente exclusivos. Um projeto real frequentemente usa <strong class="text-cyan-400">todos os tres em diferentes momentos</strong>. A arte esta em reconhecer qual usar quando.
+        </p>
+      </div>
+
+      <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-cyan-400 mb-3">Por que aprender</h3>
+        <p class="text-neutral-300 leading-relaxed">
+          Usar sempre o mesmo cenario e limitante. Projetos complexos tem <strong class="text-cyan-400">fases diferentes com necessidades diferentes</strong>. Saber transicionar entre cenarios conforme o projeto evolui maximiza eficiencia em cada etapa.
+        </p>
+      </div>
+
+      <div class="bg-gradient-to-br from-cyan-900/30 to-dark-800 rounded-xl border border-cyan-500/30 p-6">
+        <h3 class="text-lg font-semibold text-cyan-400 mb-4">Conceitos-chave</h3>
+        <ul class="space-y-3 text-neutral-300">
+          <li class="flex items-start space-x-2">
+            <span class="text-cyan-400 mt-1">•</span>
+            <span><strong class="text-white">Hibrido natural:</strong> Projetos reais misturam cenarios</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-cyan-400 mt-1">•</span>
+            <span><strong class="text-white">Transicoes:</strong> Saber quando mudar de abordagem</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-cyan-400 mt-1">•</span>
+            <span><strong class="text-white">Contexto determina:</strong> Natureza da tarefa define o cenario</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-cyan-400 mt-1">•</span>
+            <span><strong class="text-white">Flexibilidade:</strong> Adaptar conforme projeto evolui</span>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- TOPICO 2 -->
+    <section id="topico-2" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-cyan-500/20 text-cyan-400 font-bold text-xl">2</span>
+        <h2 class="text-2xl font-bold">Quando Usar Cada Um</h2>
+      </div>
+
+      <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-cyan-400 mb-3">O que e</h3>
+        <p class="text-neutral-300 leading-relaxed">
+          Um <strong class="text-white">guia de decisao</strong> para escolher o cenario certo. True Parallel para tarefas totalmente independentes. Phased Parallel quando ha fundacao compartilhada. Relay Race para projetos complexos com <strong class="text-cyan-400">muitas dependencias sequenciais</strong>.
+        </p>
+      </div>
+
+      <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-cyan-400 mb-3">Por que aprender</h3>
+        <p class="text-neutral-300 leading-relaxed">
+          Escolher o cenario errado custa tempo e dinheiro. True Parallel em tarefas dependentes gera colisoes. Relay Race para tarefas independentes e <strong class="text-cyan-400">desperdicio de potencial paralelo</strong>. A escolha certa otimiza recursos.
+        </p>
+      </div>
+
+      <div class="bg-gradient-to-br from-cyan-900/30 to-dark-800 rounded-xl border border-cyan-500/30 p-6">
+        <h3 class="text-lg font-semibold text-cyan-400 mb-4">Conceitos-chave</h3>
+        <ul class="space-y-3 text-neutral-300">
+          <li class="flex items-start space-x-2">
+            <span class="text-cyan-400 mt-1">•</span>
+            <span><strong class="text-white">True Parallel:</strong> Pesquisa, docs, tarefas nao-codigo</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-cyan-400 mt-1">•</span>
+            <span><strong class="text-white">Phased Parallel:</strong> Features independentes pos-fundacao</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-cyan-400 mt-1">•</span>
+            <span><strong class="text-white">Relay Race:</strong> Sistema complexo com dependencias</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-cyan-400 mt-1">•</span>
+            <span><strong class="text-white">Decision tree:</strong> Perguntas para guiar escolha</span>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- TOPICO 3 -->
+    <section id="topico-3" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-cyan-500/20 text-cyan-400 font-bold text-xl">3</span>
+        <h2 class="text-2xl font-bold">Session Bonus para QA</h2>
+      </div>
+
+      <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-cyan-400 mb-3">O que e</h3>
+        <p class="text-neutral-300 leading-relaxed">
+          Alem das sessoes de desenvolvimento, manter uma <strong class="text-white">sessao dedicada a QA</strong> (Quality Assurance). Esta sessao roda testes, verifica integracao, e <strong class="text-cyan-400">valida que as pecas se encaixam</strong>. Funciona como um "segundo par de olhos" automatizado.
+        </p>
+      </div>
+
+      <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-cyan-400 mb-3">Por que aprender</h3>
+        <p class="text-neutral-300 leading-relaxed">
+          Sessoes de desenvolvimento focam em construir. Uma sessao QA dedicada foca em <strong class="text-cyan-400">quebrar e validar</strong>. Essa separacao de preocupacoes pega bugs que sessoes de dev deixam passar, especialmente em integracao.
+        </p>
+      </div>
+
+      <div class="bg-gradient-to-br from-cyan-900/30 to-dark-800 rounded-xl border border-cyan-500/30 p-6">
+        <h3 class="text-lg font-semibold text-cyan-400 mb-4">Conceitos-chave</h3>
+        <ul class="space-y-3 text-neutral-300">
+          <li class="flex items-start space-x-2">
+            <span class="text-cyan-400 mt-1">•</span>
+            <span><strong class="text-white">Sessao isolada:</strong> Nao contamina contexto de dev</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-cyan-400 mt-1">•</span>
+            <span><strong class="text-white">Test runner:</strong> Executa suite de testes completa</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-cyan-400 mt-1">•</span>
+            <span><strong class="text-white">Integration check:</strong> Verifica se partes funcionam juntas</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-cyan-400 mt-1">•</span>
+            <span><strong class="text-white">Fresh perspective:</strong> Sem bias das decisoes de dev</span>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- TOPICO 4 -->
+    <section id="topico-4" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-cyan-500/20 text-cyan-400 font-bold text-xl">4</span>
+        <h2 class="text-2xl font-bold">Proactive vs Reactive</h2>
+      </div>
+
+      <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-cyan-400 mb-3">O que e</h3>
+        <p class="text-neutral-300 leading-relaxed">
+          <strong class="text-white">Proactive</strong> significa planejar e documentar antes de construir. <strong class="text-white">Reactive</strong> e ajustar conforme problemas aparecem. O God Mode bem executado e <strong class="text-cyan-400">majoritariamente proactive</strong> - a maior parte do trabalho e planejamento, com execucao rapida.
+        </p>
+      </div>
+
+      <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-cyan-400 mb-3">Por que aprender</h3>
+        <p class="text-neutral-300 leading-relaxed">
+          Trabalhar reactive com Claude Code e caro - cada correcao consome tokens, cada pivot queima contexto. <strong class="text-cyan-400">Investir tempo em planejamento</strong> reduz drasticamente o custo de execucao. E mais barato pensar que refazer.
+        </p>
+      </div>
+
+      <div class="bg-gradient-to-br from-cyan-900/30 to-dark-800 rounded-xl border border-cyan-500/30 p-6">
+        <h3 class="text-lg font-semibold text-cyan-400 mb-4">Conceitos-chave</h3>
+        <ul class="space-y-3 text-neutral-300">
+          <li class="flex items-start space-x-2">
+            <span class="text-cyan-400 mt-1">•</span>
+            <span><strong class="text-white">Plan first:</strong> 80% planejamento, 20% execucao</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-cyan-400 mt-1">•</span>
+            <span><strong class="text-white">Anticipate problems:</strong> Prever issues antes que acontecam</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-cyan-400 mt-1">•</span>
+            <span><strong class="text-white">Document decisions:</strong> Nao repetir erros passados</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-cyan-400 mt-1">•</span>
+            <span><strong class="text-white">Controlled reactive:</strong> Quando ajustar, fazer com intencao</span>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- TOPICO 5 -->
+    <section id="topico-5" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-cyan-500/20 text-cyan-400 font-bold text-xl">5</span>
+        <h2 class="text-2xl font-bold">Elegancia e Velocidade</h2>
+      </div>
+
+      <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-cyan-400 mb-3">O que e</h3>
+        <p class="text-neutral-300 leading-relaxed">
+          <strong class="text-white">Elegancia</strong> e fazer mais com menos - codigo limpo, arquitetura clara, solucoes simples. <strong class="text-white">Velocidade</strong> e entregar rapido. O God Mode busca <strong class="text-cyan-400">ambos simultaneamente</strong>: elegancia que acelera ao inves de atrasar.
+        </p>
+      </div>
+
+      <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-cyan-400 mb-3">Por que aprender</h3>
+        <p class="text-neutral-300 leading-relaxed">
+          Ha uma falsa dicotomia entre "rapido e sujo" vs "lento e limpo". Com planejamento adequado, <strong class="text-cyan-400">codigo elegante e mais rapido</strong> de produzir que gambiarras. O Claude Code gera melhor codigo quando tem instrucoes claras.
+        </p>
+      </div>
+
+      <div class="bg-gradient-to-br from-cyan-900/30 to-dark-800 rounded-xl border border-cyan-500/30 p-6">
+        <h3 class="text-lg font-semibold text-cyan-400 mb-4">Conceitos-chave</h3>
+        <ul class="space-y-3 text-neutral-300">
+          <li class="flex items-start space-x-2">
+            <span class="text-cyan-400 mt-1">•</span>
+            <span><strong class="text-white">Simplicity:</strong> Solucoes mais simples sao mais rapidas</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-cyan-400 mt-1">•</span>
+            <span><strong class="text-white">Consistency:</strong> Padroes claros aceleram desenvolvimento</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-cyan-400 mt-1">•</span>
+            <span><strong class="text-white">Maintainability:</strong> Codigo elegante e facil de modificar</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-cyan-400 mt-1">•</span>
+            <span><strong class="text-white">No tech debt:</strong> Nao criar problemas futuros</span>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- TOPICO 6 -->
+    <section id="topico-6" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-cyan-500/20 text-cyan-400 font-bold text-xl">6</span>
+        <h2 class="text-2xl font-bold">Adaptando para Seu Caso</h2>
+      </div>
+
+      <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-cyan-400 mb-3">O que e</h3>
+        <p class="text-neutral-300 leading-relaxed">
+          Tudo que foi ensinado nesta trilha sao <strong class="text-white">modelos mentais</strong>, nao receitas rigidas. Seu projeto, equipe, e contexto sao unicos. <strong class="text-cyan-400">Adaptar os principios</strong> ao seu caso especifico e a habilidade final do God Mode.
+        </p>
+      </div>
+
+      <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-cyan-400 mb-3">Por que aprender</h3>
+        <p class="text-neutral-300 leading-relaxed">
+          Seguir regras cegamente e tao ruim quanto nao ter regras. O verdadeiro poder vem de <strong class="text-cyan-400">entender os principios</strong> profundamente e saber quando quebra-los. Cada projeto e uma oportunidade de refinar seu workflow.
+        </p>
+      </div>
+
+      <div class="bg-gradient-to-br from-cyan-900/30 to-dark-800 rounded-xl border border-cyan-500/30 p-6">
+        <h3 class="text-lg font-semibold text-cyan-400 mb-4">Conceitos-chave</h3>
+        <ul class="space-y-3 text-neutral-300">
+          <li class="flex items-start space-x-2">
+            <span class="text-cyan-400 mt-1">•</span>
+            <span><strong class="text-white">Experimente:</strong> Teste variacoes dos cenarios</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-cyan-400 mt-1">•</span>
+            <span><strong class="text-white">Documente aprendizados:</strong> O que funcionou? O que nao?</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-cyan-400 mt-1">•</span>
+            <span><strong class="text-white">Evolua seu workflow:</strong> Melhoria continua</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-cyan-400 mt-1">•</span>
+            <span><strong class="text-white">Compartilhe:</strong> Contribua para a comunidade</span>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- RESUMO -->
+    <section class="mb-12">
+      <div class="bg-gradient-to-br from-cyan-900/40 via-dark-800 to-dark-800 rounded-xl border border-cyan-500/30 p-8">
+        <h2 class="text-2xl font-bold mb-6 flex items-center">
+          <span class="mr-3">Resumo do Modulo</span>
+        </h2>
+
+        <div class="space-y-4 mb-8">
+          <div class="flex items-start space-x-3">
+            <span class="text-cyan-400 mt-1">1.</span>
+            <div>
+              <strong class="text-white">Integrando os 3 Cenarios</strong>
+              <span class="text-neutral-400"> - Projetos reais usam multiplos cenarios</span>
+            </div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-cyan-400 mt-1">2.</span>
+            <div>
+              <strong class="text-white">Quando Usar Cada Um</strong>
+              <span class="text-neutral-400"> - Guia de decisao para escolher cenario</span>
+            </div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-cyan-400 mt-1">3.</span>
+            <div>
+              <strong class="text-white">Session Bonus para QA</strong>
+              <span class="text-neutral-400"> - Sessao dedicada a validacao e testes</span>
+            </div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-cyan-400 mt-1">4.</span>
+            <div>
+              <strong class="text-white">Proactive vs Reactive</strong>
+              <span class="text-neutral-400"> - Planejar e mais barato que corrigir</span>
+            </div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-cyan-400 mt-1">5.</span>
+            <div>
+              <strong class="text-white">Elegancia e Velocidade</strong>
+              <span class="text-neutral-400"> - Codigo limpo e codigo rapido</span>
+            </div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-cyan-400 mt-1">6.</span>
+            <div>
+              <strong class="text-white">Adaptando para Seu Caso</strong>
+              <span class="text-neutral-400"> - Principios para adaptar, nao receitas rigidas</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+          <h3 class="font-semibold text-cyan-400 mb-2">Parabens!</h3>
+          <p class="text-neutral-300">Voce completou a Trilha 7 - Modo Deus. Agora voce tem as ferramentas para orquestrar multiplas sessoes Claude Code com elegancia e eficiencia.</p>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-4 justify-start">
+          <a href="modulo-7-7.html" class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors">
+            Modulo Anterior
+          </a>
+          <a href="index.html" class="flex-1 text-center px-6 py-3 bg-cyan-600 text-white rounded-lg font-semibold hover:bg-cyan-500 transition-colors">
+            Voltar para Trilha 7
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-dark-600 py-8 mt-16">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+      <p>Claude Code 2026 - Curso completo de Claude Code em Portugues</p>
+    </div>
+  </footer>
+
+  <!-- SCRIPTS -->
+  <script>
+    // Theme Toggle
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    const html = document.documentElement;
+
+    if (localStorage.getItem('theme') === 'light' || (!localStorage.getItem('theme') && !html.classList.contains('dark'))) {
+      themeToggleDarkIcon.classList.remove('hidden');
+      html.classList.remove('dark');
+    } else {
+      themeToggleLightIcon.classList.remove('hidden');
+    }
+
+    themeToggle.addEventListener('click', () => {
+      themeToggleDarkIcon.classList.toggle('hidden');
+      themeToggleLightIcon.classList.toggle('hidden');
+      html.classList.toggle('dark');
+      localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+    });
+  </script>
+
+</body>
+</html>

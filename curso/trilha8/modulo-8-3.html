@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Modulo 8.3: MCP Servers e Skills | Claude Code 2026</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: { extend: { colors: { primary: '#FACC15', dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' } } } }
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+    html:not(.dark) body { background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 50%, #f1f5f9 100%); }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+  </style>
+</head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen">
+
+  <nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-14">
+        <div class="flex items-center space-x-4">
+          <a href="../../index.html" class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300"><span class="text-2xl">🤖</span><span class="font-bold text-lg hidden sm:inline">Claude Code 2026</span></a>
+          <span class="text-neutral-600">|</span>
+          <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300 text-sm font-medium">INEMA.CLUB</a>
+        </div>
+        <div class="flex items-center space-x-1 sm:space-x-2">
+          <a href="../trilha1/index.html" class="px-2 py-1.5 rounded-lg text-xs font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors"><span class="sm:hidden">T1</span><span class="hidden sm:inline">Fundamentos</span></a>
+          <a href="../trilha2/index.html" class="px-2 py-1.5 rounded-lg text-xs font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors"><span class="sm:hidden">T2</span><span class="hidden sm:inline">Comandos</span></a>
+          <a href="../trilha3/index.html" class="px-2 py-1.5 rounded-lg text-xs font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors"><span class="sm:hidden">T3</span><span class="hidden sm:inline">Avancado</span></a>
+          <a href="../trilha4/index.html" class="px-2 py-1.5 rounded-lg text-xs font-semibold text-neutral-400 hover:text-amber-400 hover:bg-amber-500/10 transition-colors"><span class="sm:hidden">T4</span><span class="hidden sm:inline">MiniCurso</span></a>
+          <a href="../trilha5/index.html" class="px-2 py-1.5 rounded-lg text-xs font-semibold text-neutral-400 hover:text-teal-400 hover:bg-teal-500/10 transition-colors"><span class="sm:hidden">T5</span><span class="hidden sm:inline">95CC</span></a>
+          <a href="../trilha6/index.html" class="px-2 py-1.5 rounded-lg text-xs font-semibold text-neutral-400 hover:text-rose-400 hover:bg-rose-500/10 transition-colors"><span class="sm:hidden">T6</span><span class="hidden sm:inline">BeginCC</span></a>
+          <a href="../trilha7/index.html" class="px-2 py-1.5 rounded-lg text-xs font-semibold text-neutral-400 hover:text-cyan-400 hover:bg-cyan-500/10 transition-colors"><span class="sm:hidden">T7</span><span class="hidden sm:inline">AICode</span></a>
+          <a href="index.html" class="px-2 py-1.5 rounded-lg text-xs font-semibold text-lime-400 bg-lime-500/10"><span class="sm:hidden">T8</span><span class="hidden sm:inline">QQApp</span></a>
+          <a href="../trilha9/index.html" class="px-2 py-1.5 rounded-lg text-xs font-semibold text-neutral-400 hover:text-orange-400 hover:bg-orange-500/10 transition-colors"><span class="sm:hidden">T9</span><span class="hidden sm:inline">MCPMaster</span></a>
+          <button id="theme-toggle" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2">
+            <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+            <svg id="theme-toggle-light-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+    <div class="flex items-center space-x-2 text-sm text-neutral-400">
+      <a href="../../index.html" class="hover:text-lime-400">Inicio</a><span>/</span>
+      <a href="index.html" class="hover:text-lime-400">Trilha 8</a><span>/</span>
+      <span class="text-lime-400">Modulo 8.3</span>
+    </div>
+  </nav>
+
+  <header class="bg-gradient-to-br from-lime-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <span class="inline-block px-3 py-1 bg-lime-500/20 text-lime-400 text-xs font-semibold rounded-full mb-4">MODULO 8.3</span>
+      <h1 class="text-3xl sm:text-4xl font-bold mb-4">🔗 MCP Servers e Skills</h1>
+      <p class="text-lg text-neutral-400 max-w-3xl">Conecte Claude Code ao n8n MCP Server e instale skills especializados para construir workflows e front-ends com conhecimento profundo.</p>
+      <div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-lime-400">6</div><div class="text-xs text-neutral-400">Topicos</div></div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-lime-400">45</div><div class="text-xs text-neutral-400">Minutos</div></div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-lime-400">Avancado</div><div class="text-xs text-neutral-400">Nivel</div></div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-lime-400">Config</div><div class="text-xs text-neutral-400">Tipo</div></div>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+    <section id="topico-1" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-lime-500/20 text-lime-400 font-bold text-xl">1</span>
+        <h2 class="text-2xl font-bold">🔧 n8n MCP Server</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">O <strong class="text-lime-400">n8n MCP Server</strong> da acesso total a sua instancia n8n. Claude pode listar, criar, editar e executar workflows.</p>
+      <div class="bg-gradient-to-br from-lime-900/30 to-dark-800 rounded-xl border border-lime-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-lime-400 mb-4">Ferramentas Disponiveis</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="bg-dark-800 rounded-lg p-4">
+            <h4 class="font-semibold text-white mb-2">Workflow Management</h4>
+            <ul class="text-sm text-neutral-300 space-y-1">
+              <li>• n8n_list_workflows - Listar workflows</li>
+              <li>• n8n_get_workflow - Obter detalhes</li>
+              <li>• n8n_create_workflow - Criar novo</li>
+              <li>• n8n_update_workflow - Atualizar</li>
+            </ul>
+          </div>
+          <div class="bg-dark-800 rounded-lg p-4">
+            <h4 class="font-semibold text-white mb-2">Discovery</h4>
+            <ul class="text-sm text-neutral-300 space-y-1">
+              <li>• search_nodes - Buscar nos 1,084 nodes</li>
+              <li>• get_node - Detalhes de configuracao</li>
+              <li>• search_templates - 2,709 templates</li>
+              <li>• validate_workflow - Validar erros</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
+        <h4 class="font-semibold text-white mb-4">Configuracao Necessaria</h4>
+        <ul class="text-neutral-300 space-y-2">
+          <li><strong class="text-lime-400">URL do MCP:</strong> URL do servidor n8n-mcp</li>
+          <li><strong class="text-lime-400">n8n URL:</strong> URL da sua instancia n8n</li>
+          <li><strong class="text-lime-400">n8n API Key:</strong> Chave de API do n8n</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="topico-2" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-lime-500/20 text-lime-400 font-bold text-xl">2</span>
+        <h2 class="text-2xl font-bold">🐙 GitHub MCP</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">O <strong class="text-lime-400">GitHub MCP</strong> permite que Claude faca push automaticamente para seus repositorios.</p>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+          <h4 class="font-bold text-emerald-400 mb-4">Operacoes Disponiveis</h4>
+          <ul class="space-y-2 text-neutral-300 text-sm">
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Push de codigo</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Criar commits</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Gerenciar branches</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Pull requests</span></li>
+          </ul>
+        </div>
+        <div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6">
+          <h4 class="font-bold text-blue-400 mb-4">Requisitos</h4>
+          <ul class="space-y-2 text-neutral-300 text-sm">
+            <li><strong>GitHub MCP URL:</strong> Servidor do MCP</li>
+            <li><strong>Personal Access Token:</strong> Token fine-grained</li>
+            <li><strong>Permissoes:</strong> Repo access completo</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="topico-3" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-lime-500/20 text-lime-400 font-bold text-xl">3</span>
+        <h2 class="text-2xl font-bold">📚 Skills Installation</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed"><strong class="text-lime-400">Skills</strong> sao pacotes de conhecimento que ensinam Claude sobre tecnologias especificas. Os skills de n8n incluem:</p>
+      <div class="bg-gradient-to-br from-lime-900/30 to-dark-800 rounded-xl border border-lime-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-lime-400 mb-4">n8n Skills (7 skills)</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <ul class="text-neutral-300 text-sm space-y-2">
+            <li>1. <strong>Expression Syntax</strong> - Padrao {{ }} correto</li>
+            <li>2. <strong>MCP Tools Expert</strong> - Uso do servidor MCP</li>
+            <li>3. <strong>Workflow Patterns</strong> - 5 padroes arquiteturais</li>
+            <li>4. <strong>Validation Expert</strong> - Resolver erros</li>
+          </ul>
+          <ul class="text-neutral-300 text-sm space-y-2">
+            <li>5. <strong>Node Configuration</strong> - Setup de nodes</li>
+            <li>6. <strong>Code JavaScript</strong> - JS em Code nodes</li>
+            <li>7. <strong>Code Python</strong> - Python com limitacoes</li>
+          </ul>
+        </div>
+      </div>
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> Dica</h3>
+        <p class="text-neutral-300">Voce pode dar a URL do skill para Claude e pedir para ele instalar. Ele le a documentacao e faz a instalacao automaticamente!</p>
+      </div>
+    </section>
+
+    <section id="topico-4" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-lime-500/20 text-lime-400 font-bold text-xl">4</span>
+        <h2 class="text-2xl font-bold">🌍 Global vs Project Skills</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">Skills podem ser instalados <strong class="text-lime-400">globalmente</strong> (todos projetos) ou apenas no <strong class="text-lime-400">projeto atual</strong>.</p>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="bg-dark-800 rounded-xl border border-lime-500/30 p-6">
+          <h4 class="font-bold text-lime-400 mb-4">Global Skills</h4>
+          <ul class="space-y-2 text-neutral-300 text-sm">
+            <li>• Disponiveis em todos os projetos</li>
+            <li>• Nao aparecem no file explorer</li>
+            <li>• Instale uma vez, use sempre</li>
+            <li>• Ideal para skills genericos (n8n, front-end)</li>
+          </ul>
+        </div>
+        <div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
+          <h4 class="font-bold text-white mb-4">Project Skills</h4>
+          <ul class="space-y-2 text-neutral-300 text-sm">
+            <li>• Apenas no projeto atual</li>
+            <li>• Aparecem na pasta do projeto</li>
+            <li>• Isolamento de contexto</li>
+            <li>• Ideal para skills especificos</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="topico-5" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-lime-500/20 text-lime-400 font-bold text-xl">5</span>
+        <h2 class="text-2xl font-bold">📁 MCP JSON Config</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">O arquivo <strong class="text-lime-400">mcp.json</strong> armazena configuracoes de todos os MCP servers conectados.</p>
+      <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+        <h4 class="font-semibold text-white mb-4">Exemplo de mcp.json</h4>
+        <div class="bg-dark-900 rounded-lg p-4 font-mono text-sm text-neutral-300">
+          <pre>
+{
+  "mcpServers": {
+    "n8n": {
+      "url": "https://n8n-mcp-server.com",
+      "config": {
+        "n8nUrl": "https://seu-n8n.com",
+        "apiKey": "sua-api-key"
+      }
+    },
+    "github": {
+      "url": "https://github-mcp.com",
+      "config": {
+        "token": "ghp_seu_token"
+      }
+    }
+  }
+}
+          </pre>
+        </div>
+      </div>
+      <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+        <h3 class="text-lg font-semibold text-red-400 mb-3 flex items-center"><span class="mr-2">⚠️</span> Importante</h3>
+        <p class="text-neutral-300">Apos modificar mcp.json, reinicie o VS Code para que as mudancas tenham efeito!</p>
+      </div>
+    </section>
+
+    <section id="topico-6" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-lime-500/20 text-lime-400 font-bold text-xl">6</span>
+        <h2 class="text-2xl font-bold">🔐 Credentials Security</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">O mcp.json contem <strong class="text-lime-400">credenciais sensiveis</strong>. Nunca compartilhe ou versione este arquivo!</p>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+          <h4 class="font-bold text-emerald-400 mb-4">Praticas Seguras</h4>
+          <ul class="space-y-2 text-neutral-300 text-sm">
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Manter arquivo local apenas</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Adicionar ao .gitignore</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Rotacionar tokens periodicamente</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Usar tokens com escopo minimo</span></li>
+          </ul>
+        </div>
+        <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+          <h4 class="font-bold text-red-400 mb-4">Riscos de Exposicao</h4>
+          <ul class="space-y-2 text-neutral-300 text-sm">
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Acesso total ao seu n8n</span></li>
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Controle dos seus repos GitHub</span></li>
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Custos inesperados</span></li>
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Vazamento de dados</span></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="mb-12">
+      <div class="bg-gradient-to-br from-lime-900/40 via-dark-800 to-dark-800 rounded-xl border border-lime-500/30 p-8">
+        <h2 class="text-2xl font-bold mb-6 flex items-center"><span class="mr-3">📋</span> Resumo do Modulo</h2>
+        <div class="space-y-4 mb-8">
+          <div class="flex items-start space-x-3"><span class="text-lime-400 mt-1">✓</span><div><strong class="text-white">n8n MCP Server</strong><span class="text-neutral-400"> - Acesso total a workflows n8n</span></div></div>
+          <div class="flex items-start space-x-3"><span class="text-lime-400 mt-1">✓</span><div><strong class="text-white">GitHub MCP</strong><span class="text-neutral-400"> - Push automatico para repos</span></div></div>
+          <div class="flex items-start space-x-3"><span class="text-lime-400 mt-1">✓</span><div><strong class="text-white">Skills ensinam Claude</strong><span class="text-neutral-400"> - 7 skills de n8n + front-end</span></div></div>
+          <div class="flex items-start space-x-3"><span class="text-lime-400 mt-1">✓</span><div><strong class="text-white">Global vs Project</strong><span class="text-neutral-400"> - Escolha o escopo certo</span></div></div>
+          <div class="flex items-start space-x-3"><span class="text-lime-400 mt-1">✓</span><div><strong class="text-white">mcp.json centraliza config</strong><span class="text-neutral-400"> - Reinicie apos mudancas</span></div></div>
+          <div class="flex items-start space-x-3"><span class="text-lime-400 mt-1">✓</span><div><strong class="text-white">Credenciais locais apenas</strong><span class="text-neutral-400"> - Nunca versione o mcp.json</span></div></div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+          <h3 class="font-semibold text-lime-400 mb-2">Proximo Modulo:</h3>
+          <p class="text-neutral-300">8.4 - Analisando Workflows n8n</p>
+        </div>
+        <div class="flex flex-col sm:flex-row gap-4">
+          <a href="modulo-8-2.html" class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors">← Modulo Anterior</a>
+          <a href="modulo-8-4.html" class="flex-1 text-center px-6 py-3 bg-lime-600 text-white rounded-lg font-semibold hover:bg-lime-500 transition-colors">Proximo Modulo →</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="border-t border-dark-600 py-8 mt-16">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm"><p>Claude Code 2026 - Guia Completo em Portugues</p></div>
+  </footer>
+
+  <script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    const html = document.documentElement;
+    if (localStorage.getItem('theme') === 'light' || (!localStorage.getItem('theme') && !html.classList.contains('dark'))) { themeToggleDarkIcon.classList.remove('hidden'); html.classList.remove('dark'); } else { themeToggleLightIcon.classList.remove('hidden'); }
+    themeToggle.addEventListener('click', () => { themeToggleDarkIcon.classList.toggle('hidden'); themeToggleLightIcon.classList.toggle('hidden'); html.classList.toggle('dark'); localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light'); });
+  </script>
+</body>
+</html>

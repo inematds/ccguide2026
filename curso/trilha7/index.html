@@ -1,0 +1,1710 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trilha 7: Modo Deus | Claude Code 2026</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: '#FACC15',
+            dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' }
+          }
+        }
+      }
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+    .topic-explanation { display: none; }
+    .topic-explanation.active { display: block; }
+
+    /* Light mode overrides */
+    html:not(.dark) body {
+      background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 50%, #f1f5f9 100%);
+    }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+  </style>
+</head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen">
+
+  <!-- NAVIGATION -->
+  <nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-14">
+        <!-- Logo + INEMA.CLUB -->
+        <div class="flex items-center space-x-4">
+          <a href="../../index.html" class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300">
+            <span class="text-2xl">🤖</span>
+            <span class="font-bold text-lg hidden sm:inline">Claude Code 2026</span>
+          </a>
+          <span class="text-neutral-600">|</span>
+          <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300 text-sm font-medium">INEMA.CLUB</a>
+        </div>
+
+        <!-- Trilhas + Theme Toggle -->
+        <div class="flex items-center space-x-1 sm:space-x-2">
+          <a href="../trilha1/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors">
+            <span class="sm:hidden">T1</span>
+            <span class="hidden sm:inline">Fundamentos</span>
+          </a>
+          <a href="../trilha2/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors">
+            <span class="sm:hidden">T2</span>
+            <span class="hidden sm:inline">Comandos</span>
+          </a>
+          <a href="../trilha3/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors">
+            <span class="sm:hidden">T3</span>
+            <span class="hidden sm:inline">Avancado</span>
+          </a>
+          <a href="../trilha4/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-amber-400 hover:bg-amber-500/10 transition-colors">
+            <span class="sm:hidden">T4</span>
+            <span class="hidden sm:inline">Customizacao</span>
+          </a>
+          <a href="../trilha5/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-teal-400 hover:bg-teal-500/10 transition-colors">
+            <span class="sm:hidden">T5</span>
+            <span class="hidden sm:inline">MCP</span>
+          </a>
+          <a href="../trilha6/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-rose-400 hover:bg-rose-500/10 transition-colors">
+            <span class="sm:hidden">T6</span>
+            <span class="hidden sm:inline">Workflow</span>
+          </a>
+          <a href="index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-cyan-400 bg-cyan-500/10">
+            <span class="sm:hidden">T7</span>
+            <span class="hidden sm:inline">God Mode</span>
+          </a>
+          <a href="../trilha8/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-orange-400 hover:bg-orange-500/10 transition-colors">
+            <span class="sm:hidden">T8</span>
+            <span class="hidden sm:inline">Prompts</span>
+          </a>
+          <a href="../trilha9/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-pink-400 hover:bg-pink-500/10 transition-colors">
+            <span class="sm:hidden">T9</span>
+            <span class="hidden sm:inline">Projeto</span>
+          </a>
+
+          <!-- Theme Toggle -->
+          <button id="theme-toggle" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2">
+            <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+            </svg>
+            <svg id="theme-toggle-light-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HEADER -->
+  <header class="bg-gradient-to-br from-cyan-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <span class="inline-block px-3 py-1 bg-cyan-500/20 text-cyan-400 text-xs font-semibold rounded-full mb-4">
+        TRILHA 7
+      </span>
+      <h1 class="text-3xl sm:text-4xl font-bold mb-4">⚡ Modo Deus</h1>
+      <p class="text-lg text-neutral-400 max-w-3xl">
+        Domine a arte de usar multiplos terminais Claude Code em paralelo. Aprenda quando faz sentido,
+        como evitar colisoes entre agentes, e os tres cenarios praticos para maximizar produtividade.
+      </p>
+
+      <!-- Stats Grid -->
+      <div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-cyan-400">8</div>
+          <div class="text-xs text-neutral-400">Modulos</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-cyan-400">48</div>
+          <div class="text-xs text-neutral-400">Topicos</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-cyan-400">~4h</div>
+          <div class="text-xs text-neutral-400">Duracao</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-cyan-400">Avancado</div>
+          <div class="text-xs text-neutral-400">Nivel</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN CONTENT -->
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+    <!-- Navegacao Rapida -->
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
+      <a href="modulo-7-1.html" class="bg-dark-800 rounded-lg p-4 border border-dark-600 hover:border-cyan-500/50 transition-colors">
+        <span class="text-cyan-400 font-bold">7.1</span>
+        <p class="text-sm text-neutral-300 mt-1">Introducao</p>
+      </a>
+      <a href="modulo-7-2.html" class="bg-dark-800 rounded-lg p-4 border border-dark-600 hover:border-cyan-500/50 transition-colors">
+        <span class="text-cyan-400 font-bold">7.2</span>
+        <p class="text-sm text-neutral-300 mt-1">True Parallel</p>
+      </a>
+      <a href="modulo-7-3.html" class="bg-dark-800 rounded-lg p-4 border border-dark-600 hover:border-cyan-500/50 transition-colors">
+        <span class="text-cyan-400 font-bold">7.3</span>
+        <p class="text-sm text-neutral-300 mt-1">Phased Parallel</p>
+      </a>
+      <a href="modulo-7-4.html" class="bg-dark-800 rounded-lg p-4 border border-dark-600 hover:border-cyan-500/50 transition-colors">
+        <span class="text-cyan-400 font-bold">7.4</span>
+        <p class="text-sm text-neutral-300 mt-1">Relay Race</p>
+      </a>
+      <a href="modulo-7-5.html" class="bg-dark-800 rounded-lg p-4 border border-dark-600 hover:border-cyan-500/50 transition-colors">
+        <span class="text-cyan-400 font-bold">7.5</span>
+        <p class="text-sm text-neutral-300 mt-1">Plan.md</p>
+      </a>
+      <a href="modulo-7-6.html" class="bg-dark-800 rounded-lg p-4 border border-dark-600 hover:border-cyan-500/50 transition-colors">
+        <span class="text-cyan-400 font-bold">7.6</span>
+        <p class="text-sm text-neutral-300 mt-1">Sessions</p>
+      </a>
+      <a href="modulo-7-7.html" class="bg-dark-800 rounded-lg p-4 border border-dark-600 hover:border-cyan-500/50 transition-colors">
+        <span class="text-cyan-400 font-bold">7.7</span>
+        <p class="text-sm text-neutral-300 mt-1">Design Thinking</p>
+      </a>
+      <a href="modulo-7-8.html" class="bg-dark-800 rounded-lg p-4 border border-dark-600 hover:border-cyan-500/50 transition-colors">
+        <span class="text-cyan-400 font-bold">7.8</span>
+        <p class="text-sm text-neutral-300 mt-1">Workflow</p>
+      </a>
+    </div>
+
+    <!-- Divisor -->
+    <div class="flex items-center mb-8">
+      <div class="flex-1 border-t border-dark-600"></div>
+      <span class="px-4 text-neutral-500 text-sm">Conteudo Detalhado</span>
+      <div class="flex-1 border-t border-dark-600"></div>
+    </div>
+
+    <!-- MODULO 7.1 -->
+    <div class="bg-dark-800 rounded-xl border border-dark-600 mb-6">
+      <div class="p-6 border-b border-dark-600">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-cyan-400 font-bold">7.1</span>
+          <span class="text-xs text-neutral-500">~30 min</span>
+        </div>
+        <h3 class="text-2xl font-bold mb-2">🚀 Introducao ao God Mode</h3>
+        <p class="text-neutral-400 text-sm">Desmistificando a fantasia dos 100 terminais e entendendo quando o trabalho paralelo realmente faz sentido.</p>
+      </div>
+
+      <div class="divide-y divide-dark-600">
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-cyan-500/20 text-cyan-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+            <span class="text-lg">🎭</span>
+            <div>
+              <span class="font-medium">Fantasy dos 100 Terminais</span>
+              <span class="text-neutral-500 text-sm ml-2">- O que mostram no LinkedIn</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-cyan-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">A imagem popular de usuarios com dezenas de terminais Claude Code rodando simultaneamente, prometendo produtividade multiplicada.</p>
+              </div>
+              <div>
+                <span class="text-cyan-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Entender a diferenca entre marketing e realidade evita frustracoes e desperdicio de recursos com abordagens ineficientes.</p>
+              </div>
+              <div>
+                <span class="text-cyan-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Hype vs realidade, screenshots enganosos, agentes colidindo, features frageis, dinheiro queimado.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-cyan-500/20 text-cyan-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+            <span class="text-lg">🔍</span>
+            <div>
+              <span class="font-medium">Realidade vs Hype</span>
+              <span class="text-neutral-500 text-sm ml-2">- O que realmente acontece</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-cyan-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">A verdade por tras dos screenshots: muitos terminais fazendo perguntas basicas, agentes pisando uns nos outros, e codigo quebradico.</p>
+              </div>
+              <div>
+                <span class="text-cyan-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Ter expectativas realistas permite construir workflows que realmente funcionam em vez de copiar o que parece impressionante.</p>
+              </div>
+              <div>
+                <span class="text-cyan-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Colisao de agentes, stepping on toes, features frageis, autocompact issues, contexto perdido.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-cyan-500/20 text-cyan-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+            <span class="text-lg">✅</span>
+            <div>
+              <span class="font-medium">Quando Paralelo Faz Sentido</span>
+              <span class="text-neutral-500 text-sm ml-2">- Criterios de elegibilidade</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-cyan-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Os criterios objetivos para determinar se uma tarefa pode ou deve ser executada em paralelo com outras.</p>
+              </div>
+              <div>
+                <span class="text-cyan-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Saber identificar tarefas paralelizaveis economiza tempo e evita retrabalho causado por conflitos.</p>
+              </div>
+              <div>
+                <span class="text-cyan-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Independencia de tarefas, outputs separados, sem dependencias, ordem de execucao irrelevante.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-cyan-500/20 text-cyan-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+            <span class="text-lg">❓</span>
+            <div>
+              <span class="font-medium">A Pergunta Essencial</span>
+              <span class="text-neutral-500 text-sm ml-2">- Antes de abrir outro terminal</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-cyan-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">A pergunta que voce deve fazer antes de cada sessao paralela: "Esta tarefa depende de outra? Vao pisar uma na outra?"</p>
+              </div>
+              <div>
+                <span class="text-cyan-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Uma unica pergunta pode evitar horas de debug e retrabalho causados por decisoes precipitadas.</p>
+              </div>
+              <div>
+                <span class="text-cyan-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Analise de dependencias, verificacao pre-execucao, decision gate, self-awareness.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-cyan-500/20 text-cyan-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+            <span class="text-lg">⚖️</span>
+            <div>
+              <span class="font-medium">Produtividade vs Caos</span>
+              <span class="text-neutral-500 text-sm ml-2">- Encontrando o equilibrio</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-cyan-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">O ponto de equilibrio entre adicionar mais terminais para velocidade e criar caos que diminui a produtividade real.</p>
+              </div>
+              <div>
+                <span class="text-cyan-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Entender que mais nem sempre e melhor evita o desperdicio de recursos e a frustracao com resultados ruins.</p>
+              </div>
+              <div>
+                <span class="text-cyan-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Lei dos retornos decrescentes, overhead de coordenacao, custo por token, qualidade vs quantidade.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-cyan-500/20 text-cyan-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+            <span class="text-lg">🧠</span>
+            <div>
+              <span class="font-medium">Modelo Mental Correto</span>
+              <span class="text-neutral-500 text-sm ml-2">- Os tres cenarios</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-cyan-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">A estrutura mental com tres cenarios claros: True Parallel, Phased Parallel e Relay Race.</p>
+              </div>
+              <div>
+                <span class="text-cyan-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Ter um framework mental claro facilita decisoes rapidas sobre como organizar o trabalho.</p>
+              </div>
+              <div>
+                <span class="text-cyan-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Tres cenarios, tarefas independentes, fases com dependencias, passagem de bastao.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+        <a href="modulo-7-1.html" class="px-4 py-2 text-sm bg-cyan-600 hover:bg-cyan-500 text-white rounded-lg transition-colors">
+          Ver Modulo Completo
+        </a>
+      </div>
+    </div>
+
+    <!-- MODULO 7.2 -->
+    <div class="bg-dark-800 rounded-xl border border-dark-600 mb-6">
+      <div class="p-6 border-b border-dark-600">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-cyan-400 font-bold">7.2</span>
+          <span class="text-xs text-neutral-500">~30 min</span>
+        </div>
+        <h3 class="text-2xl font-bold mb-2">🎯 Cenario 1: True Parallel</h3>
+        <p class="text-neutral-400 text-sm">Tarefas verdadeiramente independentes que podem rodar simultaneamente sem conflitos.</p>
+      </div>
+
+      <div class="divide-y divide-dark-600">
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-cyan-500/20 text-cyan-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+            <span class="text-lg">🔀</span>
+            <div>
+              <span class="font-medium">Tarefas Independentes</span>
+              <span class="text-neutral-500 text-sm ml-2">- Zero dependencias</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-cyan-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Tarefas que nao precisam do resultado de outras para comecar ou terminar, podendo executar em qualquer ordem.</p>
+              </div>
+              <div>
+                <span class="text-cyan-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Identificar independencia real e a chave para paralelizacao bem-sucedida sem conflitos.</p>
+              </div>
+              <div>
+                <span class="text-cyan-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Independencia total, outputs isolados, sem arquivos compartilhados, execucao assíncrona.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-cyan-500/20 text-cyan-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+            <span class="text-lg">📝</span>
+            <div>
+              <span class="font-medium">Tasks Nao-Tecnicas</span>
+              <span class="text-neutral-500 text-sm ml-2">- Alem do codigo</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-cyan-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Tarefas que nao envolvem programacao: pesquisa, escrita, planejamento, analise de concorrentes.</p>
+              </div>
+              <div>
+                <span class="text-cyan-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">O cenario ideal para True Parallel, pois tarefas nao-tecnicas raramente compartilham recursos.</p>
+              </div>
+              <div>
+                <span class="text-cyan-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Research, copywriting, content creation, planning, analise de mercado.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-cyan-500/20 text-cyan-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+            <span class="text-lg">📧</span>
+            <div>
+              <span class="font-medium">Research, Emails, Content</span>
+              <span class="text-neutral-500 text-sm ml-2">- Exemplos classicos</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-cyan-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Exemplos concretos: pesquisar competidores, escrever sequencias de email, criar posts para redes sociais.</p>
+              </div>
+              <div>
+                <span class="text-cyan-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Estes sao os casos de uso perfeitos para comecar a praticar trabalho paralelo com baixo risco.</p>
+              </div>
+              <div>
+                <span class="text-cyan-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Competitor research, email sequences, landing page copy, social media content, PR angles.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-cyan-500/20 text-cyan-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+            <span class="text-lg">📄</span>
+            <div>
+              <span class="font-medium">Outputs Separados (.md files)</span>
+              <span class="text-neutral-500 text-sm ml-2">- Isolamento de arquivos</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-cyan-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">A estrategia de direcionar cada sessao para gerar seu output em arquivo separado, evitando conflitos.</p>
+              </div>
+              <div>
+                <span class="text-cyan-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Outputs separados garantem que agentes nao sobrescrevam o trabalho uns dos outros.</p>
+              </div>
+              <div>
+                <span class="text-cyan-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">competitors.md, emails.md, influencers.md, copy.md, isolamento de arquivos.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-cyan-500/20 text-cyan-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+            <span class="text-lg">💼</span>
+            <div>
+              <span class="font-medium">Exemplos Praticos</span>
+              <span class="text-neutral-500 text-sm ml-2">- Caso lancamento de curso</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-cyan-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Um exemplo real: lancar um curso de IA com pesquisa de mercado, emails, influencers e copy rodando em paralelo.</p>
+              </div>
+              <div>
+                <span class="text-cyan-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Exemplos concretos facilitam a visualizacao e aplicacao do conceito em seus proprios projetos.</p>
+              </div>
+              <div>
+                <span class="text-cyan-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Task breakdown, prompt specifico por terminal, verificacao de independencia, workflow completo.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-cyan-500/20 text-cyan-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+            <span class="text-lg">🖥️</span>
+            <div>
+              <span class="font-medium">4-5 Terminais Simultaneos</span>
+              <span class="text-neutral-500 text-sm ml-2">- Quantidade realista</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-cyan-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">O numero pratico de terminais para True Parallel: 4-5 sessoes sao gerenciaveis e produtivas.</p>
+              </div>
+              <div>
+                <span class="text-cyan-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Saber o limite pratico evita sobrecarga cognitiva e mantem o controle sobre todas as sessoes.</p>
+              </div>
+              <div>
+                <span class="text-cyan-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Limite cognitivo, gerenciamento visual, monitoramento de progresso, 4-5 sweet spot.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+        <a href="modulo-7-2.html" class="px-4 py-2 text-sm bg-cyan-600 hover:bg-cyan-500 text-white rounded-lg transition-colors">
+          Ver Modulo Completo
+        </a>
+      </div>
+    </div>
+
+    <!-- MODULO 7.3 -->
+    <div class="bg-dark-800 rounded-xl border border-dark-600 mb-6">
+      <div class="p-6 border-b border-dark-600">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-cyan-400 font-bold">7.3</span>
+          <span class="text-xs text-neutral-500">~30 min</span>
+        </div>
+        <h3 class="text-2xl font-bold mb-2">🔄 Cenario 2: Phased Parallel</h3>
+        <p class="text-neutral-400 text-sm">Fases de desenvolvimento onde a fundacao vem primeiro, seguida de features independentes.</p>
+      </div>
+
+      <div class="divide-y divide-dark-600">
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-cyan-500/20 text-cyan-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+            <span class="text-lg">📊</span>
+            <div>
+              <span class="font-medium">Fases com Dependencias</span>
+              <span class="text-neutral-500 text-sm ml-2">- Entendendo a estrutura</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-cyan-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">A organizacao do trabalho em fases onde algumas dependem de outras, mas dentro de cada fase ha tarefas paralelas.</p>
+              </div>
+              <div>
+                <span class="text-cyan-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">A maioria dos projetos reais tem essa estrutura - entende-la permite otimizar o workflow.</p>
+              </div>
+              <div>
+                <span class="text-cyan-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Fases sequenciais, tarefas paralelas dentro da fase, dependencias inter-fase, estrutura hibrida.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-cyan-500/20 text-cyan-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+            <span class="text-lg">🏗️</span>
+            <div>
+              <span class="font-medium">Fundacao Primeiro</span>
+              <span class="text-neutral-500 text-sm ml-2">- Base antes de tudo</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-cyan-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">A necessidade de completar a infraestrutura base (database, auth) antes de construir features.</p>
+              </div>
+              <div>
+                <span class="text-cyan-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Pular a fundacao cria features que nao funcionam ou precisam ser reescritas depois.</p>
+              </div>
+              <div>
+                <span class="text-cyan-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Database schema, authentication system, core infrastructure, building blocks.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-cyan-500/20 text-cyan-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+            <span class="text-lg">🔀</span>
+            <div>
+              <span class="font-medium">Features Independentes</span>
+              <span class="text-neutral-500 text-sm ml-2">- Paralelo apos fundacao</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-cyan-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Apos a fundacao pronta, features como dashboard, admin panel e upload podem rodar em paralelo.</p>
+              </div>
+              <div>
+                <span class="text-cyan-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Identificar quando as features se tornam elegíveis para paralelo maximiza a velocidade de desenvolvimento.</p>
+              </div>
+              <div>
+                <span class="text-cyan-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">User dashboard, admin panel, file upload, payment integration, notifications.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-cyan-500/20 text-cyan-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+            <span class="text-lg">🤖</span>
+            <div>
+              <span class="font-medium">Perguntar ao Claude</span>
+              <span class="text-neutral-500 text-sm ml-2">- O que paralelizar</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-cyan-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Usar o Claude para analisar o plano e dizer quais tarefas podem rodar em paralelo sem conflitos.</p>
+              </div>
+              <div>
+                <span class="text-cyan-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">O Claude pode identificar dependencias que voce nao percebeu, especialmente se nao for tecnico.</p>
+              </div>
+              <div>
+                <span class="text-cyan-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Dependency analysis, Claude as advisor, non-technical guidance, safety check.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-cyan-500/20 text-cyan-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+            <span class="text-lg">📋</span>
+            <div>
+              <span class="font-medium">Meta Prompts para Contexto</span>
+              <span class="text-neutral-500 text-sm ml-2">- Informando novas sessoes</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-cyan-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Pedir ao Claude que gere o prompt para a nova sessao paralela, incluindo contexto necessario.</p>
+              </div>
+              <div>
+                <span class="text-cyan-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Meta prompts garantem que cada nova sessao tenha o contexto que precisa sem informacoes desnecessarias.</p>
+              </div>
+              <div>
+                <span class="text-cyan-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Meta prompting, context injection, session initialization, dependency declaration.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-cyan-500/20 text-cyan-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+            <span class="text-lg">👤</span>
+            <div>
+              <span class="font-medium">Exemplo: App Cliente</span>
+              <span class="text-neutral-500 text-sm ml-2">- Caso pratico completo</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-cyan-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Exemplo de portal de cliente: database primeiro, depois auth, depois dashboard/admin/upload em paralelo.</p>
+              </div>
+              <div>
+                <span class="text-cyan-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Ver um exemplo completo ajuda a aplicar o conceito em seus proprios projetos de software.</p>
+              </div>
+              <div>
+                <span class="text-cyan-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Client portal, users/projects/files/invoices tables, auth + database + features flow.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+        <a href="modulo-7-3.html" class="px-4 py-2 text-sm bg-cyan-600 hover:bg-cyan-500 text-white rounded-lg transition-colors">
+          Ver Modulo Completo
+        </a>
+      </div>
+    </div>
+
+    <!-- MODULO 7.4 -->
+    <div class="bg-dark-800 rounded-xl border border-dark-600 mb-6">
+      <div class="p-6 border-b border-dark-600">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-cyan-400 font-bold">7.4</span>
+          <span class="text-xs text-neutral-500">~30 min</span>
+        </div>
+        <h3 class="text-2xl font-bold mb-2">🏃 Cenario 3: Relay Race</h3>
+        <p class="text-neutral-400 text-sm">Passagem de bastao entre sessoes, onde cada fase depende completamente da anterior.</p>
+      </div>
+
+      <div class="divide-y divide-dark-600">
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-cyan-500/20 text-cyan-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+            <span class="text-lg">🔄</span>
+            <div>
+              <span class="font-medium">Baton Passing entre Sessoes</span>
+              <span class="text-neutral-500 text-sm ml-2">- O conceito do revezamento</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-cyan-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Passar o trabalho de uma sessao para outra como num revezamento, onde cada sessao completa uma fase inteira.</p>
+              </div>
+              <div>
+                <span class="text-cyan-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Evita problemas de autocompact mantendo cada sessao focada em uma unica fase com contexto fresco.</p>
+              </div>
+              <div>
+                <span class="text-cyan-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Session handoff, phase completion, clean slate, baton metaphor, sequential execution.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-cyan-500/20 text-cyan-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+            <span class="text-lg">📝</span>
+            <div>
+              <span class="font-medium">Plan.md como Guia</span>
+              <span class="text-neutral-500 text-sm ml-2">- O documento central</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-cyan-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Um arquivo plan.md que documenta todas as fases, tarefas e serve como fonte de verdade para todas as sessoes.</p>
+              </div>
+              <div>
+                <span class="text-cyan-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">O plan.md permite que cada sessao saiba exatamente onde parar e a proxima onde comecar.</p>
+              </div>
+              <div>
+                <span class="text-cyan-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Plan document, source of truth, phase definitions, task lists, central reference.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-cyan-500/20 text-cyan-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+            <span class="text-lg">☑️</span>
+            <div>
+              <span class="font-medium">Checkboxes de Progresso</span>
+              <span class="text-neutral-500 text-sm ml-2">- Marcando o que foi feito</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-cyan-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Checkboxes no plan.md que o Claude marca conforme completa cada tarefa, criando historico automatico.</p>
+              </div>
+              <div>
+                <span class="text-cyan-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Checkboxes permitem retomar de onde parou e saber exatamente o que falta fazer.</p>
+              </div>
+              <div>
+                <span class="text-cyan-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Progress tracking, automatic documentation, resumable sessions, visual progress.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-cyan-500/20 text-cyan-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+            <span class="text-lg">🔒</span>
+            <div>
+              <span class="font-medium">Sessions Mutually Exclusive</span>
+              <span class="text-neutral-500 text-sm ml-2">- Uma de cada vez</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-cyan-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Cada sessao e isolada em contexto - quando uma termina, a proxima comeca do zero com apenas o plan.md.</p>
+              </div>
+              <div>
+                <span class="text-cyan-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Sessoes exclusivas evitam contaminacao de contexto e problemas de autocompact.</p>
+              </div>
+              <div>
+                <span class="text-cyan-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Context isolation, session boundaries, clean handoffs, no context bleed.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-cyan-500/20 text-cyan-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+            <span class="text-lg">🆕</span>
+            <div>
+              <span class="font-medium">Context Window Fresh</span>
+              <span class="text-neutral-500 text-sm ml-2">- 100% de capacidade</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-cyan-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Cada nova sessao comeca com o context window completamente vazio, dando 100% de capacidade para a fase atual.</p>
+              </div>
+              <div>
+                <span class="text-cyan-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Context fresh significa que o Claude tem toda sua capacidade cognitiva disponível para a tarefa.</p>
+              </div>
+              <div>
+                <span class="text-cyan-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Fresh context, maximum capacity, no legacy baggage, optimal performance.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-cyan-500/20 text-cyan-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+            <span class="text-lg">⚠️</span>
+            <div>
+              <span class="font-medium">Autocompact Awareness</span>
+              <span class="text-neutral-500 text-sm ml-2">- Entendendo os riscos</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-cyan-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Entender que autocompact pode perder informacoes importantes e por isso sessoes separadas sao mais seguras.</p>
+              </div>
+              <div>
+                <span class="text-cyan-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Consciencia de autocompact evita surpresas quando o Claude "esquece" coisas importantes mid-session.</p>
+              </div>
+              <div>
+                <span class="text-cyan-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Context compaction, information loss, 80/20 retention, session freshness benefits.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+        <a href="modulo-7-4.html" class="px-4 py-2 text-sm bg-cyan-600 hover:bg-cyan-500 text-white rounded-lg transition-colors">
+          Ver Modulo Completo
+        </a>
+      </div>
+    </div>
+
+    <!-- MODULO 7.5 -->
+    <div class="bg-dark-800 rounded-xl border border-dark-600 mb-6">
+      <div class="p-6 border-b border-dark-600">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-cyan-400 font-bold">7.5</span>
+          <span class="text-xs text-neutral-500">~30 min</span>
+        </div>
+        <h3 class="text-2xl font-bold mb-2">📋 Plan.md e Documentacao</h3>
+        <p class="text-neutral-400 text-sm">Como criar e manter o documento de plano que coordena todas as sessoes.</p>
+      </div>
+
+      <div class="divide-y divide-dark-600">
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-cyan-500/20 text-cyan-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+            <span class="text-lg">📝</span>
+            <div>
+              <span class="font-medium">Criar Plan.md Detalhado</span>
+              <span class="text-neutral-500 text-sm ml-2">- Estrutura completa</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-cyan-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Um documento markdown com overview, fases, tarefas, checkboxes e espaco para decisoes.</p>
+              </div>
+              <div>
+                <span class="text-cyan-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">O plan.md e o cerebro compartilhado entre todas as sessoes - quanto melhor, melhor o resultado.</p>
+              </div>
+              <div>
+                <span class="text-cyan-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Document structure, markdown formatting, phase organization, task granularity.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-cyan-500/20 text-cyan-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+            <span class="text-lg">🎯</span>
+            <div>
+              <span class="font-medium">Overview e Big Picture</span>
+              <span class="text-neutral-500 text-sm ml-2">- Contexto geral do projeto</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-cyan-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">A secao inicial que explica o que estamos construindo, por que, e qual o objetivo final do projeto.</p>
+              </div>
+              <div>
+                <span class="text-cyan-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Big picture ajuda cada sessao stateless a entender o contexto e tomar decisoes alinhadas.</p>
+              </div>
+              <div>
+                <span class="text-cyan-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Project vision, problem statement, target users, success criteria, inspiration.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-cyan-500/20 text-cyan-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+            <span class="text-lg">📊</span>
+            <div>
+              <span class="font-medium">Fases com Tarefas</span>
+              <span class="text-neutral-500 text-sm ml-2">- Organizacao hierarquica</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-cyan-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Divisao do projeto em fases sequenciais, cada uma com lista de tarefas especificas.</p>
+              </div>
+              <div>
+                <span class="text-cyan-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Fases claras permitem saber exatamente quando uma sessao termina e a proxima comeca.</p>
+              </div>
+              <div>
+                <span class="text-cyan-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Phase 1/2/3/4, task lists, completion criteria, phase boundaries, dependencies.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-cyan-500/20 text-cyan-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+            <span class="text-lg">☑️</span>
+            <div>
+              <span class="font-medium">Checkboxes Automaticos</span>
+              <span class="text-neutral-500 text-sm ml-2">- Tracking de progresso</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-cyan-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Instruir o Claude a marcar checkboxes conforme completa tarefas, criando tracking automatico.</p>
+              </div>
+              <div>
+                <span class="text-cyan-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Checkboxes automaticos eliminam trabalho manual de documentacao e garantem rastreabilidade.</p>
+              </div>
+              <div>
+                <span class="text-cyan-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">[ ] unchecked, [x] checked, auto-update, progress visibility, resume points.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-cyan-500/20 text-cyan-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+            <span class="text-lg">📔</span>
+            <div>
+              <span class="font-medium">Decision Log</span>
+              <span class="text-neutral-500 text-sm ml-2">- Registrando escolhas</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-cyan-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Secao ou arquivo separado para documentar decisoes arquiteturais tomadas durante o desenvolvimento.</p>
+              </div>
+              <div>
+                <span class="text-cyan-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Decision log permite que sessoes futuras entendam por que certas escolhas foram feitas.</p>
+              </div>
+              <div>
+                <span class="text-cyan-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Architecture decisions, rationale, alternatives considered, context for future sessions.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-cyan-500/20 text-cyan-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+            <span class="text-lg">🧠</span>
+            <div>
+              <span class="font-medium">Claude.md Updates</span>
+              <span class="text-neutral-500 text-sm ml-2">- Sincronizando memoria</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-cyan-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Atualizar o CLAUDE.md com informacoes relevantes conforme o projeto evolui.</p>
+              </div>
+              <div>
+                <span class="text-cyan-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">CLAUDE.md atualizado garante que novas sessoes tenham contexto do projeto automaticamente.</p>
+              </div>
+              <div>
+                <span class="text-cyan-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Memory persistence, project evolution, context injection, automated context.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+        <a href="modulo-7-5.html" class="px-4 py-2 text-sm bg-cyan-600 hover:bg-cyan-500 text-white rounded-lg transition-colors">
+          Ver Modulo Completo
+        </a>
+      </div>
+    </div>
+
+    <!-- MODULO 7.6 -->
+    <div class="bg-dark-800 rounded-xl border border-dark-600 mb-6">
+      <div class="p-6 border-b border-dark-600">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-cyan-400 font-bold">7.6</span>
+          <span class="text-xs text-neutral-500">~30 min</span>
+        </div>
+        <h3 class="text-2xl font-bold mb-2">💾 Session Management</h3>
+        <p class="text-neutral-400 text-sm">Gerenciando context window, evitando problemas de autocompact e mantendo sessoes produtivas.</p>
+      </div>
+
+      <div class="divide-y divide-dark-600">
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-cyan-500/20 text-cyan-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+            <span class="text-lg">📏</span>
+            <div>
+              <span class="font-medium">Context Window Limits</span>
+              <span class="text-neutral-500 text-sm ml-2">- Entendendo o teto</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-cyan-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">O limite de 200K tokens que define quanto o Claude pode "lembrar" em uma sessao.</p>
+              </div>
+              <div>
+                <span class="text-cyan-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Entender o limite ajuda a planejar sessoes que nao ultrapassem a capacidade do modelo.</p>
+              </div>
+              <div>
+                <span class="text-cyan-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">200K tokens, context budget, token counting, capacity planning.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-cyan-500/20 text-cyan-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+            <span class="text-lg">⚠️</span>
+            <div>
+              <span class="font-medium">Autocompact Pitfalls</span>
+              <span class="text-neutral-500 text-sm ml-2">- Armadilhas da compactacao</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-cyan-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Problemas causados quando autocompact descarta informacoes que eram importantes para a tarefa.</p>
+              </div>
+              <div>
+                <span class="text-cyan-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Conhecer os riscos de autocompact ajuda a estruturar sessoes que minimizam perda de informacao.</p>
+              </div>
+              <div>
+                <span class="text-cyan-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Information loss, priority confusion, context degradation, unpredictable retention.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-cyan-500/20 text-cyan-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+            <span class="text-lg">🆕</span>
+            <div>
+              <span class="font-medium">Sessao Virginizada para Plano</span>
+              <span class="text-neutral-500 text-sm ml-2">- Sessao bonus de QA</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-cyan-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Uma sessao extra mantida limpa, focada apenas no plan.md, para verificar progresso das outras sessoes.</p>
+              </div>
+              <div>
+                <span class="text-cyan-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">A sessao bonus permite QA proativo - verificar se as outras sessoes completaram tudo corretamente.</p>
+              </div>
+              <div>
+                <span class="text-cyan-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Bonus session, QA session, plan-obsessed, fresh perspective, proactive checking.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-cyan-500/20 text-cyan-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+            <span class="text-lg">📊</span>
+            <div>
+              <span class="font-medium">80/20 do Contexto</span>
+              <span class="text-neutral-500 text-sm ml-2">- O que realmente importa</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-cyan-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">A ideia de que 80% do valor vem de 20% do contexto - foco no essencial.</p>
+              </div>
+              <div>
+                <span class="text-cyan-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Focar no contexto essencial permite sessoes mais eficientes com menos risco de perda importante.</p>
+              </div>
+              <div>
+                <span class="text-cyan-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Pareto principle, essential context, noise reduction, focused sessions.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-cyan-500/20 text-cyan-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+            <span class="text-lg">✨</span>
+            <div>
+              <span class="font-medium">Fresh Slate Benefits</span>
+              <span class="text-neutral-500 text-sm ml-2">- Vantagens de comecar limpo</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-cyan-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Os beneficios de iniciar sessoes do zero: capacidade total, sem confusao de contexto anterior, foco total.</p>
+              </div>
+              <div>
+                <span class="text-cyan-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Entender os beneficios de sessoes limpas motiva a usar o modelo Relay Race quando apropriado.</p>
+              </div>
+              <div>
+                <span class="text-cyan-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Full capacity, no confusion, focused attention, optimal performance, clean start.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-cyan-500/20 text-cyan-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+            <span class="text-lg">🚀</span>
+            <div>
+              <span class="font-medium">Momentum sem Perda</span>
+              <span class="text-neutral-500 text-sm ml-2">- Velocidade com seguranca</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-cyan-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Manter ritmo de desenvolvimento alto sem perder qualidade ou informacao importante.</p>
+              </div>
+              <div>
+                <span class="text-cyan-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">O objetivo final e velocidade sustentavel - rapido E confiavel.</p>
+              </div>
+              <div>
+                <span class="text-cyan-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Sustainable pace, quality maintenance, reliable output, consistent progress.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+        <a href="modulo-7-6.html" class="px-4 py-2 text-sm bg-cyan-600 hover:bg-cyan-500 text-white rounded-lg transition-colors">
+          Ver Modulo Completo
+        </a>
+      </div>
+    </div>
+
+    <!-- MODULO 7.7 -->
+    <div class="bg-dark-800 rounded-xl border border-dark-600 mb-6">
+      <div class="p-6 border-b border-dark-600">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-cyan-400 font-bold">7.7</span>
+          <span class="text-xs text-neutral-500">~30 min</span>
+        </div>
+        <h3 class="text-2xl font-bold mb-2">🎨 Design Thinking</h3>
+        <p class="text-neutral-400 text-sm">Pensamento de design: entender ordem de operacoes e arquitetura de sistema.</p>
+      </div>
+
+      <div class="divide-y divide-dark-600">
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-cyan-500/20 text-cyan-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+            <span class="text-lg">🔢</span>
+            <div>
+              <span class="font-medium">Ordem de Operacoes</span>
+              <span class="text-neutral-500 text-sm ml-2">- O que vem primeiro</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-cyan-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">A habilidade de determinar a sequencia correta de tarefas baseada em dependencias logicas.</p>
+              </div>
+              <div>
+                <span class="text-cyan-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Ordem errada significa retrabalho - esta e a skill mais importante para os proximos 12 meses.</p>
+              </div>
+              <div>
+                <span class="text-cyan-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Dependency mapping, prerequisite analysis, logical sequencing, critical path.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-cyan-500/20 text-cyan-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+            <span class="text-lg">🗄️</span>
+            <div>
+              <span class="font-medium">Database Primeiro</span>
+              <span class="text-neutral-500 text-sm ml-2">- Fundacao de dados</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-cyan-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">A regra de que o database schema deve ser definido antes de qualquer feature que usa dados.</p>
+              </div>
+              <div>
+                <span class="text-cyan-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Tudo depende de onde os dados sao armazenados - o database e sempre o ponto de partida.</p>
+              </div>
+              <div>
+                <span class="text-cyan-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Schema design, table structure, relationships, data model, storage decisions.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-cyan-500/20 text-cyan-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+            <span class="text-lg">🔐</span>
+            <div>
+              <span class="font-medium">Auth Antes de Dashboard</span>
+              <span class="text-neutral-500 text-sm ml-2">- Identidade antes de UI</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-cyan-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">A necessidade de ter autenticacao funcionando antes de construir interfaces que dependem de usuario logado.</p>
+              </div>
+              <div>
+                <span class="text-cyan-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Dashboard sem auth e uma casca vazia - voce precisa saber QUEM esta usando.</p>
+              </div>
+              <div>
+                <span class="text-cyan-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">User identity, session management, protected routes, auth flow, login/signup.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-cyan-500/20 text-cyan-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+            <span class="text-lg">🏛️</span>
+            <div>
+              <span class="font-medium">Arquitetura de Sistema</span>
+              <span class="text-neutral-500 text-sm ml-2">- Visao de alto nivel</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-cyan-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">A visao de como os componentes do sistema se conectam e dependem uns dos outros.</p>
+              </div>
+              <div>
+                <span class="text-cyan-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Entender arquitetura permite tomar decisoes informadas sobre paralelizacao e sequenciamento.</p>
+              </div>
+              <div>
+                <span class="text-cyan-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">System components, connections, data flow, service boundaries, integration points.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-cyan-500/20 text-cyan-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+            <span class="text-lg">➡️</span>
+            <div>
+              <span class="font-medium">Pre-requisitos A para B</span>
+              <span class="text-neutral-500 text-sm ml-2">- Mapeando dependencias</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-cyan-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">O processo de identificar o que precisa existir antes de cada tarefa poder comecar.</p>
+              </div>
+              <div>
+                <span class="text-cyan-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Mapear pre-requisitos evita comecar tarefas que vao falhar por falta de dependencias.</p>
+              </div>
+              <div>
+                <span class="text-cyan-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Prerequisite mapping, dependency graph, blocker identification, ready state.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-cyan-500/20 text-cyan-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+            <span class="text-lg">📋</span>
+            <div>
+              <span class="font-medium">Whiteboard Mental</span>
+              <span class="text-neutral-500 text-sm ml-2">- Visualizando o sistema</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-cyan-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">A pratica de visualizar o sistema como um diagrama, mesmo que seja mental, antes de comecar.</p>
+              </div>
+              <div>
+                <span class="text-cyan-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Visualizacao ajuda a identificar dependencias e pontos de paralelizacao que nao sao obvios.</p>
+              </div>
+              <div>
+                <span class="text-cyan-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Mental model, system diagram, visual thinking, architecture sketch, flow mapping.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+        <a href="modulo-7-7.html" class="px-4 py-2 text-sm bg-cyan-600 hover:bg-cyan-500 text-white rounded-lg transition-colors">
+          Ver Modulo Completo
+        </a>
+      </div>
+    </div>
+
+    <!-- MODULO 7.8 -->
+    <div class="bg-dark-800 rounded-xl border border-dark-600 mb-6">
+      <div class="p-6 border-b border-dark-600">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-cyan-400 font-bold">7.8</span>
+          <span class="text-xs text-neutral-500">~30 min</span>
+        </div>
+        <h3 class="text-2xl font-bold mb-2">🔧 Workflow Completo</h3>
+        <p class="text-neutral-400 text-sm">Integrando os tres cenarios em um workflow pratico e adaptavel.</p>
+      </div>
+
+      <div class="divide-y divide-dark-600">
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-cyan-500/20 text-cyan-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+            <span class="text-lg">🔄</span>
+            <div>
+              <span class="font-medium">Integrando os 3 Cenarios</span>
+              <span class="text-neutral-500 text-sm ml-2">- Combinando estrategias</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-cyan-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">A arte de combinar True Parallel, Phased Parallel e Relay Race conforme a necessidade do momento.</p>
+              </div>
+              <div>
+                <span class="text-cyan-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Projetos reais precisam de flexibilidade - voce usara diferentes cenarios em diferentes fases.</p>
+              </div>
+              <div>
+                <span class="text-cyan-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Strategy switching, adaptive workflow, context-aware decisions, hybrid approach.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-cyan-500/20 text-cyan-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+            <span class="text-lg">❓</span>
+            <div>
+              <span class="font-medium">Quando Usar Cada Um</span>
+              <span class="text-neutral-500 text-sm ml-2">- Criterios de selecao</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-cyan-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Regras claras para decidir qual cenario aplicar baseado nas caracteristicas da tarefa.</p>
+              </div>
+              <div>
+                <span class="text-cyan-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Decisao rapida e correta sobre qual cenario usar economiza tempo e evita erros.</p>
+              </div>
+              <div>
+                <span class="text-cyan-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Decision matrix, task analysis, independence test, phase detection, relay indicators.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-cyan-500/20 text-cyan-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+            <span class="text-lg">🎯</span>
+            <div>
+              <span class="font-medium">Session Bonus para QA</span>
+              <span class="text-neutral-500 text-sm ml-2">- Verificacao proativa</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-cyan-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Manter uma sessao extra dedicada exclusivamente a verificar o trabalho das outras sessoes.</p>
+              </div>
+              <div>
+                <span class="text-cyan-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">A sessao bonus pega erros e omissoes antes que se tornem problemas maiores.</p>
+              </div>
+              <div>
+                <span class="text-cyan-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">QA session, verification, completeness check, fresh eyes, plan validation.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-cyan-500/20 text-cyan-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+            <span class="text-lg">🏹</span>
+            <div>
+              <span class="font-medium">Proactive vs Reactive</span>
+              <span class="text-neutral-500 text-sm ml-2">- Ataque vs defesa</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-cyan-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">A diferenca entre agir preventivamente (proactive) e apenas responder a problemas (reactive).</p>
+              </div>
+              <div>
+                <span class="text-cyan-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Ser proativo com a sessao de QA coloca voce no ataque em vez de sempre apagando incendios.</p>
+              </div>
+              <div>
+                <span class="text-cyan-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Proactive checking, prevention vs cure, offense mindset, continuous validation.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-cyan-500/20 text-cyan-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+            <span class="text-lg">✨</span>
+            <div>
+              <span class="font-medium">Elegancia e Velocidade</span>
+              <span class="text-neutral-500 text-sm ml-2">- Rapido E bem feito</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-cyan-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">O objetivo de terminar projetos rapidamente sem sacrificar qualidade ou criar divida tecnica.</p>
+              </div>
+              <div>
+                <span class="text-cyan-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Velocidade sem qualidade e ilusao - o objetivo e ser rapido E confiavel.</p>
+              </div>
+              <div>
+                <span class="text-cyan-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Sustainable speed, quality maintenance, tech debt avoidance, elegant solutions.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-cyan-500/20 text-cyan-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+            <span class="text-lg">🛠️</span>
+            <div>
+              <span class="font-medium">Adaptando para Seu Caso</span>
+              <span class="text-neutral-500 text-sm ml-2">- Personalizacao do workflow</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-cyan-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">O processo de adaptar os tres cenarios para seu contexto especifico, tipo de projeto e estilo de trabalho.</p>
+              </div>
+              <div>
+                <span class="text-cyan-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Nenhum workflow serve para todos - voce precisa customizar para sua realidade.</p>
+              </div>
+              <div>
+                <span class="text-cyan-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Personal adaptation, context-specific, experimentation, iterative improvement.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+        <a href="modulo-7-8.html" class="px-4 py-2 text-sm bg-cyan-600 hover:bg-cyan-500 text-white rounded-lg transition-colors">
+          Ver Modulo Completo
+        </a>
+      </div>
+    </div>
+
+    <!-- Navegacao -->
+    <div class="flex flex-col sm:flex-row gap-4 mt-12">
+      <a href="../trilha6/index.html" class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors">
+        ← Trilha 6: Workflow
+      </a>
+      <a href="../trilha8/index.html" class="flex-1 text-center px-6 py-3 bg-cyan-600 text-white rounded-lg font-semibold hover:bg-cyan-500 transition-colors">
+        Trilha 8: Prompts →
+      </a>
+    </div>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-dark-600 py-8 mt-16">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+      <p>Claude Code 2026 - Curso completo de Claude Code em Portugues</p>
+    </div>
+  </footer>
+
+  <!-- SCRIPTS -->
+  <script>
+    function toggleTopic(button) {
+      const topicItem = button.closest('.topic-item');
+      const explanation = topicItem.querySelector('.topic-explanation');
+      const moduleCard = button.closest('.bg-dark-800');
+
+      // Fecha outros topicos do mesmo modulo
+      moduleCard.querySelectorAll('.topic-explanation.active').forEach(exp => {
+        if (exp !== explanation) {
+          exp.classList.remove('active');
+        }
+      });
+
+      // Toggle do topico atual
+      explanation.classList.toggle('active');
+    }
+
+    // Theme Toggle
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    const html = document.documentElement;
+
+    // Inicializa icone correto
+    if (localStorage.getItem('theme') === 'light' || (!localStorage.getItem('theme') && !html.classList.contains('dark'))) {
+      themeToggleDarkIcon.classList.remove('hidden');
+      html.classList.remove('dark');
+    } else {
+      themeToggleLightIcon.classList.remove('hidden');
+    }
+
+    // Click handler
+    themeToggle.addEventListener('click', () => {
+      themeToggleDarkIcon.classList.toggle('hidden');
+      themeToggleLightIcon.classList.toggle('hidden');
+      html.classList.toggle('dark');
+      localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+    });
+  </script>
+
+</body>
+</html>

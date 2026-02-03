@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Modulo 7.1: Introducao ao God Mode | Claude Code 2026</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: '#FACC15',
+            dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' }
+          }
+        }
+      }
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+
+    /* Light mode overrides */
+    html:not(.dark) body {
+      background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 50%, #f1f5f9 100%);
+    }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+  </style>
+</head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen">
+
+  <!-- NAVIGATION -->
+  <nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-14">
+        <div class="flex items-center space-x-4">
+          <a href="../../index.html" class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300">
+            <span class="text-2xl">🤖</span>
+            <span class="font-bold text-lg hidden sm:inline">Claude Code 2026</span>
+          </a>
+          <span class="text-neutral-600">|</span>
+          <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300 text-sm font-medium">INEMA.CLUB</a>
+        </div>
+
+        <div class="flex items-center space-x-1 sm:space-x-2">
+          <a href="../trilha1/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors">
+            <span class="sm:hidden">T1</span>
+            <span class="hidden sm:inline">Fundamentos</span>
+          </a>
+          <a href="../trilha2/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors">
+            <span class="sm:hidden">T2</span>
+            <span class="hidden sm:inline">Comandos</span>
+          </a>
+          <a href="../trilha3/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors">
+            <span class="sm:hidden">T3</span>
+            <span class="hidden sm:inline">Avancado</span>
+          </a>
+          <a href="../trilha4/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-amber-400 hover:bg-amber-500/10 transition-colors">
+            <span class="sm:hidden">T4</span>
+            <span class="hidden sm:inline">Customizacao</span>
+          </a>
+          <a href="../trilha5/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-teal-400 hover:bg-teal-500/10 transition-colors">
+            <span class="sm:hidden">T5</span>
+            <span class="hidden sm:inline">MCP</span>
+          </a>
+          <a href="../trilha6/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-rose-400 hover:bg-rose-500/10 transition-colors">
+            <span class="sm:hidden">T6</span>
+            <span class="hidden sm:inline">Workflow</span>
+          </a>
+          <a href="index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-cyan-400 bg-cyan-500/10">
+            <span class="sm:hidden">T7</span>
+            <span class="hidden sm:inline">God Mode</span>
+          </a>
+          <a href="../trilha8/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-orange-400 hover:bg-orange-500/10 transition-colors">
+            <span class="sm:hidden">T8</span>
+            <span class="hidden sm:inline">Prompts</span>
+          </a>
+          <a href="../trilha9/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-pink-400 hover:bg-pink-500/10 transition-colors">
+            <span class="sm:hidden">T9</span>
+            <span class="hidden sm:inline">Projeto</span>
+          </a>
+
+          <button id="theme-toggle" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2">
+            <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+            </svg>
+            <svg id="theme-toggle-light-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- BREADCRUMB -->
+  <nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+    <div class="flex items-center space-x-2 text-sm text-neutral-400">
+      <a href="../../index.html" class="hover:text-cyan-400">Inicio</a>
+      <span>/</span>
+      <a href="index.html" class="hover:text-cyan-400">Trilha 7</a>
+      <span>/</span>
+      <span class="text-cyan-400">Modulo 7.1</span>
+    </div>
+  </nav>
+
+  <!-- HEADER -->
+  <header class="bg-gradient-to-br from-cyan-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <span class="inline-block px-3 py-1 bg-cyan-500/20 text-cyan-400 text-xs font-semibold rounded-full mb-4">
+        MODULO 7.1
+      </span>
+      <h1 class="text-3xl sm:text-4xl font-bold mb-4">🚀 Introducao ao God Mode</h1>
+      <p class="text-lg text-neutral-400 max-w-3xl">
+        Desmistifique a fantasia dos 100 terminais e entenda quando o trabalho paralelo realmente faz sentido.
+        Este modulo estabelece o modelo mental correto antes de voce comecar.
+      </p>
+
+      <div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-cyan-400">6</div>
+          <div class="text-xs text-neutral-400">Topicos</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-cyan-400">30</div>
+          <div class="text-xs text-neutral-400">Minutos</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-cyan-400">Avancado</div>
+          <div class="text-xs text-neutral-400">Nivel</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-cyan-400">Teoria</div>
+          <div class="text-xs text-neutral-400">Tipo</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN CONTENT -->
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+    <!-- TOPICO 1 -->
+    <section id="topico-1" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-cyan-500/20 text-cyan-400 font-bold text-xl">1</span>
+        <h2 class="text-2xl font-bold">🎭 Fantasy dos 100 Terminais</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Se voce usa Claude Code, ja deve ter visto screenshots no LinkedIn ou X mostrando pessoas com <strong class="text-cyan-400">5, 10, 50, ate centenas de terminais</strong> rodando simultaneamente. A fantasia de ser "100x mais produtivo" e sedutora, mas esconde uma realidade bem diferente.
+      </p>
+
+      <div class="bg-gradient-to-br from-cyan-900/30 to-dark-800 rounded-xl border border-cyan-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-cyan-400 mb-4 flex items-center">
+          <span class="mr-2">🎪</span> O Que Voce Ve no LinkedIn
+        </h3>
+        <p class="text-neutral-300 mb-4">
+          Screenshots impressionantes com dezenas de terminais abertos, cada um aparentemente fazendo trabalho "real". A promessa implicita: <strong class="text-white">mais terminais = mais produtividade</strong>.
+        </p>
+        <ul class="space-y-2 text-neutral-300">
+          <li class="flex items-start space-x-2">
+            <span class="text-cyan-400 mt-1">•</span>
+            <span>Flexing de 5, 10, 50+ terminais rodando ao mesmo tempo</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-cyan-400 mt-1">•</span>
+            <span>Sugestao de que isso multiplica a produtividade</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-cyan-400 mt-1">•</span>
+            <span>Apelo visual impressionante que gera engagement</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-cyan-400 mt-1">•</span>
+            <span>FOMO: "se voce nao faz isso, esta ficando para tras"</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+        <h3 class="text-lg font-semibold text-red-400 mb-3 flex items-center">
+          <span class="mr-2">⚠️</span> A Verdade Oculta
+        </h3>
+        <p class="text-neutral-300">
+          O que eles <strong>nao</strong> mostram: quando voce olha de perto esses terminais, muitos estao fazendo perguntas basicas que levam 30 segundos para responder. E os que estao "trabalhando de verdade"? Frequentemente tem agentes <strong class="text-red-400">colidindo uns com os outros</strong>, criando features frageis que quebram no primeiro toque.
+        </p>
+      </div>
+    </section>
+
+    <!-- TOPICO 2 -->
+    <section id="topico-2" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-cyan-500/20 text-cyan-400 font-bold text-xl">2</span>
+        <h2 class="text-2xl font-bold">🔍 Realidade vs Hype</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        A realidade por tras dos screenshots e bem menos glamourosa. Muitos terminais fazem trabalho trivial, e os que fazem trabalho real frequentemente <strong class="text-cyan-400">pisam uns nos outros</strong>, criando mais problemas do que solucionam.
+      </p>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+          <h4 class="font-bold text-emerald-400 mb-4">O Que Prometem</h4>
+          <ul class="space-y-3 text-neutral-300">
+            <li class="flex items-start space-x-2">
+              <span class="text-emerald-400">•</span>
+              <span>8 terminais = 8x mais rapido</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-emerald-400">•</span>
+              <span>Producao massiva em paralelo</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-emerald-400">•</span>
+              <span>Automacao total do desenvolvimento</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-emerald-400">•</span>
+              <span>Resultados impressionantes</span>
+            </li>
+          </ul>
+        </div>
+        <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+          <h4 class="font-bold text-red-400 mb-4">O Que Realmente Acontece</h4>
+          <ul class="space-y-3 text-neutral-300">
+            <li class="flex items-start space-x-2">
+              <span class="text-red-400">•</span>
+              <span>Agentes colidindo e sobrescrevendo trabalho</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-red-400">•</span>
+              <span>Features frageis que quebram facilmente</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-red-400">•</span>
+              <span>Dinheiro queimado em tokens desperdicados</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-red-400">•</span>
+              <span>Caos chamado de "produtividade"</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6">
+        <h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center">
+          <span class="mr-2">📊</span> Analogia com Desenvolvimento Tradicional
+        </h3>
+        <p class="text-neutral-300">
+          No mundo do desenvolvimento de software, ja sabemos: <strong class="text-white">dobrar o numero de desenvolvedores nao reduz o tempo pela metade</strong>. Ha overhead de coordenacao, conflitos de merge, e tarefas que simplesmente nao podem ser paralelizadas. O mesmo principio se aplica a terminais Claude Code.
+        </p>
+      </div>
+    </section>
+
+    <!-- TOPICO 3 -->
+    <section id="topico-3" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-cyan-500/20 text-cyan-400 font-bold text-xl">3</span>
+        <h2 class="text-2xl font-bold">✅ Quando Paralelo Faz Sentido</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Nem toda tarefa e elegivel para execucao paralela. A chave e identificar criterios objetivos que determinam se algo <strong class="text-cyan-400">pode e deve</strong> rodar simultaneamente com outras tarefas.
+      </p>
+
+      <div class="bg-gradient-to-br from-cyan-900/30 to-dark-800 rounded-xl border border-cyan-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-cyan-400 mb-4 flex items-center">
+          <span class="mr-2">✓</span> Criterios para Paralelizacao
+        </h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="flex items-start space-x-3">
+            <span class="text-cyan-400 text-xl">1</span>
+            <div>
+              <h4 class="font-semibold text-white">Voce Sabe o Que Quer</h4>
+              <p class="text-neutral-400 text-sm">Tem clareza total do objetivo final</p>
+            </div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-cyan-400 text-xl">2</span>
+            <div>
+              <h4 class="font-semibold text-white">Passos Intermediarios Claros</h4>
+              <p class="text-neutral-400 text-sm">Sabe exatamente as etapas necessarias</p>
+            </div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-cyan-400 text-xl">3</span>
+            <div>
+              <h4 class="font-semibold text-white">Prompts Bem Definidos</h4>
+              <p class="text-neutral-400 text-sm">Nao precisa ficar babysitting</p>
+            </div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-cyan-400 text-xl">4</span>
+            <div>
+              <h4 class="font-semibold text-white">Tarefas Independentes</h4>
+              <p class="text-neutral-400 text-sm">Nao pisam uma na outra</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">💡</span> Dica Pratica
+        </h3>
+        <p class="text-neutral-300">
+          Se voce precisa <strong>pensar</strong> se duas tarefas podem rodar em paralelo, provavelmente nao podem - pelo menos nao sem um plano cuidadoso. A elegibilidade deve ser <strong>obvia</strong>.
+        </p>
+      </div>
+    </section>
+
+    <!-- TOPICO 4 -->
+    <section id="topico-4" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-cyan-500/20 text-cyan-400 font-bold text-xl">4</span>
+        <h2 class="text-2xl font-bold">❓ A Pergunta Essencial</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Antes de abrir qualquer nova sessao paralela, ha <strong class="text-cyan-400">uma pergunta</strong> que voce deve fazer. Esta pergunta simples pode evitar horas de retrabalho e frustracoes.
+      </p>
+
+      <div class="bg-gradient-to-br from-cyan-900/30 to-dark-800 rounded-xl border border-cyan-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-cyan-400 mb-4 flex items-center">
+          <span class="mr-2">🎯</span> A Pergunta
+        </h3>
+        <div class="bg-dark-900 rounded-lg p-6 text-center">
+          <p class="text-2xl font-bold text-white mb-4">"Esta tarefa depende de outra?"</p>
+          <p class="text-xl text-cyan-400">"Elas vao pisar uma na outra?"</p>
+        </div>
+      </div>
+
+      <div class="space-y-4 mb-6">
+        <div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
+          <h4 class="font-semibold text-white mb-2">Se a resposta for NAO para ambas:</h4>
+          <p class="text-emerald-400">Pode abrir a nova sessao paralela</p>
+        </div>
+        <div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
+          <h4 class="font-semibold text-white mb-2">Se a resposta for SIM para qualquer uma:</h4>
+          <p class="text-red-400">PARE - precisa de planejamento adicional ou sequenciamento</p>
+        </div>
+      </div>
+
+      <div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6">
+        <h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center">
+          <span class="mr-2">🧠</span> Exemplos Praticos
+        </h3>
+        <ul class="space-y-3 text-neutral-300">
+          <li><strong class="text-white">Pesquisa + Email copy:</strong> NAO dependem, NAO pisam - OK paralelo</li>
+          <li><strong class="text-white">Database + Dashboard:</strong> Dashboard DEPENDE do database - NAO paralelo</li>
+          <li><strong class="text-white">Auth + Admin panel:</strong> Admin DEPENDE de auth - NAO paralelo</li>
+          <li><strong class="text-white">Landing copy + PR research:</strong> NAO dependem, NAO pisam - OK paralelo</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- TOPICO 5 -->
+    <section id="topico-5" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-cyan-500/20 text-cyan-400 font-bold text-xl">5</span>
+        <h2 class="text-2xl font-bold">⚖️ Produtividade vs Caos</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Ha um ponto de equilibrio entre adicionar mais terminais para velocidade e criar caos que na verdade <strong class="text-cyan-400">diminui</strong> a produtividade real. Entender esse equilibrio e crucial.
+      </p>
+
+      <div class="bg-gradient-to-br from-cyan-900/30 to-dark-800 rounded-xl border border-cyan-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-cyan-400 mb-4 flex items-center">
+          <span class="mr-2">📈</span> Lei dos Retornos Decrescentes
+        </h3>
+        <p class="text-neutral-300 mb-4">
+          Cada terminal adicional traz <strong class="text-white">menos valor marginal</strong> que o anterior, enquanto aumenta o overhead de coordenacao:
+        </p>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div class="bg-dark-800 rounded-lg p-4 text-center">
+            <div class="text-2xl font-bold text-emerald-400">1-4</div>
+            <div class="text-sm text-neutral-400">terminais</div>
+            <div class="text-xs text-emerald-400 mt-2">Alta produtividade</div>
+          </div>
+          <div class="bg-dark-800 rounded-lg p-4 text-center">
+            <div class="text-2xl font-bold text-yellow-400">5-8</div>
+            <div class="text-sm text-neutral-400">terminais</div>
+            <div class="text-xs text-yellow-400 mt-2">Retornos decrescentes</div>
+          </div>
+          <div class="bg-dark-800 rounded-lg p-4 text-center">
+            <div class="text-2xl font-bold text-red-400">10+</div>
+            <div class="text-sm text-neutral-400">terminais</div>
+            <div class="text-xs text-red-400 mt-2">Risco de caos</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+        <h3 class="text-lg font-semibold text-red-400 mb-3 flex items-center">
+          <span class="mr-2">🔥</span> O Perigo do "Mais e Melhor"
+        </h3>
+        <p class="text-neutral-300">
+          Se voce nao entende quando faz sentido rodar algo em paralelo versus quando cria caos, voce esta <strong class="text-red-400">queimando dinheiro</strong> e chamando isso de produtividade. Cada token desperdicado em colisoes e retrabalho e custo sem beneficio.
+        </p>
+      </div>
+    </section>
+
+    <!-- TOPICO 6 -->
+    <section id="topico-6" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-cyan-500/20 text-cyan-400 font-bold text-xl">6</span>
+        <h2 class="text-2xl font-bold">🧠 Modelo Mental Correto</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Em vez de sair abrindo terminais aleatoriamente, voce precisa de um <strong class="text-cyan-400">framework mental</strong> para decidir como organizar o trabalho. Apresentamos tres cenarios que cobrem a maioria das situacoes.
+      </p>
+
+      <div class="space-y-6 mb-6">
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-12 h-12 rounded-full bg-cyan-500/20 flex items-center justify-center">
+            <span class="text-cyan-400 font-bold">1</span>
+          </div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+            <h4 class="font-semibold text-white mb-2">True Parallel</h4>
+            <p class="text-sm text-neutral-400 mb-3">Tarefas verdadeiramente independentes</p>
+            <p class="text-neutral-300 text-sm">Usado para tarefas nao-tecnicas ou quando outputs sao completamente isolados. Voce pode ter 4-5 terminais sem problemas.</p>
+          </div>
+        </div>
+
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-12 h-12 rounded-full bg-cyan-500/20 flex items-center justify-center">
+            <span class="text-cyan-400 font-bold">2</span>
+          </div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+            <h4 class="font-semibold text-white mb-2">Phased Parallel</h4>
+            <p class="text-sm text-neutral-400 mb-3">Fundacao primeiro, depois paralelo</p>
+            <p class="text-neutral-300 text-sm">Completa a infraestrutura base (database, auth), depois abre terminais paralelos para features independentes.</p>
+          </div>
+        </div>
+
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-12 h-12 rounded-full bg-cyan-500/20 flex items-center justify-center">
+            <span class="text-cyan-400 font-bold">3</span>
+          </div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+            <h4 class="font-semibold text-white mb-2">Relay Race</h4>
+            <p class="text-sm text-neutral-400 mb-3">Passagem de bastao entre sessoes</p>
+            <p class="text-neutral-300 text-sm">Cada fase e completada em uma sessao separada. Evita problemas de autocompact e mantem contexto fresco.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">💡</span> Importante
+        </h3>
+        <p class="text-neutral-300">
+          Estes tres cenarios nao sao as unicas opcoes - sao <strong class="text-white">modelos mentais</strong> para ajudar voce a pensar. Ha milhares de formas de resolver o mesmo problema. O objetivo e ter uma base solida para tomar decisoes, nao seguir uma receita rigida.
+        </p>
+      </div>
+    </section>
+
+    <!-- RESUMO -->
+    <section class="mb-12">
+      <div class="bg-gradient-to-br from-cyan-900/40 via-dark-800 to-dark-800 rounded-xl border border-cyan-500/30 p-8">
+        <h2 class="text-2xl font-bold mb-6 flex items-center">
+          <span class="mr-3">📋</span> Resumo do Modulo
+        </h2>
+
+        <div class="space-y-4 mb-8">
+          <div class="flex items-start space-x-3">
+            <span class="text-cyan-400 mt-1">✓</span>
+            <div>
+              <strong class="text-white">Fantasy vs Realidade</strong>
+              <span class="text-neutral-400"> - Screenshots de 100 terminais sao mais marketing que produtividade real</span>
+            </div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-cyan-400 mt-1">✓</span>
+            <div>
+              <strong class="text-white">Colisoes de Agentes</strong>
+              <span class="text-neutral-400"> - Terminais paralelos sem planejamento criam features frageis</span>
+            </div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-cyan-400 mt-1">✓</span>
+            <div>
+              <strong class="text-white">A Pergunta Essencial</strong>
+              <span class="text-neutral-400"> - "Depende de outra? Vao pisar uma na outra?"</span>
+            </div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-cyan-400 mt-1">✓</span>
+            <div>
+              <strong class="text-white">Retornos Decrescentes</strong>
+              <span class="text-neutral-400"> - Mais terminais nao significa mais produtividade</span>
+            </div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-cyan-400 mt-1">✓</span>
+            <div>
+              <strong class="text-white">Tres Cenarios</strong>
+              <span class="text-neutral-400"> - True Parallel, Phased Parallel, e Relay Race</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+          <h3 class="font-semibold text-cyan-400 mb-2">Proximo Modulo:</h3>
+          <p class="text-neutral-300">7.2 - Cenario 1: True Parallel - Tarefas verdadeiramente independentes</p>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-4">
+          <a href="index.html" class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors">
+            ← Voltar para Trilha
+          </a>
+          <a href="modulo-7-2.html" class="flex-1 text-center px-6 py-3 bg-cyan-600 text-white rounded-lg font-semibold hover:bg-cyan-500 transition-colors">
+            Proximo Modulo →
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-dark-600 py-8 mt-16">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+      <p>Claude Code 2026 - Curso completo de Claude Code em Portugues</p>
+    </div>
+  </footer>
+
+  <!-- SCRIPTS -->
+  <script>
+    // Theme Toggle
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    const html = document.documentElement;
+
+    if (localStorage.getItem('theme') === 'light' || (!localStorage.getItem('theme') && !html.classList.contains('dark'))) {
+      themeToggleDarkIcon.classList.remove('hidden');
+      html.classList.remove('dark');
+    } else {
+      themeToggleLightIcon.classList.remove('hidden');
+    }
+
+    themeToggle.addEventListener('click', () => {
+      themeToggleDarkIcon.classList.toggle('hidden');
+      themeToggleLightIcon.classList.toggle('hidden');
+      html.classList.toggle('dark');
+      localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+    });
+  </script>
+
+</body>
+</html>

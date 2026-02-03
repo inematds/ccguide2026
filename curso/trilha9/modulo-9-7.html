@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Modulo 9.7: Deployment de Skills | Claude Code 2026</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: { extend: { colors: { primary: '#FACC15', dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' } } } }
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+    html:not(.dark) body { background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 50%, #f1f5f9 100%); }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+  </style>
+</head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen">
+  <nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-14">
+        <div class="flex items-center space-x-4">
+          <a href="../../index.html" class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300"><span class="text-2xl">🤖</span><span class="font-bold text-lg hidden sm:inline">Claude Code 2026</span></a>
+          <span class="text-neutral-600">|</span>
+          <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300 text-sm font-medium">INEMA.CLUB</a>
+        </div>
+        <div class="flex items-center space-x-1 sm:space-x-2">
+          <a href="../trilha1/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors"><span class="sm:hidden">T1</span><span class="hidden sm:inline">Fundamentos</span></a>
+          <a href="../trilha2/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors"><span class="sm:hidden">T2</span><span class="hidden sm:inline">Comandos</span></a>
+          <a href="../trilha3/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors"><span class="sm:hidden">T3</span><span class="hidden sm:inline">Avancado</span></a>
+          <a href="../trilha4/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-amber-400 hover:bg-amber-500/10 transition-colors"><span class="sm:hidden">T4</span><span class="hidden sm:inline">MCP</span></a>
+          <a href="../trilha5/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-teal-400 hover:bg-teal-500/10 transition-colors"><span class="sm:hidden">T5</span><span class="hidden sm:inline">Hooks</span></a>
+          <a href="../trilha6/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-rose-400 hover:bg-rose-500/10 transition-colors"><span class="sm:hidden">T6</span><span class="hidden sm:inline">Agentes</span></a>
+          <a href="../trilha7/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-cyan-400 hover:bg-cyan-400/10 transition-colors"><span class="sm:hidden">T7</span><span class="hidden sm:inline">Prompts</span></a>
+          <a href="../trilha8/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-orange-400 hover:bg-orange-500/10 transition-colors"><span class="sm:hidden">T8</span><span class="hidden sm:inline">Projetos</span></a>
+          <a href="index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-fuchsia-400 bg-fuchsia-500/10"><span class="sm:hidden">T9</span><span class="hidden sm:inline">Skills</span></a>
+          <button id="theme-toggle" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2">
+            <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+            <svg id="theme-toggle-light-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+    <div class="flex items-center space-x-2 text-sm text-neutral-400">
+      <a href="../../index.html" class="hover:text-fuchsia-400">Inicio</a><span>/</span>
+      <a href="index.html" class="hover:text-fuchsia-400">Trilha 9</a><span>/</span>
+      <span class="text-fuchsia-400">Modulo 9.7</span>
+    </div>
+  </nav>
+
+  <header class="bg-gradient-to-br from-fuchsia-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <span class="inline-block px-3 py-1 bg-fuchsia-500/20 text-fuchsia-400 text-xs font-semibold rounded-full mb-4">MODULO 9.7</span>
+      <h1 class="text-3xl sm:text-4xl font-bold mb-4">🚀 Deployment de Skills</h1>
+      <p class="text-lg text-neutral-400 max-w-3xl">Como distribuir e instalar seus skills: upload no Claude.ai, instalacao no Claude Code, configuracoes globais e por projeto.</p>
+      <div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-fuchsia-400">6</div><div class="text-xs text-neutral-400">Topicos</div></div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-fuchsia-400">20</div><div class="text-xs text-neutral-400">Minutos</div></div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-fuchsia-400">Avancado</div><div class="text-xs text-neutral-400">Nivel</div></div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-fuchsia-400">Pratico</div><div class="text-xs text-neutral-400">Tipo</div></div>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+    <!-- TOPICO 1 -->
+    <section id="topico-1" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-fuchsia-500/20 text-fuchsia-400 font-bold text-xl">1</span>
+        <h2 class="text-2xl font-bold">🌐 Claude.ai Upload</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">O metodo mais simples de deploy e o <strong class="text-fuchsia-400">upload direto no Claude.ai</strong> atraves da interface web. Ideal para usuarios sem acesso a terminal.</p>
+      <div class="space-y-6 mb-6">
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-12 h-12 rounded-full bg-fuchsia-500/20 flex items-center justify-center">
+            <span class="text-fuchsia-400 font-bold">1</span>
+          </div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+            <h4 class="font-semibold text-white mb-2">Acesse Settings</h4>
+            <p class="text-sm text-neutral-400">No Claude.ai, clique no icone de engrenagem no canto inferior esquerdo.</p>
+          </div>
+        </div>
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-12 h-12 rounded-full bg-fuchsia-500/20 flex items-center justify-center">
+            <span class="text-fuchsia-400 font-bold">2</span>
+          </div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+            <h4 class="font-semibold text-white mb-2">Navegue para Capabilities</h4>
+            <p class="text-sm text-neutral-400">Na aba Capabilities voce encontra a opcao de gerenciar skills customizados.</p>
+          </div>
+        </div>
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-12 h-12 rounded-full bg-fuchsia-500/20 flex items-center justify-center">
+            <span class="text-fuchsia-400 font-bold">3</span>
+          </div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+            <h4 class="font-semibold text-white mb-2">Upload do ZIP</h4>
+            <p class="text-sm text-neutral-400">Arraste o arquivo .zip ou clique para selecionar. O skill e instalado automaticamente.</p>
+          </div>
+        </div>
+      </div>
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6">
+        <h3 class="text-lg font-semibold text-primary mb-3">Requisito do ZIP</h3>
+        <p class="text-neutral-300">O arquivo SKILL.md deve estar na <strong class="text-white">raiz do ZIP</strong>, nao dentro de uma subpasta. Caso contrario, o upload falha.</p>
+      </div>
+    </section>
+
+    <!-- TOPICO 2 -->
+    <section id="topico-2" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-fuchsia-500/20 text-fuchsia-400 font-bold text-xl">2</span>
+        <h2 class="text-2xl font-bold">📁 ~/.claude/skills/</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">Para Claude Code, skills globais ficam em <strong class="text-fuchsia-400">~/.claude/skills/</strong>. Eles estao disponiveis em qualquer projeto.</p>
+      <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+        <h4 class="font-semibold text-white mb-4">Estrutura de Diretorios</h4>
+        <div class="bg-dark-900 rounded-lg p-4 font-mono text-sm text-neutral-300">
+<pre>~/.claude/
+├── settings.json
+├── CLAUDE.md           # Instrucoes globais
+└── skills/
+    ├── sales-data-analyzer/
+    │   ├── SKILL.md
+    │   ├── analyze_sales.py
+    │   └── sample_sales.csv
+    ├── meeting-notes-extractor/
+    │   └── ...
+    └── pdf-invoice-parser/
+        └── ...</pre>
+        </div>
+      </div>
+      <div class="bg-gradient-to-br from-fuchsia-900/30 to-dark-800 rounded-xl border border-fuchsia-500/30 p-6">
+        <h3 class="text-lg font-semibold text-fuchsia-400 mb-4">Comando de Instalacao</h3>
+        <div class="bg-dark-900 rounded-lg p-4 font-mono text-sm text-fuchsia-400 mb-4">
+          cp -r sales-data-analyzer ~/.claude/skills/
+        </div>
+        <p class="text-neutral-300 text-sm">O skill estara disponivel imediatamente em novas sessoes do Claude Code.</p>
+      </div>
+    </section>
+
+    <!-- TOPICO 3 -->
+    <section id="topico-3" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-fuchsia-500/20 text-fuchsia-400 font-bold text-xl">3</span>
+        <h2 class="text-2xl font-bold">📂 Project Skills</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">Skills especificos de um projeto ficam em <strong class="text-fuchsia-400">.claude/skills/</strong> na raiz do projeto. Sao versionados com o repositorio.</p>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
+          <h4 class="font-bold text-fuchsia-400 mb-4">Estrutura do Projeto</h4>
+          <div class="bg-dark-900 rounded-lg p-4 font-mono text-sm text-neutral-300">
+<pre>meu-projeto/
+├── .claude/
+│   ├── CLAUDE.md
+│   └── skills/
+│       └── projeto-skill/
+│           └── SKILL.md
+├── src/
+├── tests/
+└── package.json</pre>
+          </div>
+        </div>
+        <div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
+          <h4 class="font-bold text-fuchsia-400 mb-4">Vantagens</h4>
+          <ul class="space-y-3 text-neutral-300">
+            <li class="flex items-start space-x-2"><span class="text-fuchsia-400">•</span><span>Versionado com Git</span></li>
+            <li class="flex items-start space-x-2"><span class="text-fuchsia-400">•</span><span>Compartilhado com a equipe</span></li>
+            <li class="flex items-start space-x-2"><span class="text-fuchsia-400">•</span><span>Especifico ao contexto</span></li>
+            <li class="flex items-start space-x-2"><span class="text-fuchsia-400">•</span><span>Facilita code review</span></li>
+          </ul>
+        </div>
+      </div>
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6">
+        <h3 class="text-lg font-semibold text-primary mb-3">Comando de Instalacao</h3>
+        <div class="bg-dark-900 rounded-lg p-4 font-mono text-sm text-primary">
+          cp -r sales-data-analyzer .claude/skills/
+        </div>
+      </div>
+    </section>
+
+    <!-- TOPICO 4 -->
+    <section id="topico-4" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-fuchsia-500/20 text-fuchsia-400 font-bold text-xl">4</span>
+        <h2 class="text-2xl font-bold">🔗 API Endpoint</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">Para integracao automatizada, skills podem ser disponibilizados via <strong class="text-fuchsia-400">endpoints HTTP</strong> ou repositorios Git.</p>
+      <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+        <h4 class="font-semibold text-white mb-4">Opcoes de Distribuicao</h4>
+        <div class="space-y-4">
+          <div class="bg-dark-700 rounded-lg p-4">
+            <p class="font-mono text-fuchsia-400 mb-2">GitHub Releases</p>
+            <p class="text-sm text-neutral-400">Publique skills como releases com assets .zip para download direto.</p>
+          </div>
+          <div class="bg-dark-700 rounded-lg p-4">
+            <p class="font-mono text-fuchsia-400 mb-2">CDN / S3</p>
+            <p class="text-sm text-neutral-400">Hospede zips em CDN para download rapido e confiavel.</p>
+          </div>
+          <div class="bg-dark-700 rounded-lg p-4">
+            <p class="font-mono text-fuchsia-400 mb-2">Git Submodules</p>
+            <p class="text-sm text-neutral-400">Adicione skills como submodulos para atualizacoes versionadas.</p>
+          </div>
+        </div>
+      </div>
+      <div class="bg-gradient-to-br from-fuchsia-900/30 to-dark-800 rounded-xl border border-fuchsia-500/30 p-6">
+        <h3 class="text-lg font-semibold text-fuchsia-400 mb-4">Exemplo: Download via curl</h3>
+        <div class="bg-dark-900 rounded-lg p-4 font-mono text-sm text-neutral-300">
+<pre>curl -L https://github.com/org/skills/releases/download/v1.0/sales-data-analyzer.zip \
+  -o sales-data-analyzer.zip
+unzip sales-data-analyzer.zip -d ~/.claude/skills/</pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- TOPICO 5 -->
+    <section id="topico-5" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-fuchsia-500/20 text-fuchsia-400 font-bold text-xl">5</span>
+        <h2 class="text-2xl font-bold">🌍 Global vs Local</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">Entender quando usar skills <strong class="text-fuchsia-400">globais</strong> versus <strong class="text-fuchsia-400">locais</strong> (por projeto) e crucial para organizacao.</p>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="bg-fuchsia-900/20 rounded-xl border border-fuchsia-500/30 p-6">
+          <h4 class="font-bold text-fuchsia-400 mb-4">~/.claude/skills/ (Global)</h4>
+          <ul class="space-y-3 text-neutral-300 text-sm">
+            <li class="flex items-start space-x-2"><span class="text-fuchsia-400">•</span><span>Skills de uso geral</span></li>
+            <li class="flex items-start space-x-2"><span class="text-fuchsia-400">•</span><span>Analise de dados generica</span></li>
+            <li class="flex items-start space-x-2"><span class="text-fuchsia-400">•</span><span>Formatacao e conversao</span></li>
+            <li class="flex items-start space-x-2"><span class="text-fuchsia-400">•</span><span>Produtividade pessoal</span></li>
+            <li class="flex items-start space-x-2"><span class="text-fuchsia-400">•</span><span>Disponiveis em todos os projetos</span></li>
+          </ul>
+        </div>
+        <div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6">
+          <h4 class="font-bold text-blue-400 mb-4">.claude/skills/ (Projeto)</h4>
+          <ul class="space-y-3 text-neutral-300 text-sm">
+            <li class="flex items-start space-x-2"><span class="text-blue-400">•</span><span>Skills especificos do projeto</span></li>
+            <li class="flex items-start space-x-2"><span class="text-blue-400">•</span><span>Padroes de codigo do time</span></li>
+            <li class="flex items-start space-x-2"><span class="text-blue-400">•</span><span>Geracao de componentes</span></li>
+            <li class="flex items-start space-x-2"><span class="text-blue-400">•</span><span>Regras de negocio especificas</span></li>
+            <li class="flex items-start space-x-2"><span class="text-blue-400">•</span><span>Versionados no repositorio</span></li>
+          </ul>
+        </div>
+      </div>
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6">
+        <h3 class="text-lg font-semibold text-primary mb-3">Prioridade de Carregamento</h3>
+        <p class="text-neutral-300">Se existir um skill com o mesmo nome em ambos os locais, o skill do <strong class="text-white">projeto (.claude/skills/)</strong> tem prioridade sobre o global.</p>
+      </div>
+    </section>
+
+    <!-- TOPICO 6 -->
+    <section id="topico-6" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-fuchsia-500/20 text-fuchsia-400 font-bold text-xl">6</span>
+        <h2 class="text-2xl font-bold">⚡ Quick Start</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">Um guia rapido de <strong class="text-fuchsia-400">instalacao e teste</strong> para garantir que o skill esta funcionando corretamente.</p>
+      <div class="bg-gradient-to-br from-fuchsia-900/30 to-dark-800 rounded-xl border border-fuchsia-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-fuchsia-400 mb-4">Checklist de Deploy</h3>
+        <div class="space-y-3">
+          <div class="flex items-center space-x-3">
+            <span class="w-6 h-6 rounded bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-sm font-bold">1</span>
+            <span class="text-neutral-300">Copiar skill para o diretorio correto</span>
+          </div>
+          <div class="flex items-center space-x-3">
+            <span class="w-6 h-6 rounded bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-sm font-bold">2</span>
+            <span class="text-neutral-300">Instalar dependencias (pip install, npm install)</span>
+          </div>
+          <div class="flex items-center space-x-3">
+            <span class="w-6 h-6 rounded bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-sm font-bold">3</span>
+            <span class="text-neutral-300">Iniciar nova sessao do Claude Code</span>
+          </div>
+          <div class="flex items-center space-x-3">
+            <span class="w-6 h-6 rounded bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-sm font-bold">4</span>
+            <span class="text-neutral-300">Testar com demo-prompt.txt</span>
+          </div>
+          <div class="flex items-center space-x-3">
+            <span class="w-6 h-6 rounded bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-sm font-bold">5</span>
+            <span class="text-neutral-300">Validar output esperado</span>
+          </div>
+        </div>
+      </div>
+      <div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
+        <h4 class="font-semibold text-white mb-4">Exemplo Completo</h4>
+        <div class="bg-dark-900 rounded-lg p-4 font-mono text-sm text-neutral-300">
+<pre># 1. Copiar skill
+cp -r sales-data-analyzer ~/.claude/skills/
+
+# 2. Instalar dependencias
+pip install pandas
+
+# 3. Iniciar Claude Code (nova sessao)
+claude
+
+# 4. Testar
+> Hey Claude, I just added the 'sales-data-analyzer' skill.
+> Please analyze the sample_sales.csv file.</pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- RESUMO -->
+    <section class="mb-12">
+      <div class="bg-gradient-to-br from-fuchsia-900/40 via-dark-800 to-dark-800 rounded-xl border border-fuchsia-500/30 p-8">
+        <h2 class="text-2xl font-bold mb-6 flex items-center"><span class="mr-3">📋</span> Resumo do Modulo</h2>
+        <div class="space-y-4 mb-8">
+          <div class="flex items-start space-x-3"><span class="text-fuchsia-400 mt-1">✓</span><div><strong class="text-white">Claude.ai upload</strong><span class="text-neutral-400"> - via Settings > Capabilities com ZIP</span></div></div>
+          <div class="flex items-start space-x-3"><span class="text-fuchsia-400 mt-1">✓</span><div><strong class="text-white">~/.claude/skills/</strong><span class="text-neutral-400"> - skills globais para todos os projetos</span></div></div>
+          <div class="flex items-start space-x-3"><span class="text-fuchsia-400 mt-1">✓</span><div><strong class="text-white">.claude/skills/</strong><span class="text-neutral-400"> - skills locais versionados no projeto</span></div></div>
+          <div class="flex items-start space-x-3"><span class="text-fuchsia-400 mt-1">✓</span><div><strong class="text-white">API/Git distribution</strong><span class="text-neutral-400"> - automacao de deploy</span></div></div>
+          <div class="flex items-start space-x-3"><span class="text-fuchsia-400 mt-1">✓</span><div><strong class="text-white">Local tem prioridade</strong><span class="text-neutral-400"> - sobre skills globais</span></div></div>
+          <div class="flex items-start space-x-3"><span class="text-fuchsia-400 mt-1">✓</span><div><strong class="text-white">Quick start checklist</strong><span class="text-neutral-400"> - validacao rapida</span></div></div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+          <h3 class="font-semibold text-fuchsia-400 mb-2">Proximo Modulo:</h3>
+          <p class="text-neutral-300">9.8 - Criando sua Fabrica: Customizacao avancada e skills industry-specific</p>
+        </div>
+        <div class="flex flex-col sm:flex-row gap-4">
+          <a href="modulo-9-6.html" class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors">← Modulo Anterior</a>
+          <a href="modulo-9-8.html" class="flex-1 text-center px-6 py-3 bg-fuchsia-600 text-white rounded-lg font-semibold hover:bg-fuchsia-500 transition-colors">Proximo Modulo →</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="border-t border-dark-600 py-8 mt-16">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+      <p>Claude Code 2026 - Curso criado por <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300">INEMA.CLUB</a></p>
+    </div>
+  </footer>
+
+  <script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    const html = document.documentElement;
+    if (localStorage.getItem('theme') === 'light' || (!localStorage.getItem('theme') && !html.classList.contains('dark'))) { themeToggleDarkIcon.classList.remove('hidden'); html.classList.remove('dark'); } else { themeToggleLightIcon.classList.remove('hidden'); }
+    themeToggle.addEventListener('click', () => { themeToggleDarkIcon.classList.toggle('hidden'); themeToggleLightIcon.classList.toggle('hidden'); html.classList.toggle('dark'); localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light'); });
+  </script>
+</body>
+</html>

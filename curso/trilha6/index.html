@@ -1,0 +1,1694 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trilha 6: BeginCC Iniciante | Claude Code 2026</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: '#FACC15',
+            dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' }
+          }
+        }
+      }
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+    .topic-explanation { display: none; }
+    .topic-explanation.active { display: block; }
+
+    /* Light mode overrides */
+    html:not(.dark) body {
+      background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 50%, #f1f5f9 100%);
+    }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+  </style>
+</head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen">
+
+  <!-- NAVIGATION -->
+  <nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-14">
+        <!-- Logo + INEMA.CLUB -->
+        <div class="flex items-center space-x-4">
+          <a href="../../index.html" class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300">
+            <span class="text-2xl">🤖</span>
+            <span class="font-bold text-lg hidden sm:inline">Claude Code 2026</span>
+          </a>
+          <span class="text-neutral-600">|</span>
+          <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300 text-sm font-medium">INEMA.CLUB</a>
+        </div>
+
+        <!-- Trilhas + Theme Toggle -->
+        <div class="flex items-center space-x-1 sm:space-x-2">
+          <a href="../trilha1/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors">
+            <span class="sm:hidden">T1</span>
+            <span class="hidden sm:inline">Fundamentos</span>
+          </a>
+          <a href="../trilha2/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors">
+            <span class="sm:hidden">T2</span>
+            <span class="hidden sm:inline">Comandos</span>
+          </a>
+          <a href="../trilha3/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors">
+            <span class="sm:hidden">T3</span>
+            <span class="hidden sm:inline">Avancado</span>
+          </a>
+          <a href="../trilha4/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-amber-400 hover:bg-amber-500/10 transition-colors">
+            <span class="sm:hidden">T4</span>
+            <span class="hidden sm:inline">Prompts</span>
+          </a>
+          <a href="../trilha5/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-teal-400 hover:bg-teal-500/10 transition-colors">
+            <span class="sm:hidden">T5</span>
+            <span class="hidden sm:inline">Projetos</span>
+          </a>
+          <a href="index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-rose-400 bg-rose-500/10">
+            <span class="sm:hidden">T6</span>
+            <span class="hidden sm:inline">BeginCC</span>
+          </a>
+
+          <!-- Theme Toggle -->
+          <button id="theme-toggle" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2">
+            <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+            </svg>
+            <svg id="theme-toggle-light-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HEADER -->
+  <header class="bg-gradient-to-br from-rose-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <span class="inline-block px-3 py-1 bg-rose-500/20 text-rose-400 text-xs font-semibold rounded-full mb-4">
+        TRILHA 6
+      </span>
+      <h1 class="text-3xl sm:text-4xl font-bold mb-4">🌸 BeginCC - Guia para Iniciantes</h1>
+      <p class="text-lg text-neutral-400 max-w-3xl">
+        Voce nao precisa saber programar para usar Claude Code! Esta trilha foi criada especialmente para
+        pessoas nao-tecnicas que querem aproveitar o poder da IA para criar projetos incriveis.
+        Passo a passo, do zero ao seu primeiro site.
+      </p>
+
+      <!-- Stats Grid -->
+      <div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-rose-400">8</div>
+          <div class="text-xs text-neutral-400">Modulos</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-rose-400">48</div>
+          <div class="text-xs text-neutral-400">Topicos</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-rose-400">~4h</div>
+          <div class="text-xs text-neutral-400">Duracao</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-rose-400">Iniciante</div>
+          <div class="text-xs text-neutral-400">Nivel</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN CONTENT -->
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+    <!-- Navegacao Rapida -->
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
+      <a href="modulo-6-1.html" class="bg-dark-800 rounded-lg p-4 border border-dark-600 hover:border-rose-500/50 transition-colors">
+        <span class="text-rose-400 font-bold">6.1</span>
+        <p class="text-sm text-neutral-300 mt-1">Por que Claude Code?</p>
+      </a>
+      <a href="modulo-6-2.html" class="bg-dark-800 rounded-lg p-4 border border-dark-600 hover:border-rose-500/50 transition-colors">
+        <span class="text-rose-400 font-bold">6.2</span>
+        <p class="text-sm text-neutral-300 mt-1">Subagentes e Poder</p>
+      </a>
+      <a href="modulo-6-3.html" class="bg-dark-800 rounded-lg p-4 border border-dark-600 hover:border-rose-500/50 transition-colors">
+        <span class="text-rose-400 font-bold">6.3</span>
+        <p class="text-sm text-neutral-300 mt-1">Instalacao Passo a Passo</p>
+      </a>
+      <a href="modulo-6-4.html" class="bg-dark-800 rounded-lg p-4 border border-dark-600 hover:border-rose-500/50 transition-colors">
+        <span class="text-rose-400 font-bold">6.4</span>
+        <p class="text-sm text-neutral-300 mt-1">Cursor + Claude Code</p>
+      </a>
+      <a href="modulo-6-5.html" class="bg-dark-800 rounded-lg p-4 border border-dark-600 hover:border-rose-500/50 transition-colors">
+        <span class="text-rose-400 font-bold">6.5</span>
+        <p class="text-sm text-neutral-300 mt-1">Seu Primeiro Site</p>
+      </a>
+      <a href="modulo-6-6.html" class="bg-dark-800 rounded-lg p-4 border border-dark-600 hover:border-rose-500/50 transition-colors">
+        <span class="text-rose-400 font-bold">6.6</span>
+        <p class="text-sm text-neutral-300 mt-1">MCPs Explicados</p>
+      </a>
+      <a href="modulo-6-7.html" class="bg-dark-800 rounded-lg p-4 border border-dark-600 hover:border-rose-500/50 transition-colors">
+        <span class="text-rose-400 font-bold">6.7</span>
+        <p class="text-sm text-neutral-300 mt-1">Agentes Especializados</p>
+      </a>
+      <a href="modulo-6-8.html" class="bg-dark-800 rounded-lg p-4 border border-dark-600 hover:border-rose-500/50 transition-colors">
+        <span class="text-rose-400 font-bold">6.8</span>
+        <p class="text-sm text-neutral-300 mt-1">Dominando o Workflow</p>
+      </a>
+    </div>
+
+    <!-- Divisor -->
+    <div class="flex items-center mb-8">
+      <div class="flex-1 border-t border-dark-600"></div>
+      <span class="px-4 text-neutral-500 text-sm">Conteudo Detalhado</span>
+      <div class="flex-1 border-t border-dark-600"></div>
+    </div>
+
+    <!-- MODULO 6.1 -->
+    <div class="bg-dark-800 rounded-xl border border-dark-600 mb-6">
+      <div class="p-6 border-b border-dark-600">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-rose-400 font-bold">6.1</span>
+          <span class="text-xs text-neutral-500">~30 min</span>
+        </div>
+        <h3 class="text-2xl font-bold mb-2">🚀 Por que Claude Code?</h3>
+        <p class="text-neutral-400 text-sm">Entenda todo o hype por tras do Claude Code e descubra por que ele pode te tornar superhumano - mesmo sem saber programar.</p>
+      </div>
+
+      <div class="divide-y divide-dark-600">
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+            <span class="text-lg">📣</span>
+            <div>
+              <span class="font-medium">O Hype Explicado</span>
+              <span class="text-neutral-500 text-sm ml-2">- Por que todos estao falando disso</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-rose-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Claude Code e a ferramenta de IA que esta revolucionando como pessoas criam software. Diferente de chatbots comuns, ele realmente faz coisas no seu computador.</p>
+              </div>
+              <div>
+                <span class="text-rose-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Entender o hype te ajuda a separar o que e real do que e exagero, e a aproveitar o potencial verdadeiro da ferramenta.</p>
+              </div>
+              <div>
+                <span class="text-rose-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">IA generativa, agentes autonomos, produtividade 10x, automacao de tarefas.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+            <span class="text-lg">🦸</span>
+            <div>
+              <span class="font-medium">Superhumano com IA</span>
+              <span class="text-neutral-500 text-sm ml-2">- Multiplicando suas capacidades</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-rose-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">A ideia de que com IA voce pode fazer coisas que antes eram impossiveis para uma pessoa sozinha - como criar um site inteiro em minutos.</p>
+              </div>
+              <div>
+                <span class="text-rose-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Mudar sua mentalidade de "nao sei fazer" para "posso pedir para a IA fazer" abre um mundo de possibilidades.</p>
+              </div>
+              <div>
+                <span class="text-rose-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Amplificacao cognitiva, delegacao para IA, foco em ideias vs execucao.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+            <span class="text-lg">🔄</span>
+            <div>
+              <span class="font-medium">Paradigm Shift</span>
+              <span class="text-neutral-500 text-sm ml-2">- A mudanca de paradigma</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-rose-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Claude Code representa uma nova forma de criar software onde voce descreve o que quer e a IA constroi para voce.</p>
+              </div>
+              <div>
+                <span class="text-rose-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Quem entende essa mudanca primeiro consegue se adaptar mais rapido e sair na frente.</p>
+              </div>
+              <div>
+                <span class="text-rose-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">De "escrever codigo" para "descrever intencao", vibe coding, prompt engineering.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+            <span class="text-lg">⚔️</span>
+            <div>
+              <span class="font-medium">Cursor vs Claude Code</span>
+              <span class="text-neutral-500 text-sm ml-2">- Entendendo as diferencas</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-rose-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Cursor e um editor de codigo com IA, enquanto Claude Code e um agente que trabalha no terminal. Eles podem ser usados juntos!</p>
+              </div>
+              <div>
+                <span class="text-rose-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Saber quando usar cada ferramenta maximiza sua produtividade e evita frustracao.</p>
+              </div>
+              <div>
+                <span class="text-rose-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Editor vs terminal, assistente vs agente, complementaridade.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+            <span class="text-lg">🎯</span>
+            <div>
+              <span class="font-medium">Nao Precisa Saber Programar</span>
+              <span class="text-neutral-500 text-sm ml-2">- Verdade ou mito?</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-rose-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Com Claude Code, pessoas sem conhecimento tecnico podem criar sites, apps e automacoes - a IA faz o trabalho tecnico por voce.</p>
+              </div>
+              <div>
+                <span class="text-rose-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Eliminar a crenca limitante de que "preciso aprender programacao primeiro" acelera sua jornada.</p>
+              </div>
+              <div>
+                <span class="text-rose-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">No-code com IA, descricao em linguagem natural, foco no resultado.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+            <span class="text-lg">💰</span>
+            <div>
+              <span class="font-medium">Investimento vs Resultado</span>
+              <span class="text-neutral-500 text-sm ml-2">- Vale a pena pagar?</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-rose-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Claude Code requer assinatura (a partir de $20/mes), mas o retorno em produtividade pode ser de 10x a 100x o investimento.</p>
+              </div>
+              <div>
+                <span class="text-rose-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Entender o custo-beneficio te ajuda a tomar a decisao certa para sua situacao.</p>
+              </div>
+              <div>
+                <span class="text-rose-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">ROI de ferramentas de IA, tempo economizado, projetos viabilizados.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+        <a href="modulo-6-1.html" class="px-4 py-2 text-sm bg-rose-600 hover:bg-rose-500 text-white rounded-lg transition-colors">
+          Ver Modulo Completo
+        </a>
+      </div>
+    </div>
+
+    <!-- MODULO 6.2 -->
+    <div class="bg-dark-800 rounded-xl border border-dark-600 mb-6">
+      <div class="p-6 border-b border-dark-600">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-rose-400 font-bold">6.2</span>
+          <span class="text-xs text-neutral-500">~30 min</span>
+        </div>
+        <h3 class="text-2xl font-bold mb-2">🧠 Subagentes e Poder</h3>
+        <p class="text-neutral-400 text-sm">Descubra como Claude Code usa subagentes para fazer varias coisas ao mesmo tempo e entenda a janela de 1 milhao de tokens.</p>
+      </div>
+
+      <div class="divide-y divide-dark-600">
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+            <span class="text-lg">🤖</span>
+            <div>
+              <span class="font-medium">Conceito de Subagentes</span>
+              <span class="text-neutral-500 text-sm ml-2">- Multiplos ajudantes</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-rose-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Subagentes sao como "ajudantes" que Claude Code pode criar para fazer tarefas especificas enquanto ele cuida de outras coisas.</p>
+              </div>
+              <div>
+                <span class="text-rose-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Entender subagentes te ajuda a dar tarefas maiores e mais complexas para o Claude resolver.</p>
+              </div>
+              <div>
+                <span class="text-rose-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Agente principal, delegacao de tarefas, especializacao.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+            <span class="text-lg">⚡</span>
+            <div>
+              <span class="font-medium">Paralelo vs Sequencial</span>
+              <span class="text-neutral-500 text-sm ml-2">- Fazendo varias coisas ao mesmo tempo</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-rose-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Paralelo significa fazer varias tarefas ao mesmo tempo. Sequencial e uma coisa de cada vez. Claude Code sabe escolher o melhor modo.</p>
+              </div>
+              <div>
+                <span class="text-rose-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Saber isso te ajuda a estruturar pedidos de forma que Claude possa trabalhar mais rapido.</p>
+              </div>
+              <div>
+                <span class="text-rose-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Execucao paralela, dependencias, otimizacao de tempo.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+            <span class="text-lg">📚</span>
+            <div>
+              <span class="font-medium">Context Window de 1 Milhao</span>
+              <span class="text-neutral-500 text-sm ml-2">- A memoria do Claude</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-rose-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">O context window e como a "memoria de trabalho" do Claude - ele pode lembrar de ate 1 milhao de tokens (mais ou menos 750 mil palavras!).</p>
+              </div>
+              <div>
+                <span class="text-rose-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Saber o tamanho da memoria te ajuda a entender o que Claude consegue "ver" e quando ele pode esquecer coisas.</p>
+              </div>
+              <div>
+                <span class="text-rose-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Tokens, limite de contexto, informacao persistente vs temporaria.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+            <span class="text-lg">🔍</span>
+            <div>
+              <span class="font-medium">Ramming de Codebase</span>
+              <span class="text-neutral-500 text-sm ml-2">- Explorando seu projeto</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-rose-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Ramming e quando Claude "vasculha" todos os arquivos do seu projeto para entender como tudo funciona junto.</p>
+              </div>
+              <div>
+                <span class="text-rose-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Isso explica por que Claude consegue fazer mudancas inteligentes mesmo em projetos grandes.</p>
+              </div>
+              <div>
+                <span class="text-rose-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Analise de projeto, compreensao de estrutura, navegacao inteligente.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+            <span class="text-lg">⏰</span>
+            <div>
+              <span class="font-medium">Shelf Life de Conversas</span>
+              <span class="text-neutral-500 text-sm ml-2">- Quanto tempo dura uma sessao</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-rose-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Conversas com Claude tem uma "vida util" - depois de muito tempo ou muita informacao, ele comeca a esquecer o comeco.</p>
+              </div>
+              <div>
+                <span class="text-rose-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Saber disso te ajuda a decidir quando comecar uma nova conversa para melhores resultados.</p>
+              </div>
+              <div>
+                <span class="text-rose-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Degradacao de contexto, quando reiniciar, sessoes focadas.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+            <span class="text-lg">🆕</span>
+            <div>
+              <span class="font-medium">Fresh Slate</span>
+              <span class="text-neutral-500 text-sm ml-2">- O poder de comecar do zero</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-rose-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Fresh slate significa comecar uma nova conversa limpa, sem a bagagem de conversas anteriores que podem confundir.</p>
+              </div>
+              <div>
+                <span class="text-rose-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Saber quando "limpar a lousa" e essencial para manter Claude funcionando bem.</p>
+              </div>
+              <div>
+                <span class="text-rose-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Nova sessao, /clear, reinicio estrategico.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+        <a href="modulo-6-2.html" class="px-4 py-2 text-sm bg-rose-600 hover:bg-rose-500 text-white rounded-lg transition-colors">
+          Ver Modulo Completo
+        </a>
+      </div>
+    </div>
+
+    <!-- MODULO 6.3 -->
+    <div class="bg-dark-800 rounded-xl border border-dark-600 mb-6">
+      <div class="p-6 border-b border-dark-600">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-rose-400 font-bold">6.3</span>
+          <span class="text-xs text-neutral-500">~35 min</span>
+        </div>
+        <h3 class="text-2xl font-bold mb-2">📦 Instalacao Passo a Passo</h3>
+        <p class="text-neutral-400 text-sm">Guia completo para instalar Claude Code no seu computador, mesmo se voce nunca usou um terminal antes.</p>
+      </div>
+
+      <div class="divide-y divide-dark-600">
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+            <span class="text-lg">🌐</span>
+            <div>
+              <span class="font-medium">Node.js Download</span>
+              <span class="text-neutral-500 text-sm ml-2">- O primeiro passo</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-rose-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Node.js e um programa que permite rodar JavaScript no seu computador. Claude Code precisa dele para funcionar.</p>
+              </div>
+              <div>
+                <span class="text-rose-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Sem Node.js instalado, voce nao consegue usar Claude Code. E o requisito numero 1.</p>
+              </div>
+              <div>
+                <span class="text-rose-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">nodejs.org, versao LTS, instalador para seu sistema operacional.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+            <span class="text-lg">📥</span>
+            <div>
+              <span class="font-medium">npm install claude</span>
+              <span class="text-neutral-500 text-sm ml-2">- Instalando o Claude Code</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-rose-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">npm e como uma "loja de apps" para programas de terminal. Com um comando simples, voce baixa e instala o Claude Code.</p>
+              </div>
+              <div>
+                <span class="text-rose-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Esse e o comando magico que coloca Claude Code no seu computador.</p>
+              </div>
+              <div>
+                <span class="text-rose-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">npm install -g, pacote global, linha de comando.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+            <span class="text-lg">🖥️</span>
+            <div>
+              <span class="font-medium">Warp como Alternativa</span>
+              <span class="text-neutral-500 text-sm ml-2">- Um terminal mais amigavel</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-rose-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Warp e um terminal moderno com interface mais bonita e facil de usar. Otimo para quem esta comecando.</p>
+              </div>
+              <div>
+                <span class="text-rose-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Se o terminal padrao te assusta, Warp pode tornar a experiencia muito mais agradavel.</p>
+              </div>
+              <div>
+                <span class="text-rose-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">warp.dev, terminal moderno, autocompletar, historico visual.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+            <span class="text-lg">▶️</span>
+            <div>
+              <span class="font-medium">Primeiro Comando "claude"</span>
+              <span class="text-neutral-500 text-sm ml-2">- Iniciando pela primeira vez</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-rose-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Depois de instalar, voce digita "claude" no terminal e ele abre. E so isso! A magia comeca.</p>
+              </div>
+              <div>
+                <span class="text-rose-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Esse momento e a primeira vez que voce realmente usa Claude Code. Um marco importante!</p>
+              </div>
+              <div>
+                <span class="text-rose-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Comando inicial, configuracao automatica, primeiro prompt.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+            <span class="text-lg">💳</span>
+            <div>
+              <span class="font-medium">Planos Anthropic ($20 vs $100-200)</span>
+              <span class="text-neutral-500 text-sm ml-2">- Qual escolher</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-rose-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Anthropic oferece planos de $20/mes (Pro) e $100-200/mes (Max). A diferenca esta nos limites de uso e velocidade.</p>
+              </div>
+              <div>
+                <span class="text-rose-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Escolher o plano certo evita surpresas na conta e garante que voce tenha recursos suficientes.</p>
+              </div>
+              <div>
+                <span class="text-rose-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Claude Pro, Claude Max, limites mensais, uso intensivo vs casual.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+            <span class="text-lg">🔑</span>
+            <div>
+              <span class="font-medium">Login e Autenticacao</span>
+              <span class="text-neutral-500 text-sm ml-2">- Conectando sua conta</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-rose-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Voce precisa fazer login com sua conta Anthropic para que Claude Code saiba quem voce e e use seu plano.</p>
+              </div>
+              <div>
+                <span class="text-rose-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Sem autenticacao, Claude Code nao funciona. E o ultimo passo antes de comecar a usar.</p>
+              </div>
+              <div>
+                <span class="text-rose-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">API key, autenticacao OAuth, conta Anthropic.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+        <a href="modulo-6-3.html" class="px-4 py-2 text-sm bg-rose-600 hover:bg-rose-500 text-white rounded-lg transition-colors">
+          Ver Modulo Completo
+        </a>
+      </div>
+    </div>
+
+    <!-- MODULO 6.4 -->
+    <div class="bg-dark-800 rounded-xl border border-dark-600 mb-6">
+      <div class="p-6 border-b border-dark-600">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-rose-400 font-bold">6.4</span>
+          <span class="text-xs text-neutral-500">~30 min</span>
+        </div>
+        <h3 class="text-2xl font-bold mb-2">🔗 Cursor + Claude Code</h3>
+        <p class="text-neutral-400 text-sm">Aprenda a usar Cursor (editor visual) junto com Claude Code (terminal) para o melhor dos dois mundos.</p>
+      </div>
+
+      <div class="divide-y divide-dark-600">
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+            <span class="text-lg">💻</span>
+            <div>
+              <span class="font-medium">VS Code/Cursor Integracao</span>
+              <span class="text-neutral-500 text-sm ml-2">- Conectando os dois</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-rose-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">VS Code e Cursor sao editores de codigo visual. Voce pode usar Claude Code dentro deles atraves do terminal integrado.</p>
+              </div>
+              <div>
+                <span class="text-rose-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Ver os arquivos visualmente enquanto Claude trabalha torna tudo mais facil de acompanhar.</p>
+              </div>
+              <div>
+                <span class="text-rose-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Editor de codigo, terminal integrado, visualizacao lado a lado.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+            <span class="text-lg">🔌</span>
+            <div>
+              <span class="font-medium">Extensao Claude Code</span>
+              <span class="text-neutral-500 text-sm ml-2">- Plugin para VS Code</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-rose-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Uma extensao que adiciona botoes e atalhos para usar Claude Code diretamente no VS Code sem precisar abrir terminal separado.</p>
+              </div>
+              <div>
+                <span class="text-rose-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">A extensao torna o uso de Claude Code ainda mais facil e integrado ao seu fluxo de trabalho.</p>
+              </div>
+              <div>
+                <span class="text-rose-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Marketplace VS Code, instalacao de extensao, atalhos de teclado.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+            <span class="text-lg">📺</span>
+            <div>
+              <span class="font-medium">Terminal Dentro do Editor</span>
+              <span class="text-neutral-500 text-sm ml-2">- Tudo em um lugar</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-rose-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">VS Code e Cursor tem um terminal embutido. Voce pode rodar Claude Code ali enquanto ve seus arquivos ao lado.</p>
+              </div>
+              <div>
+                <span class="text-rose-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Nao precisar alternar entre janelas acelera muito seu trabalho.</p>
+              </div>
+              <div>
+                <span class="text-rose-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Ctrl+`, terminal integrado, dividir tela.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+            <span class="text-lg">🤝</span>
+            <div>
+              <span class="font-medium">Dois AIs Lado a Lado</span>
+              <span class="text-neutral-500 text-sm ml-2">- Cursor AI + Claude Code</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-rose-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Voce pode usar a IA do Cursor para coisas rapidas e Claude Code para tarefas mais complexas - juntos!</p>
+              </div>
+              <div>
+                <span class="text-rose-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Cada IA tem seus pontos fortes. Usar as duas juntas e mais poderoso que qualquer uma sozinha.</p>
+              </div>
+              <div>
+                <span class="text-rose-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Complementaridade, workflow hibrido, melhor ferramenta para cada tarefa.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+            <span class="text-lg">☁️</span>
+            <div>
+              <span class="font-medium">Run Cloud Code Button</span>
+              <span class="text-neutral-500 text-sm ml-2">- Botao de um clique</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-rose-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Um botao que aparece no VS Code para iniciar Claude Code com um clique, sem precisar digitar comandos.</p>
+              </div>
+              <div>
+                <span class="text-rose-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Simplicidade maxima - um clique e voce esta usando Claude Code.</p>
+              </div>
+              <div>
+                <span class="text-rose-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Interface visual, um clique, inicializacao rapida.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+            <span class="text-lg">📑</span>
+            <div>
+              <span class="font-medium">Multiplas Sessoes</span>
+              <span class="text-neutral-500 text-sm ml-2">- Varios Claudes ao mesmo tempo</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-rose-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Voce pode abrir varios terminais, cada um com uma sessao diferente de Claude Code, trabalhando em coisas diferentes.</p>
+              </div>
+              <div>
+                <span class="text-rose-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Multiplas sessoes permitem trabalhar em varios aspectos do projeto ao mesmo tempo.</p>
+              </div>
+              <div>
+                <span class="text-rose-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Terminais multiplos, sessoes independentes, trabalho paralelo.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+        <a href="modulo-6-4.html" class="px-4 py-2 text-sm bg-rose-600 hover:bg-rose-500 text-white rounded-lg transition-colors">
+          Ver Modulo Completo
+        </a>
+      </div>
+    </div>
+
+    <!-- MODULO 6.5 -->
+    <div class="bg-dark-800 rounded-xl border border-dark-600 mb-6">
+      <div class="p-6 border-b border-dark-600">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-rose-400 font-bold">6.5</span>
+          <span class="text-xs text-neutral-500">~40 min</span>
+        </div>
+        <h3 class="text-2xl font-bold mb-2">🌐 Seu Primeiro Site</h3>
+        <p class="text-neutral-400 text-sm">Hora de colocar a mao na massa! Vamos criar seu primeiro site completo usando apenas comandos de voz natural.</p>
+      </div>
+
+      <div class="divide-y divide-dark-600">
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+            <span class="text-lg">⚡</span>
+            <div>
+              <span class="font-medium">claude dangerously skip</span>
+              <span class="text-neutral-500 text-sm ml-2">- Modo rapido</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-rose-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Um modo que pula as confirmacoes de seguranca, deixando Claude trabalhar mais rapido. Use com cuidado!</p>
+              </div>
+              <div>
+                <span class="text-rose-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Para projetos novos onde nao tem nada a perder, isso acelera muito o trabalho.</p>
+              </div>
+              <div>
+                <span class="text-rose-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Modo YOLO, sem confirmacoes, velocidade vs seguranca.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+            <span class="text-lg">✍️</span>
+            <div>
+              <span class="font-medium">Prompt para Website</span>
+              <span class="text-neutral-500 text-sm ml-2">- Descrevendo o que voce quer</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-rose-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Voce descreve em portugues normal o site que quer - cores, secoes, funcionalidades - e Claude cria tudo.</p>
+              </div>
+              <div>
+                <span class="text-rose-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Saber descrever bem o que voce quer e a habilidade mais importante para usar Claude Code.</p>
+              </div>
+              <div>
+                <span class="text-rose-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Descricao clara, detalhes visuais, funcionalidades desejadas.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+            <span class="text-lg">🏗️</span>
+            <div>
+              <span class="font-medium">Auto-building de Arquivos</span>
+              <span class="text-neutral-500 text-sm ml-2">- Claude cria tudo sozinho</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-rose-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Claude Code nao so escreve codigo - ele cria pastas, arquivos, configura tudo automaticamente.</p>
+              </div>
+              <div>
+                <span class="text-rose-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Entender que Claude faz TUDO - nao so o codigo - expande sua visao do que e possivel.</p>
+              </div>
+              <div>
+                <span class="text-rose-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Criacao de arquivos, estrutura de pastas, configuracao automatica.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+            <span class="text-lg">🎯</span>
+            <div>
+              <span class="font-medium">@ para Targets Especificos</span>
+              <span class="text-neutral-500 text-sm ml-2">- Apontando para arquivos</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-rose-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Usar @ seguido do nome de um arquivo diz para Claude focar especificamente naquele arquivo.</p>
+              </div>
+              <div>
+                <span class="text-rose-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Quando voce quer mudar algo especifico, @ garante que Claude mexa no arquivo certo.</p>
+              </div>
+              <div>
+                <span class="text-rose-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">@arquivo, referencia direta, foco especifico.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+            <span class="text-lg">❓</span>
+            <div>
+              <span class="font-medium">Ask Mode (shift+tab)</span>
+              <span class="text-neutral-500 text-sm ml-2">- Modo de perguntas</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-rose-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Um modo onde Claude so responde perguntas sem fazer mudancas. Otimo para entender seu codigo primeiro.</p>
+              </div>
+              <div>
+                <span class="text-rose-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">As vezes voce so quer entender algo antes de mudar. Ask mode e perfeito para isso.</p>
+              </div>
+              <div>
+                <span class="text-rose-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Modo somente-leitura, perguntas, exploracao segura.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+            <span class="text-lg">🧠</span>
+            <div>
+              <span class="font-medium">Planning Mode com Opus</span>
+              <span class="text-neutral-500 text-sm ml-2">- Pensamento profundo</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-rose-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Um modo onde Claude para e pensa mais profundamente antes de agir. Usa o modelo Opus, mais inteligente.</p>
+              </div>
+              <div>
+                <span class="text-rose-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Para tarefas complexas, fazer Claude planejar primeiro evita erros e retrabalho.</p>
+              </div>
+              <div>
+                <span class="text-rose-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Planejamento, modelo Opus, pensamento profundo, estrategia antes de acao.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+        <a href="modulo-6-5.html" class="px-4 py-2 text-sm bg-rose-600 hover:bg-rose-500 text-white rounded-lg transition-colors">
+          Ver Modulo Completo
+        </a>
+      </div>
+    </div>
+
+    <!-- MODULO 6.6 -->
+    <div class="bg-dark-800 rounded-xl border border-dark-600 mb-6">
+      <div class="p-6 border-b border-dark-600">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-rose-400 font-bold">6.6</span>
+          <span class="text-xs text-neutral-500">~35 min</span>
+        </div>
+        <h3 class="text-2xl font-bold mb-2">🚪 MCPs Explicados</h3>
+        <p class="text-neutral-400 text-sm">MCPs sao como "portas" que dao a Claude superpoderes extras - acesso a navegadores, pesquisa, memoria e muito mais.</p>
+      </div>
+
+      <div class="divide-y divide-dark-600">
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+            <span class="text-lg">🚪</span>
+            <div>
+              <span class="font-medium">MCP como Portas/Senhas</span>
+              <span class="text-neutral-500 text-sm ml-2">- O que sao MCPs</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-rose-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">MCP (Model Context Protocol) sao conexoes que dao a Claude acesso a servicos externos - como portas para outros mundos.</p>
+              </div>
+              <div>
+                <span class="text-rose-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">MCPs expandem muito o que Claude pode fazer - de pesquisar na internet a controlar seu navegador.</p>
+              </div>
+              <div>
+                <span class="text-rose-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Protocolo de contexto, integracao externa, capacidades expandidas.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+            <span class="text-lg">🔧</span>
+            <div>
+              <span class="font-medium">Servidor Unico = Multiplas Acoes</span>
+              <span class="text-neutral-500 text-sm ml-2">- Um MCP, muitas funcoes</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-rose-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Cada MCP e como um servidor que oferece varias ferramentas. Um MCP de navegador pode abrir paginas, clicar, preencher formularios...</p>
+              </div>
+              <div>
+                <span class="text-rose-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Entender que um MCP da acesso a MUITAS acoes te ajuda a explorar todo o potencial.</p>
+              </div>
+              <div>
+                <span class="text-rose-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Servidor MCP, ferramentas disponiveis, acoes multiplas.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+            <span class="text-lg">🎭</span>
+            <div>
+              <span class="font-medium">Playwright para Browser</span>
+              <span class="text-neutral-500 text-sm ml-2">- Claude controla o navegador</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-rose-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Playwright e um MCP que permite Claude abrir sites, clicar em botoes, preencher formularios - automatizar o navegador!</p>
+              </div>
+              <div>
+                <span class="text-rose-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Automacao de navegador abre possibilidades incriveis - de scraping a testes automatizados.</p>
+              </div>
+              <div>
+                <span class="text-rose-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Automacao web, controle de browser, acoes programaticas.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+            <span class="text-lg">🔎</span>
+            <div>
+              <span class="font-medium">Exa para Pesquisa</span>
+              <span class="text-neutral-500 text-sm ml-2">- Claude pesquisa na internet</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-rose-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Exa e um MCP de pesquisa que permite Claude buscar informacoes atualizadas na internet.</p>
+              </div>
+              <div>
+                <span class="text-rose-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Claude normalmente nao tem acesso a internet. Com Exa, ele pode pesquisar informacoes recentes.</p>
+              </div>
+              <div>
+                <span class="text-rose-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Busca web, informacao atualizada, pesquisa semantica.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+            <span class="text-lg">🧠</span>
+            <div>
+              <span class="font-medium">Cipher para Memoria</span>
+              <span class="text-neutral-500 text-sm ml-2">- Claude lembra de tudo</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-rose-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Cipher e um MCP de memoria que permite Claude salvar e recuperar informacoes entre sessoes.</p>
+              </div>
+              <div>
+                <span class="text-rose-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Com memoria persistente, Claude pode lembrar suas preferencias e contexto de projetos anteriores.</p>
+              </div>
+              <div>
+                <span class="text-rose-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Memoria de longo prazo, persistencia, preferencias salvas.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+            <span class="text-lg">📲</span>
+            <div>
+              <span class="font-medium">Importar do Claude Desktop</span>
+              <span class="text-neutral-500 text-sm ml-2">- Trazendo MCPs do app</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-rose-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Se voce ja configurou MCPs no Claude Desktop (app), pode importar essas configuracoes para o Claude Code.</p>
+              </div>
+              <div>
+                <span class="text-rose-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Evita ter que configurar tudo de novo - suas configuracoes do Desktop funcionam no Code.</p>
+              </div>
+              <div>
+                <span class="text-rose-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Importacao, configuracao compartilhada, migracao de MCPs.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+        <a href="modulo-6-6.html" class="px-4 py-2 text-sm bg-rose-600 hover:bg-rose-500 text-white rounded-lg transition-colors">
+          Ver Modulo Completo
+        </a>
+      </div>
+    </div>
+
+    <!-- MODULO 6.7 -->
+    <div class="bg-dark-800 rounded-xl border border-dark-600 mb-6">
+      <div class="p-6 border-b border-dark-600">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-rose-400 font-bold">6.7</span>
+          <span class="text-xs text-neutral-500">~35 min</span>
+        </div>
+        <h3 class="text-2xl font-bold mb-2">🎭 Agentes Especializados</h3>
+        <p class="text-neutral-400 text-sm">Crie agentes com personalidades e habilidades especificas - um designer, um QA, um PM - trabalhando juntos no seu projeto.</p>
+      </div>
+
+      <div class="divide-y divide-dark-600">
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+            <span class="text-lg">📋</span>
+            <div>
+              <span class="font-medium">/agents Comando</span>
+              <span class="text-neutral-500 text-sm ml-2">- Gerenciando agentes</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-rose-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">O comando /agents permite ver, criar e gerenciar agentes especializados no seu projeto.</p>
+              </div>
+              <div>
+                <span class="text-rose-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Agentes especializados fazem tarefas especificas melhor que um agente generico.</p>
+              </div>
+              <div>
+                <span class="text-rose-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Lista de agentes, criacao, ativacao, desativacao.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+            <span class="text-lg">🤖</span>
+            <div>
+              <span class="font-medium">Gerar vs Configurar Manual</span>
+              <span class="text-neutral-500 text-sm ml-2">- Duas formas de criar</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-rose-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Voce pode deixar Claude gerar agentes automaticamente ou configurar manualmente cada detalhe.</p>
+              </div>
+              <div>
+                <span class="text-rose-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Geracao automatica e rapida, configuracao manual da mais controle. Escolha conforme sua necessidade.</p>
+              </div>
+              <div>
+                <span class="text-rose-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Auto-geracao, YAML manual, personalizacao.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+            <span class="text-lg">📦</span>
+            <div>
+              <span class="font-medium">subagents.cc Repositorio</span>
+              <span class="text-neutral-500 text-sm ml-2">- Agentes prontos</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-rose-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Um repositorio com agentes pre-configurados que voce pode baixar e usar imediatamente.</p>
+              </div>
+              <div>
+                <span class="text-rose-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Por que criar do zero se ja existem agentes prontos e testados pela comunidade?</p>
+              </div>
+              <div>
+                <span class="text-rose-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Biblioteca de agentes, download, instalacao rapida.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+            <span class="text-lg">🎨</span>
+            <div>
+              <span class="font-medium">Designer, QA, PM Agentes</span>
+              <span class="text-neutral-500 text-sm ml-2">- Especializacoes comuns</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-rose-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Agentes pre-configurados para funcoes especificas: Designer cuida do visual, QA testa, PM gerencia o projeto.</p>
+              </div>
+              <div>
+                <span class="text-rose-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Ter uma "equipe" de agentes especializados simula ter uma equipe real de desenvolvimento.</p>
+              </div>
+              <div>
+                <span class="text-rose-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Roles especificos, expertises diferentes, colaboracao.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+            <span class="text-lg">🎯</span>
+            <div>
+              <span class="font-medium">Orquestracao Multi-agente</span>
+              <span class="text-neutral-500 text-sm ml-2">- Agentes trabalhando juntos</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-rose-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">O processo de fazer varios agentes trabalharem juntos de forma coordenada em um projeto.</p>
+              </div>
+              <div>
+                <span class="text-rose-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Orquestracao bem feita multiplica a produtividade - cada agente faz o que sabe melhor.</p>
+              </div>
+              <div>
+                <span class="text-rose-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Coordenacao, delegacao, workflow multi-agente.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+            <span class="text-lg">🌈</span>
+            <div>
+              <span class="font-medium">Cores de Identificacao</span>
+              <span class="text-neutral-500 text-sm ml-2">- Diferenciando agentes</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-rose-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Cada agente pode ter uma cor diferente no terminal para voce saber rapidamente quem esta "falando".</p>
+              </div>
+              <div>
+                <span class="text-rose-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Identificacao visual rapida ajuda a acompanhar o trabalho quando varios agentes estao ativos.</p>
+              </div>
+              <div>
+                <span class="text-rose-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Cores personalizadas, identificacao visual, terminal colorido.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+        <a href="modulo-6-7.html" class="px-4 py-2 text-sm bg-rose-600 hover:bg-rose-500 text-white rounded-lg transition-colors">
+          Ver Modulo Completo
+        </a>
+      </div>
+    </div>
+
+    <!-- MODULO 6.8 -->
+    <div class="bg-dark-800 rounded-xl border border-dark-600 mb-6">
+      <div class="p-6 border-b border-dark-600">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-rose-400 font-bold">6.8</span>
+          <span class="text-xs text-neutral-500">~35 min</span>
+        </div>
+        <h3 class="text-2xl font-bold mb-2">🎓 Dominando o Workflow</h3>
+        <p class="text-neutral-400 text-sm">Comandos avancados, personalizacao e dicas de experts para dominar completamente o Claude Code.</p>
+      </div>
+
+      <div class="divide-y divide-dark-600">
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+            <span class="text-lg">⌨️</span>
+            <div>
+              <span class="font-medium">Slash Commands (/clear, /compact, /resume)</span>
+              <span class="text-neutral-500 text-sm ml-2">- Comandos essenciais</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-rose-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Comandos que comecam com / e fazem coisas especiais: limpar conversa, compactar contexto, retomar sessao.</p>
+              </div>
+              <div>
+                <span class="text-rose-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Esses comandos sao atalhos poderosos que todo usuario de Claude Code deve conhecer.</p>
+              </div>
+              <div>
+                <span class="text-rose-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">/clear (limpar), /compact (resumir), /resume (continuar), /context (ver uso).</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+            <span class="text-lg">🎨</span>
+            <div>
+              <span class="font-medium">Output Style</span>
+              <span class="text-neutral-500 text-sm ml-2">- Como Claude responde</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-rose-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Voce pode configurar como Claude formata suas respostas - mais conciso, mais detalhado, com ou sem explicacoes.</p>
+              </div>
+              <div>
+                <span class="text-rose-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Personalizar o estilo de output deixa Claude mais alinhado com suas preferencias.</p>
+              </div>
+              <div>
+                <span class="text-rose-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Verbosidade, formato de resposta, preferencias de comunicacao.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+            <span class="text-lg">🔒</span>
+            <div>
+              <span class="font-medium">Security Review</span>
+              <span class="text-neutral-500 text-sm ml-2">- Claude verifica seguranca</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-rose-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Um modo onde Claude analisa seu codigo procurando vulnerabilidades de seguranca.</p>
+              </div>
+              <div>
+                <span class="text-rose-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Mesmo codigo gerado por IA pode ter falhas de seguranca. Review automatico ajuda a pegar problemas.</p>
+              </div>
+              <div>
+                <span class="text-rose-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Analise de seguranca, vulnerabilidades, boas praticas.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+            <span class="text-lg">💭</span>
+            <div>
+              <span class="font-medium">Think Modes</span>
+              <span class="text-neutral-500 text-sm ml-2">- Niveis de pensamento</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-rose-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Diferentes modos que controlam quanto Claude "pensa" antes de responder - de rapido e simples a profundo e complexo.</p>
+              </div>
+              <div>
+                <span class="text-rose-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Tarefas simples nao precisam de pensamento profundo. Tarefas complexas sim. Escolha o modo certo.</p>
+              </div>
+              <div>
+                <span class="text-rose-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Think, think hard, think deeply, ultrathink.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+            <span class="text-lg">🔔</span>
+            <div>
+              <span class="font-medium">Hooks para Sons</span>
+              <span class="text-neutral-500 text-sm ml-2">- Notificacoes sonoras</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-rose-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Hooks sao scripts que rodam automaticamente. Voce pode configurar para tocar um som quando Claude termina uma tarefa.</p>
+              </div>
+              <div>
+                <span class="text-rose-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Muito util quando Claude esta trabalhando e voce quer fazer outra coisa enquanto espera.</p>
+              </div>
+              <div>
+                <span class="text-rose-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Hooks, automacao, notificacoes, scripts personalizados.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+            <span class="text-lg">⚙️</span>
+            <div>
+              <span class="font-medium">settings.json e Modular Building</span>
+              <span class="text-neutral-500 text-sm ml-2">- Configuracao avancada</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-rose-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">O arquivo settings.json controla todas as configuracoes do Claude Code. Modular building e construir em partes organizadas.</p>
+              </div>
+              <div>
+                <span class="text-rose-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Configuracao avancada e construcao modular sao o que separam usuarios basicos de power users.</p>
+              </div>
+              <div>
+                <span class="text-rose-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">settings.json, configuracoes globais vs projeto, construcao em modulos.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+        <a href="modulo-6-8.html" class="px-4 py-2 text-sm bg-rose-600 hover:bg-rose-500 text-white rounded-lg transition-colors">
+          Ver Modulo Completo
+        </a>
+      </div>
+    </div>
+
+    <!-- Navegacao -->
+    <div class="flex flex-col sm:flex-row gap-4 mt-12">
+      <a href="../trilha5/index.html" class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors">
+        ← Trilha Anterior (Projetos)
+      </a>
+      <a href="../../index.html" class="flex-1 text-center px-6 py-3 bg-rose-600 text-white rounded-lg font-semibold hover:bg-rose-500 transition-colors">
+        Voltar para Inicio
+      </a>
+    </div>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-dark-600 py-8 mt-16">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+      <p>Claude Code 2026 - Curso criado por <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300">INEMA.CLUB</a></p>
+    </div>
+  </footer>
+
+  <!-- SCRIPTS -->
+  <script>
+    function toggleTopic(button) {
+      const topicItem = button.closest('.topic-item');
+      const explanation = topicItem.querySelector('.topic-explanation');
+      const moduleCard = button.closest('.bg-dark-800');
+
+      moduleCard.querySelectorAll('.topic-explanation.active').forEach(exp => {
+        if (exp !== explanation) {
+          exp.classList.remove('active');
+        }
+      });
+
+      explanation.classList.toggle('active');
+    }
+
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    const html = document.documentElement;
+
+    if (localStorage.getItem('theme') === 'light' || (!localStorage.getItem('theme') && !html.classList.contains('dark'))) {
+      themeToggleDarkIcon.classList.remove('hidden');
+      html.classList.remove('dark');
+    } else {
+      themeToggleLightIcon.classList.remove('hidden');
+    }
+
+    themeToggle.addEventListener('click', () => {
+      themeToggleDarkIcon.classList.toggle('hidden');
+      themeToggleLightIcon.classList.toggle('hidden');
+      html.classList.toggle('dark');
+      localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+    });
+  </script>
+
+</body>
+</html>

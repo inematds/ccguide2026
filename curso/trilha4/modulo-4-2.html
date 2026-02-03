@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Modulo 4.2: Diferencial e Instalacao | Claude Code 2026</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: '#FACC15',
+            dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' }
+          }
+        }
+      }
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+
+    /* Light mode overrides */
+    html:not(.dark) body {
+      background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 50%, #f1f5f9 100%);
+    }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+  </style>
+</head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen">
+
+  <!-- NAVIGATION -->
+  <nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-14">
+        <div class="flex items-center space-x-4">
+          <a href="../../index.html" class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300">
+            <span class="text-2xl">🤖</span>
+            <span class="font-bold text-lg hidden sm:inline">Claude Code 2026</span>
+          </a>
+          <span class="text-neutral-600">|</span>
+          <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300 text-sm font-medium">INEMA.CLUB</a>
+        </div>
+
+        <div class="flex items-center space-x-1 sm:space-x-2">
+          <a href="../trilha1/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors">
+            <span class="sm:hidden">T1</span>
+            <span class="hidden sm:inline">Fundamentos</span>
+          </a>
+          <a href="../trilha2/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors">
+            <span class="sm:hidden">T2</span>
+            <span class="hidden sm:inline">Comandos</span>
+          </a>
+          <a href="../trilha3/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors">
+            <span class="sm:hidden">T3</span>
+            <span class="hidden sm:inline">Avancado</span>
+          </a>
+          <a href="index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-amber-400 bg-amber-500/10">
+            <span class="sm:hidden">T4</span>
+            <span class="hidden sm:inline">MiniCurso18</span>
+          </a>
+          <a href="../trilha5/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-teal-400 hover:bg-teal-500/10 transition-colors">
+            <span class="sm:hidden">T5</span>
+            <span class="hidden sm:inline">Projetos</span>
+          </a>
+          <a href="../trilha6/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-rose-400 hover:bg-rose-500/10 transition-colors">
+            <span class="sm:hidden">T6</span>
+            <span class="hidden sm:inline">Expert</span>
+          </a>
+
+          <button id="theme-toggle" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2">
+            <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+            </svg>
+            <svg id="theme-toggle-light-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- BREADCRUMB -->
+  <nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+    <div class="flex items-center space-x-2 text-sm text-neutral-400">
+      <a href="../../index.html" class="hover:text-amber-400">Inicio</a>
+      <span>/</span>
+      <a href="index.html" class="hover:text-amber-400">Trilha 4</a>
+      <span>/</span>
+      <span class="text-amber-400">Modulo 4.2</span>
+    </div>
+  </nav>
+
+  <!-- HEADER -->
+  <header class="bg-gradient-to-br from-amber-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <span class="inline-block px-3 py-1 bg-amber-500/20 text-amber-400 text-xs font-semibold rounded-full mb-4">
+        MODULO 4.2
+      </span>
+      <h1 class="text-3xl sm:text-4xl font-bold mb-4">🔧 Diferencial e Instalacao</h1>
+      <p class="text-lg text-neutral-400 max-w-3xl">
+        Entenda as vantagens competitivas do Claude Code como subagentes paralelos e context window de 1M tokens, e aprenda a instalar e configurar a ferramenta.
+      </p>
+
+      <div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-amber-400">6</div>
+          <div class="text-xs text-neutral-400">Topicos</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-amber-400">50</div>
+          <div class="text-xs text-neutral-400">Minutos</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-amber-400">Interm.</div>
+          <div class="text-xs text-neutral-400">Nivel</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-amber-400">Pratico</div>
+          <div class="text-xs text-neutral-400">Tipo</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN CONTENT -->
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+    <!-- TOPICO 1 -->
+    <section id="topico-1" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">1</span>
+        <h2 class="text-2xl font-bold">🚀 Subagentes Paralelos</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        A caracteristica mais revolucionaria do Claude Code e sua capacidade de criar e gerenciar <strong class="text-amber-400">subagentes especializados que operam em paralelo</strong>. Diferente de ferramentas sequenciais, multiplos agentes trabalham simultaneamente em diferentes aspectos do projeto.
+      </p>
+
+      <div class="bg-gradient-to-br from-amber-900/30 to-dark-800 rounded-xl border border-amber-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-amber-400 mb-4 flex items-center">
+          <span class="mr-2">⚡</span> Como Funciona
+        </h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="bg-dark-700/50 rounded-lg p-4">
+            <h4 class="font-semibold text-red-400 mb-3">Abordagem Sequencial (Outras Ferramentas)</h4>
+            <ul class="space-y-2 text-neutral-300 text-sm">
+              <li>• Tarefa 1 completa -> Tarefa 2 inicia</li>
+              <li>• Gargalos de produtividade</li>
+              <li>• Perda de contexto entre etapas</li>
+              <li>• Reinicializacoes frequentes</li>
+            </ul>
+          </div>
+          <div class="bg-dark-700/50 rounded-lg p-4">
+            <h4 class="font-semibold text-emerald-400 mb-3">Abordagem Paralela (Claude Code)</h4>
+            <ul class="space-y-2 text-neutral-300 text-sm">
+              <li>• Multiplas tarefas simultaneas</li>
+              <li>• Contexto independente por agente</li>
+              <li>• Especializacao profunda</li>
+              <li>• Coordenacao inteligente</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6">
+        <h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center">
+          <span class="mr-2">👥</span> Exemplo de Equipe Virtual
+        </h3>
+        <ul class="space-y-2 text-neutral-300">
+          <li><strong class="text-white">Agente Frontend:</strong> Criando interface do usuario</li>
+          <li><strong class="text-white">Agente Backend:</strong> Desenvolvendo API simultaneamente</li>
+          <li><strong class="text-white">Agente Database:</strong> Projetando esquema de dados</li>
+          <li><strong class="text-white">Agente QA:</strong> Preparando testes automatizados</li>
+          <li><strong class="text-white">Agente DevOps:</strong> Configurando pipeline de deployment</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- TOPICO 2 -->
+    <section id="topico-2" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">2</span>
+        <h2 class="text-2xl font-bold">📊 Context Window 1M</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        A janela de contexto de <strong class="text-amber-400">1 milhao de tokens</strong> do Claude Code e uma mudanca transformadora. Historicamente limitado a 200K tokens, esse aumento de 5x permite trabalhar em projetos de nivel empresarial sem perder contexto.
+      </p>
+
+      <div class="bg-gradient-to-br from-amber-900/30 to-dark-800 rounded-xl border border-amber-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-amber-400 mb-4 flex items-center">
+          <span class="mr-2">📈</span> Implicacoes Praticas
+        </h3>
+        <ul class="space-y-3 text-neutral-300">
+          <li class="flex items-start space-x-2">
+            <span class="text-amber-400 mt-1">•</span>
+            <div>
+              <strong class="text-white">Projetos de Maior Escala:</strong>
+              <span class="text-neutral-400"> Aplicacoes web de nivel de producao sem perder contexto</span>
+            </div>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-amber-400 mt-1">•</span>
+            <div>
+              <strong class="text-white">Conversas Mais Longas:</strong>
+              <span class="text-neutral-400"> Planejamento e construcao de multiplas funcionalidades em uma sessao</span>
+            </div>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-amber-400 mt-1">•</span>
+            <div>
+              <strong class="text-white">Melhor Qualidade:</strong>
+              <span class="text-neutral-400"> Codigo melhor atraves de prompts em linguagem natural</span>
+            </div>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-amber-400 mt-1">•</span>
+            <div>
+              <strong class="text-white">Menos Alucinacoes:</strong>
+              <span class="text-neutral-400"> Vida util estendida antes que o modelo comece a "inventar"</span>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">💡</span> Dica de Otimizacao
+        </h3>
+        <p class="text-neutral-300">
+          Use comandos como <code class="bg-dark-700 px-2 py-1 rounded text-amber-400">/summarize</code> para condensar conversas longas mantendo informacoes essenciais, permitindo sessoes ainda mais extensas sem perder o fio da meada.
+        </p>
+      </div>
+    </section>
+
+    <!-- TOPICO 3 -->
+    <section id="topico-3" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">3</span>
+        <h2 class="text-2xl font-bold">⚔️ Comparacao Cursor/Windsurf</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Para entender o valor do Claude Code, e importante compara-lo com as principais alternativas do mercado. Cada ferramenta tem seus pontos fortes, mas <strong class="text-amber-400">Claude Code se destaca em cenarios complexos</strong>.
+      </p>
+
+      <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+        <h4 class="font-semibold text-white mb-4">Comparativo Detalhado</h4>
+        <div class="overflow-x-auto">
+          <table class="w-full text-sm">
+            <thead>
+              <tr class="border-b border-dark-600">
+                <th class="text-left py-2 text-neutral-400">Caracteristica</th>
+                <th class="text-left py-2 text-amber-400">Claude Code</th>
+                <th class="text-left py-2 text-neutral-400">Cursor</th>
+                <th class="text-left py-2 text-neutral-400">Windsurf</th>
+              </tr>
+            </thead>
+            <tbody class="text-neutral-300">
+              <tr class="border-b border-dark-700">
+                <td class="py-2">Processamento</td>
+                <td class="py-2 text-emerald-400">Paralelo</td>
+                <td class="py-2">Sequencial</td>
+                <td class="py-2">Sequencial</td>
+              </tr>
+              <tr class="border-b border-dark-700">
+                <td class="py-2">Contexto</td>
+                <td class="py-2 text-emerald-400">1M tokens</td>
+                <td class="py-2">200K tokens</td>
+                <td class="py-2">200K tokens</td>
+              </tr>
+              <tr class="border-b border-dark-700">
+                <td class="py-2">Execucao</td>
+                <td class="py-2 text-emerald-400">Local</td>
+                <td class="py-2">Hibrido</td>
+                <td class="py-2">Hibrido</td>
+              </tr>
+              <tr class="border-b border-dark-700">
+                <td class="py-2">MCP</td>
+                <td class="py-2 text-emerald-400">Nativo</td>
+                <td class="py-2">Parcial</td>
+                <td class="py-2">Limitado</td>
+              </tr>
+              <tr>
+                <td class="py-2">Subagentes</td>
+                <td class="py-2 text-emerald-400">Sim</td>
+                <td class="py-2 text-red-400">Nao</td>
+                <td class="py-2 text-red-400">Nao</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+          <h4 class="font-bold text-emerald-400 mb-4">Vantagens do Cursor</h4>
+          <ul class="space-y-2 text-neutral-300 text-sm">
+            <li>• Flexibilidade de modelos (Claude, OpenAI, Gemini)</li>
+            <li>• Interface familiar baseada em VS Code</li>
+            <li>• Comunidade estabelecida</li>
+          </ul>
+        </div>
+        <div class="bg-amber-900/20 rounded-xl border border-amber-500/30 p-6">
+          <h4 class="font-bold text-amber-400 mb-4">Por que Claude Code e Melhor</h4>
+          <ul class="space-y-2 text-neutral-300 text-sm">
+            <li>• Subagentes paralelos exclusivos</li>
+            <li>• Integracao otimizada com ecossistema Anthropic</li>
+            <li>• Comandos slash avancados</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- TOPICO 4 -->
+    <section id="topico-4" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">4</span>
+        <h2 class="text-2xl font-bold">📋 Pre-requisitos</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Antes de instalar o Claude Code, e fundamental garantir que seu sistema atenda aos <strong class="text-amber-400">pre-requisitos necessarios</strong>. A preparacao adequada evitara problemas futuros.
+      </p>
+
+      <div class="bg-gradient-to-br from-amber-900/30 to-dark-800 rounded-xl border border-amber-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-amber-400 mb-4 flex items-center">
+          <span class="mr-2">💻</span> Sistema Operacional
+        </h3>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div class="bg-dark-700/50 rounded-lg p-4 text-center">
+            <span class="text-3xl mb-2 block">🪟</span>
+            <h4 class="font-semibold text-white">Windows</h4>
+            <p class="text-neutral-400 text-sm">10/11 com PowerShell</p>
+          </div>
+          <div class="bg-dark-700/50 rounded-lg p-4 text-center">
+            <span class="text-3xl mb-2 block">🍎</span>
+            <h4 class="font-semibold text-white">macOS</h4>
+            <p class="text-neutral-400 text-sm">10.15 (Catalina) ou superior</p>
+          </div>
+          <div class="bg-dark-700/50 rounded-lg p-4 text-center">
+            <span class="text-3xl mb-2 block">🐧</span>
+            <h4 class="font-semibold text-white">Linux</h4>
+            <p class="text-neutral-400 text-sm">Ubuntu, Debian, CentOS</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6">
+        <h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center">
+          <span class="mr-2">🔧</span> Requisitos de Hardware
+        </h3>
+        <ul class="space-y-2 text-neutral-300">
+          <li><strong class="text-white">RAM:</strong> Minimo 4GB, recomendado 8GB ou mais</li>
+          <li><strong class="text-white">Armazenamento:</strong> Pelo menos 1GB de espaco livre</li>
+          <li><strong class="text-white">Internet:</strong> Conexao estavel (processamento na nuvem)</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- TOPICO 5 -->
+    <section id="topico-5" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">5</span>
+        <h2 class="text-2xl font-bold">📦 Node.js</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        O Claude Code e construido sobre <strong class="text-amber-400">Node.js</strong>, tornando sua instalacao um pre-requisito absoluto. Node.js permite executar JavaScript fora do navegador.
+      </p>
+
+      <div class="bg-gradient-to-br from-amber-900/30 to-dark-800 rounded-xl border border-amber-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-amber-400 mb-4 flex items-center">
+          <span class="mr-2">✅</span> Verificar Instalacao
+        </h3>
+        <div class="bg-dark-900 rounded-lg p-4 font-mono text-sm">
+          <p class="text-emerald-400"># Verificar se Node.js esta instalado</p>
+          <p class="text-white">node --version</p>
+          <p class="text-white">npm --version</p>
+          <p class="text-neutral-400 mt-2"># Versao minima: 16.0</p>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+        <div class="bg-dark-700 rounded-lg p-4">
+          <h4 class="font-semibold text-white mb-2">Windows</h4>
+          <p class="text-neutral-400 text-sm">Baixe o instalador oficial de nodejs.org e execute</p>
+        </div>
+        <div class="bg-dark-700 rounded-lg p-4">
+          <h4 class="font-semibold text-white mb-2">macOS</h4>
+          <p class="text-neutral-400 text-sm"><code class="text-amber-400">brew install node</code> via Homebrew</p>
+        </div>
+        <div class="bg-dark-700 rounded-lg p-4">
+          <h4 class="font-semibold text-white mb-2">Linux</h4>
+          <p class="text-neutral-400 text-sm"><code class="text-amber-400">sudo apt install nodejs npm</code></p>
+        </div>
+      </div>
+
+      <div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
+        <h3 class="text-lg font-semibold text-white mb-4 flex items-center">
+          <span class="mr-2">📥</span> Instalacao do Claude Code
+        </h3>
+        <div class="bg-dark-900 rounded-lg p-4 font-mono text-sm">
+          <p class="text-emerald-400"># Instalacao global</p>
+          <p class="text-white">npm install -g @anthropic-ai/claude-code</p>
+          <p class="text-neutral-400 mt-2"># Verificar instalacao</p>
+          <p class="text-white">claude --version</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TOPICO 6 -->
+    <section id="topico-6" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">6</span>
+        <h2 class="text-2xl font-bold">🔑 Conta Anthropic</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Para usar o Claude Code, voce precisa de uma <strong class="text-amber-400">conta Anthropic valida e uma chave de API</strong>. Este processo autentica suas solicitacoes e permite acessar os recursos da plataforma.
+      </p>
+
+      <div class="bg-gradient-to-br from-amber-900/30 to-dark-800 rounded-xl border border-amber-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-amber-400 mb-4 flex items-center">
+          <span class="mr-2">📝</span> Passo a Passo
+        </h3>
+        <div class="space-y-4">
+          <div class="flex items-start space-x-4">
+            <div class="flex-shrink-0 w-8 h-8 rounded-full bg-amber-500/20 flex items-center justify-center">
+              <span class="text-amber-400 font-bold text-sm">1</span>
+            </div>
+            <div>
+              <h4 class="font-semibold text-white">Acesse console.anthropic.com</h4>
+              <p class="text-neutral-400 text-sm">Crie uma conta ou faca login</p>
+            </div>
+          </div>
+          <div class="flex items-start space-x-4">
+            <div class="flex-shrink-0 w-8 h-8 rounded-full bg-amber-500/20 flex items-center justify-center">
+              <span class="text-amber-400 font-bold text-sm">2</span>
+            </div>
+            <div>
+              <h4 class="font-semibold text-white">Va para API Keys</h4>
+              <p class="text-neutral-400 text-sm">No menu, navegue ate a secao de chaves</p>
+            </div>
+          </div>
+          <div class="flex items-start space-x-4">
+            <div class="flex-shrink-0 w-8 h-8 rounded-full bg-amber-500/20 flex items-center justify-center">
+              <span class="text-amber-400 font-bold text-sm">3</span>
+            </div>
+            <div>
+              <h4 class="font-semibold text-white">Crie uma nova chave</h4>
+              <p class="text-neutral-400 text-sm">De um nome como "Claude Code Local"</p>
+            </div>
+          </div>
+          <div class="flex items-start space-x-4">
+            <div class="flex-shrink-0 w-8 h-8 rounded-full bg-amber-500/20 flex items-center justify-center">
+              <span class="text-amber-400 font-bold text-sm">4</span>
+            </div>
+            <div>
+              <h4 class="font-semibold text-white">Configure a variavel de ambiente</h4>
+              <p class="text-neutral-400 text-sm"><code class="text-amber-400">export ANTHROPIC_API_KEY="sua-chave-aqui"</code></p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+        <h3 class="text-lg font-semibold text-red-400 mb-3 flex items-center">
+          <span class="mr-2">⚠️</span> Importante
+        </h3>
+        <p class="text-neutral-300">
+          A chave de API e mostrada <strong class="text-white">apenas uma vez</strong>. Copie e armazene em local seguro antes de fechar a janela. Nunca compartilhe ou comite sua chave em repositorios publicos.
+        </p>
+      </div>
+    </section>
+
+    <!-- RESUMO -->
+    <section class="mb-12">
+      <div class="bg-gradient-to-br from-amber-900/40 via-dark-800 to-dark-800 rounded-xl border border-amber-500/30 p-8">
+        <h2 class="text-2xl font-bold mb-6 flex items-center">
+          <span class="mr-3">📚</span> Resumo do Modulo
+        </h2>
+
+        <div class="space-y-4 mb-8">
+          <div class="flex items-start space-x-3">
+            <span class="text-amber-400 mt-1">✓</span>
+            <div>
+              <strong class="text-white">Subagentes paralelos</strong>
+              <span class="text-neutral-400"> - Multiplos especialistas trabalhando simultaneamente</span>
+            </div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-amber-400 mt-1">✓</span>
+            <div>
+              <strong class="text-white">Context window 1M</strong>
+              <span class="text-neutral-400"> - 5x maior que concorrentes</span>
+            </div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-amber-400 mt-1">✓</span>
+            <div>
+              <strong class="text-white">Vantagens sobre Cursor/Windsurf</strong>
+              <span class="text-neutral-400"> - Processamento paralelo e MCP nativo</span>
+            </div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-amber-400 mt-1">✓</span>
+            <div>
+              <strong class="text-white">Pre-requisitos</strong>
+              <span class="text-neutral-400"> - Windows/macOS/Linux, 4GB+ RAM</span>
+            </div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-amber-400 mt-1">✓</span>
+            <div>
+              <strong class="text-white">Node.js</strong>
+              <span class="text-neutral-400"> - Base do Claude Code, versao 16+</span>
+            </div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-amber-400 mt-1">✓</span>
+            <div>
+              <strong class="text-white">Conta Anthropic</strong>
+              <span class="text-neutral-400"> - API key para autenticacao</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+          <h3 class="font-semibold text-amber-400 mb-2">Proximo Modulo:</h3>
+          <p class="text-neutral-300">4.3 - Primeiro Contato e Projeto: Terminal, comandos basicos e criacao de projetos</p>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-4">
+          <a href="modulo-4-1.html" class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors">
+            ← Modulo Anterior
+          </a>
+          <a href="modulo-4-3.html" class="flex-1 text-center px-6 py-3 bg-amber-600 text-white rounded-lg font-semibold hover:bg-amber-500 transition-colors">
+            Proximo Modulo →
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-dark-600 py-8 mt-16">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+      <p>Claude Code 2026 - Todos os direitos reservados</p>
+    </div>
+  </footer>
+
+  <!-- SCRIPTS -->
+  <script>
+    // Theme Toggle
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    const html = document.documentElement;
+
+    if (localStorage.getItem('theme') === 'light' || (!localStorage.getItem('theme') && !html.classList.contains('dark'))) {
+      themeToggleDarkIcon.classList.remove('hidden');
+      html.classList.remove('dark');
+    } else {
+      themeToggleLightIcon.classList.remove('hidden');
+    }
+
+    themeToggle.addEventListener('click', () => {
+      themeToggleDarkIcon.classList.toggle('hidden');
+      themeToggleLightIcon.classList.toggle('hidden');
+      html.classList.toggle('dark');
+      localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+    });
+  </script>
+
+</body>
+</html>

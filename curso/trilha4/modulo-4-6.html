@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Modulo 4.6: Organizacao e Custos | Claude Code 2026</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { darkMode: 'class', theme: { extend: { colors: { primary: '#FACC15', dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' } } } } }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+    html:not(.dark) body { background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 50%, #f1f5f9 100%); }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+  </style>
+</head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen">
+
+  <!-- NAVIGATION -->
+  <nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-14">
+        <div class="flex items-center space-x-4">
+          <a href="../../index.html" class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300"><span class="text-2xl">🤖</span><span class="font-bold text-lg hidden sm:inline">Claude Code 2026</span></a>
+          <span class="text-neutral-600">|</span>
+          <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300 text-sm font-medium">INEMA.CLUB</a>
+        </div>
+        <div class="flex items-center space-x-1 sm:space-x-2">
+          <a href="../trilha1/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors"><span class="sm:hidden">T1</span><span class="hidden sm:inline">Fundamentos</span></a>
+          <a href="../trilha2/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors"><span class="sm:hidden">T2</span><span class="hidden sm:inline">Comandos</span></a>
+          <a href="../trilha3/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors"><span class="sm:hidden">T3</span><span class="hidden sm:inline">Avancado</span></a>
+          <a href="index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-amber-400 bg-amber-500/10"><span class="sm:hidden">T4</span><span class="hidden sm:inline">MiniCurso18</span></a>
+          <a href="../trilha5/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-teal-400 hover:bg-teal-500/10 transition-colors"><span class="sm:hidden">T5</span><span class="hidden sm:inline">Projetos</span></a>
+          <a href="../trilha6/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-rose-400 hover:bg-rose-500/10 transition-colors"><span class="sm:hidden">T6</span><span class="hidden sm:inline">Expert</span></a>
+          <button id="theme-toggle" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2">
+            <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+            <svg id="theme-toggle-light-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- BREADCRUMB -->
+  <nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+    <div class="flex items-center space-x-2 text-sm text-neutral-400">
+      <a href="../../index.html" class="hover:text-amber-400">Inicio</a><span>/</span>
+      <a href="index.html" class="hover:text-amber-400">Trilha 4</a><span>/</span>
+      <span class="text-amber-400">Modulo 4.6</span>
+    </div>
+  </nav>
+
+  <!-- HEADER -->
+  <header class="bg-gradient-to-br from-amber-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <span class="inline-block px-3 py-1 bg-amber-500/20 text-amber-400 text-xs font-semibold rounded-full mb-4">MODULO 4.6</span>
+      <h1 class="text-3xl sm:text-4xl font-bold mb-4">💰 Organizacao e Custos</h1>
+      <p class="text-lg text-neutral-400 max-w-3xl">Aprenda a organizar projetos com sessoes modulares, use claude.md para contexto persistente, entenda custos de tokens e otimize seus gastos.</p>
+      <div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-amber-400">6</div><div class="text-xs text-neutral-400">Topicos</div></div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-amber-400">50</div><div class="text-xs text-neutral-400">Minutos</div></div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-amber-400">Interm.</div><div class="text-xs text-neutral-400">Nivel</div></div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-amber-400">Gestao</div><div class="text-xs text-neutral-400">Tipo</div></div>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN CONTENT -->
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+    <!-- TOPICO 1 -->
+    <section id="topico-1" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">1</span>
+        <h2 class="text-2xl font-bold">📂 Sessoes Modulares</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">A <strong class="text-amber-400">organizacao modular</strong> vai alem de estrutura de arquivos. E uma filosofia que maximiza eficiencia de agentes, reduz alucinacoes e permite escalabilidade.</p>
+      <div class="bg-gradient-to-br from-amber-900/30 to-dark-800 rounded-xl border border-amber-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-amber-400 mb-4">Divisao de Sessoes</h3>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div class="bg-dark-700/50 rounded-lg p-4">
+            <h4 class="font-semibold text-emerald-400 mb-2">Sessao Frontend</h4>
+            <p class="text-neutral-400 text-sm">ReactMaster + DesignSystem focados em UI/UX</p>
+          </div>
+          <div class="bg-dark-700/50 rounded-lg p-4">
+            <h4 class="font-semibold text-blue-400 mb-2">Sessao Backend</h4>
+            <p class="text-neutral-400 text-sm">ArchitectPro + DatabaseExpert em APIs</p>
+          </div>
+          <div class="bg-dark-700/50 rounded-lg p-4">
+            <h4 class="font-semibold text-purple-400 mb-2">Sessao DevOps</h4>
+            <p class="text-neutral-400 text-sm">DevOpsGuru + SecurityGuard em infra</p>
+          </div>
+        </div>
+      </div>
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6">
+        <h3 class="text-lg font-semibold text-primary mb-3">Beneficio</h3>
+        <p class="text-neutral-300">Cada agente mantem contexto especializado sem interferir no trabalho de outros, resultando em codigo mais limpo e menos alucinacoes.</p>
+      </div>
+    </section>
+
+    <!-- TOPICO 2 -->
+    <section id="topico-2" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">2</span>
+        <h2 class="text-2xl font-bold">📝 claude.md</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">O arquivo <strong class="text-amber-400">claude.md</strong> funciona como centro de controle e memoria persistente do projeto, servindo de referencia para todos os agentes e sessoes.</p>
+      <div class="bg-gradient-to-br from-amber-900/30 to-dark-800 rounded-xl border border-amber-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-amber-400 mb-4">Conteudo Recomendado</h3>
+        <ul class="space-y-2 text-neutral-300">
+          <li>• Visao geral e arquitetura atual</li>
+          <li>• Agentes especializados ativos</li>
+          <li>• Decisoes arquiteturais com justificativas</li>
+          <li>• Modulos do sistema e status</li>
+          <li>• Padroes e convencoes de codigo</li>
+          <li>• Metricas e KPIs</li>
+          <li>• Proximos marcos e tarefas</li>
+        </ul>
+      </div>
+      <div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
+        <h3 class="text-lg font-semibold text-white mb-4">Exemplo de Estrutura</h3>
+        <div class="bg-dark-900 rounded-lg p-4 font-mono text-xs">
+          <pre class="text-neutral-300"># Projeto: EcommerceApp Pro
+
+## Arquitetura Atual
+- Frontend: React 18 + TypeScript
+- Backend: Node.js + Express
+- Database: PostgreSQL + Redis
+
+## Decisoes Arquiteturais
+### 2024-01-15: Escolha do Banco
+- Decisao: PostgreSQL
+- Justificativa: ACID + queries complexas</pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- TOPICO 3 -->
+    <section id="topico-3" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">3</span>
+        <h2 class="text-2xl font-bold">🎯 Reducao de Alucinacoes</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">A organizacao modular e uma das estrategias mais eficazes para <strong class="text-amber-400">reduzir alucinacoes</strong>. Dividir projetos em modulos menores mantem o foco.</p>
+      <div class="bg-gradient-to-br from-amber-900/30 to-dark-800 rounded-xl border border-amber-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-amber-400 mb-4">Estrategias Anti-Alucinacao</h3>
+        <ul class="space-y-3 text-neutral-300">
+          <li class="flex items-start space-x-2"><span class="text-amber-400 mt-1">1.</span><div><strong class="text-white">Contexto Limitado:</strong> Cada sessao foca em um modulo especifico</div></li>
+          <li class="flex items-start space-x-2"><span class="text-amber-400 mt-1">2.</span><div><strong class="text-white">Documentacao Atualizada:</strong> claude.md sempre reflete estado atual</div></li>
+          <li class="flex items-start space-x-2"><span class="text-amber-400 mt-1">3.</span><div><strong class="text-white">Validacao Cruzada:</strong> Agentes diferentes validam trabalho de outros</div></li>
+          <li class="flex items-start space-x-2"><span class="text-amber-400 mt-1">4.</span><div><strong class="text-white">Testes Automatizados:</strong> Validacao continua de funcionalidades</div></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- TOPICO 4 -->
+    <section id="topico-4" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">4</span>
+        <h2 class="text-2xl font-bold">🪙 Tokens Sonnet vs Opus</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">A escolha entre <strong class="text-amber-400">Claude Sonnet e Opus</strong> e fundamental para otimizacao de custos. Cada modelo tem relacao custo-beneficio diferente.</p>
+      <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+        <div class="overflow-x-auto">
+          <table class="w-full text-sm">
+            <thead>
+              <tr class="border-b border-dark-600">
+                <th class="text-left py-2 text-neutral-400">Caracteristica</th>
+                <th class="text-left py-2 text-emerald-400">Sonnet</th>
+                <th class="text-left py-2 text-purple-400">Opus</th>
+              </tr>
+            </thead>
+            <tbody class="text-neutral-300">
+              <tr class="border-b border-dark-700">
+                <td class="py-2">Custo Input</td>
+                <td class="py-2">$3/1M tokens</td>
+                <td class="py-2">$15/1M tokens</td>
+              </tr>
+              <tr class="border-b border-dark-700">
+                <td class="py-2">Custo Output</td>
+                <td class="py-2">$15/1M tokens</td>
+                <td class="py-2">$75/1M tokens</td>
+              </tr>
+              <tr class="border-b border-dark-700">
+                <td class="py-2">Velocidade</td>
+                <td class="py-2">Rapida (2-5s)</td>
+                <td class="py-2">Mais lenta (5-15s)</td>
+              </tr>
+              <tr>
+                <td class="py-2">Ideal para</td>
+                <td class="py-2">Dev diario, CRUD</td>
+                <td class="py-2">Arquitetura, seguranca</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6">
+        <h3 class="text-lg font-semibold text-primary mb-3">Regra de Ouro</h3>
+        <p class="text-neutral-300">Use <strong>Sonnet</strong> para 90% das tarefas diarias. Reserve <strong>Opus</strong> apenas para decisoes arquiteturais criticas, auditorias de seguranca e analises profundas.</p>
+      </div>
+    </section>
+
+    <!-- TOPICO 5 -->
+    <section id="topico-5" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">5</span>
+        <h2 class="text-2xl font-bold">📊 Relatorios de Uso</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">Monitore seus gastos com <strong class="text-amber-400">dashboards e relatorios</strong> para tomar decisoes informadas sobre otimizacao.</p>
+      <div class="bg-gradient-to-br from-amber-900/30 to-dark-800 rounded-xl border border-amber-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-amber-400 mb-4">Exemplo de Dashboard</h3>
+        <div class="bg-dark-900 rounded-lg p-4 font-mono text-xs">
+          <p class="text-emerald-400">CUSTOS HOJE - 14:30</p>
+          <p class="text-white mt-2">Sonnet: 245K tokens ($0.73) - 85%</p>
+          <p class="text-white">Opus: 45K tokens ($3.38) - 15%</p>
+          <p class="text-amber-400 mt-2">Total: $4.11</p>
+          <p class="text-neutral-400 mt-3">ROI estimado: 340%</p>
+        </div>
+      </div>
+      <div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
+        <div class="bg-dark-900 rounded-lg p-4 font-mono text-sm">
+          <p class="text-emerald-400"># Ver relatorio de custos</p>
+          <p class="text-white">claude "/costs dashboard --period today"</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TOPICO 6 -->
+    <section id="topico-6" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">6</span>
+        <h2 class="text-2xl font-bold">⚡ Otimizacao</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">Estrategias praticas para <strong class="text-amber-400">maximizar ROI</strong> e reduzir custos sem sacrificar qualidade.</p>
+      <div class="bg-gradient-to-br from-amber-900/30 to-dark-800 rounded-xl border border-amber-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-amber-400 mb-4">Estrategias de Economia</h3>
+        <ul class="space-y-3 text-neutral-300">
+          <li class="flex items-start space-x-2"><span class="text-amber-400 mt-1">1.</span><div><strong class="text-white">Prompts otimizados:</strong> Seja especifico, evite redundancia</div></li>
+          <li class="flex items-start space-x-2"><span class="text-amber-400 mt-1">2.</span><div><strong class="text-white">Use /summarize:</strong> Economize 35% condensando contexto</div></li>
+          <li class="flex items-start space-x-2"><span class="text-amber-400 mt-1">3.</span><div><strong class="text-white">Cache de respostas:</strong> Reutilize resultados similares</div></li>
+          <li class="flex items-start space-x-2"><span class="text-amber-400 mt-1">4.</span><div><strong class="text-white">Componentes reutilizaveis:</strong> Reduza geracao repetitiva</div></li>
+          <li class="flex items-start space-x-2"><span class="text-amber-400 mt-1">5.</span><div><strong class="text-white">Alertas de orcamento:</strong> Configure limites e notificacoes</div></li>
+        </ul>
+      </div>
+      <div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6">
+        <h3 class="text-lg font-semibold text-blue-400 mb-4">Exemplo de ROI</h3>
+        <p class="text-neutral-300">Autenticacao de usuarios: <strong class="text-white">$66.60</strong> com Claude Code vs <strong class="text-white">$3.600</strong> com desenvolvimento tradicional = <strong class="text-emerald-400">98% de economia</strong></p>
+      </div>
+    </section>
+
+    <!-- RESUMO -->
+    <section class="mb-12">
+      <div class="bg-gradient-to-br from-amber-900/40 via-dark-800 to-dark-800 rounded-xl border border-amber-500/30 p-8">
+        <h2 class="text-2xl font-bold mb-6 flex items-center"><span class="mr-3">📚</span> Resumo do Modulo</h2>
+        <div class="space-y-4 mb-8">
+          <div class="flex items-start space-x-3"><span class="text-amber-400 mt-1">✓</span><div><strong class="text-white">Sessoes modulares</strong><span class="text-neutral-400"> - Divisao estrategica por area</span></div></div>
+          <div class="flex items-start space-x-3"><span class="text-amber-400 mt-1">✓</span><div><strong class="text-white">claude.md</strong><span class="text-neutral-400"> - Centro de controle e memoria</span></div></div>
+          <div class="flex items-start space-x-3"><span class="text-amber-400 mt-1">✓</span><div><strong class="text-white">Anti-alucinacao</strong><span class="text-neutral-400"> - Contexto limitado e validacao cruzada</span></div></div>
+          <div class="flex items-start space-x-3"><span class="text-amber-400 mt-1">✓</span><div><strong class="text-white">Sonnet vs Opus</strong><span class="text-neutral-400"> - Sonnet 90%, Opus 10%</span></div></div>
+          <div class="flex items-start space-x-3"><span class="text-amber-400 mt-1">✓</span><div><strong class="text-white">Relatorios</strong><span class="text-neutral-400"> - Dashboard e metricas de custos</span></div></div>
+          <div class="flex items-start space-x-3"><span class="text-amber-400 mt-1">✓</span><div><strong class="text-white">Otimizacao</strong><span class="text-neutral-400"> - Prompts, cache, alertas</span></div></div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+          <h3 class="font-semibold text-amber-400 mb-2">Proximo Modulo:</h3>
+          <p class="text-neutral-300">4.7 - Hooks e Seguranca: Personalizacao avancada, notificacoes e auditoria</p>
+        </div>
+        <div class="flex flex-col sm:flex-row gap-4">
+          <a href="modulo-4-5.html" class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors">← Modulo Anterior</a>
+          <a href="modulo-4-7.html" class="flex-1 text-center px-6 py-3 bg-amber-600 text-white rounded-lg font-semibold hover:bg-amber-500 transition-colors">Proximo Modulo →</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="border-t border-dark-600 py-8 mt-16">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm"><p>Claude Code 2026 - Todos os direitos reservados</p></div>
+  </footer>
+
+  <script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    const html = document.documentElement;
+    if (localStorage.getItem('theme') === 'light' || (!localStorage.getItem('theme') && !html.classList.contains('dark'))) { themeToggleDarkIcon.classList.remove('hidden'); html.classList.remove('dark'); } else { themeToggleLightIcon.classList.remove('hidden'); }
+    themeToggle.addEventListener('click', () => { themeToggleDarkIcon.classList.toggle('hidden'); themeToggleLightIcon.classList.toggle('hidden'); html.classList.toggle('dark'); localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light'); });
+  </script>
+</body>
+</html>

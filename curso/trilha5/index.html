@@ -1,0 +1,1693 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trilha 5: 95CC Automacao | Claude Code 2026</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: '#FACC15',
+            dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' }
+          }
+        }
+      }
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+    .topic-explanation { display: none; }
+    .topic-explanation.active { display: block; }
+
+    /* Light mode overrides */
+    html:not(.dark) body {
+      background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 50%, #f1f5f9 100%);
+    }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+  </style>
+</head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen">
+
+  <!-- NAVIGATION -->
+  <nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-14">
+        <!-- Logo + INEMA.CLUB -->
+        <div class="flex items-center space-x-4">
+          <a href="../../index.html" class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300">
+            <span class="text-2xl">🤖</span>
+            <span class="font-bold text-lg hidden sm:inline">Claude Code 2026</span>
+          </a>
+          <span class="text-neutral-600">|</span>
+          <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300 text-sm font-medium">INEMA.CLUB</a>
+        </div>
+
+        <!-- Trilhas + Theme Toggle -->
+        <div class="flex items-center space-x-1 sm:space-x-2">
+          <a href="../trilha1/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors">
+            <span class="sm:hidden">T1</span>
+            <span class="hidden sm:inline">Fundamentos</span>
+          </a>
+          <a href="../trilha2/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors">
+            <span class="sm:hidden">T2</span>
+            <span class="hidden sm:inline">Comandos</span>
+          </a>
+          <a href="../trilha3/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors">
+            <span class="sm:hidden">T3</span>
+            <span class="hidden sm:inline">Avancado</span>
+          </a>
+          <a href="../trilha4/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-amber-400 hover:bg-amber-500/10 transition-colors">
+            <span class="sm:hidden">T4</span>
+            <span class="hidden sm:inline">Producao</span>
+          </a>
+          <a href="index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-teal-400 bg-teal-500/10">
+            <span class="sm:hidden">T5</span>
+            <span class="hidden sm:inline">95CC</span>
+          </a>
+          <a href="../trilha6/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-rose-400 hover:bg-rose-500/10 transition-colors">
+            <span class="sm:hidden">T6</span>
+            <span class="hidden sm:inline">Projetos</span>
+          </a>
+
+          <!-- Theme Toggle -->
+          <button id="theme-toggle" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2">
+            <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+            </svg>
+            <svg id="theme-toggle-light-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HEADER -->
+  <header class="bg-gradient-to-br from-teal-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <span class="inline-block px-3 py-1 bg-teal-500/20 text-teal-400 text-xs font-semibold rounded-full mb-4">
+        TRILHA 5
+      </span>
+      <h1 class="text-3xl sm:text-4xl font-bold mb-4">🔧 95CC Automacao</h1>
+      <p class="text-lg text-neutral-400 max-w-3xl">
+        Domine 95% do Claude Code construindo automacoes reais. Aprenda o framework WAT (Workflows, Agents, Tools),
+        integre MCP servers, crie skills personalizados e faca deploy em producao usando Modal.
+      </p>
+
+      <!-- Stats Grid -->
+      <div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-teal-400">8</div>
+          <div class="text-xs text-neutral-400">Modulos</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-teal-400">48</div>
+          <div class="text-xs text-neutral-400">Topicos</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-teal-400">~5h</div>
+          <div class="text-xs text-neutral-400">Duracao</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-teal-400">Avancado</div>
+          <div class="text-xs text-neutral-400">Nivel</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN CONTENT -->
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+    <!-- Navegacao Rapida -->
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
+      <a href="modulo-5-1.html" class="bg-dark-800 rounded-lg p-4 border border-dark-600 hover:border-teal-500/50 transition-colors">
+        <span class="text-teal-400 font-bold">5.1</span>
+        <p class="text-sm text-neutral-300 mt-1">Interface e Ambiente</p>
+      </a>
+      <a href="modulo-5-2.html" class="bg-dark-800 rounded-lg p-4 border border-dark-600 hover:border-teal-500/50 transition-colors">
+        <span class="text-teal-400 font-bold">5.2</span>
+        <p class="text-sm text-neutral-300 mt-1">Framework WAT</p>
+      </a>
+      <a href="modulo-5-3.html" class="bg-dark-800 rounded-lg p-4 border border-dark-600 hover:border-teal-500/50 transition-colors">
+        <span class="text-teal-400 font-bold">5.3</span>
+        <p class="text-sm text-neutral-300 mt-1">Planejamento com IA</p>
+      </a>
+      <a href="modulo-5-4.html" class="bg-dark-800 rounded-lg p-4 border border-dark-600 hover:border-teal-500/50 transition-colors">
+        <span class="text-teal-400 font-bold">5.4</span>
+        <p class="text-sm text-neutral-300 mt-1">Construindo Tools</p>
+      </a>
+      <a href="modulo-5-5.html" class="bg-dark-800 rounded-lg p-4 border border-dark-600 hover:border-teal-500/50 transition-colors">
+        <span class="text-teal-400 font-bold">5.5</span>
+        <p class="text-sm text-neutral-300 mt-1">MCP Avancados</p>
+      </a>
+      <a href="modulo-5-6.html" class="bg-dark-800 rounded-lg p-4 border border-dark-600 hover:border-teal-500/50 transition-colors">
+        <span class="text-teal-400 font-bold">5.6</span>
+        <p class="text-sm text-neutral-300 mt-1">Skills Personalizados</p>
+      </a>
+      <a href="modulo-5-7.html" class="bg-dark-800 rounded-lg p-4 border border-dark-600 hover:border-teal-500/50 transition-colors">
+        <span class="text-teal-400 font-bold">5.7</span>
+        <p class="text-sm text-neutral-300 mt-1">Deploy no Modal</p>
+      </a>
+      <a href="modulo-5-8.html" class="bg-dark-800 rounded-lg p-4 border border-dark-600 hover:border-teal-500/50 transition-colors">
+        <span class="text-teal-400 font-bold">5.8</span>
+        <p class="text-sm text-neutral-300 mt-1">Workflow Completo</p>
+      </a>
+    </div>
+
+    <!-- Divisor -->
+    <div class="flex items-center mb-8">
+      <div class="flex-1 border-t border-dark-600"></div>
+      <span class="px-4 text-neutral-500 text-sm">Conteudo Detalhado</span>
+      <div class="flex-1 border-t border-dark-600"></div>
+    </div>
+
+    <!-- MODULO 5.1 -->
+    <div class="bg-dark-800 rounded-xl border border-dark-600 mb-6">
+      <div class="p-6 border-b border-dark-600">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-teal-400 font-bold">5.1</span>
+          <span class="text-xs text-neutral-500">~35 min</span>
+        </div>
+        <h3 class="text-2xl font-bold mb-2">🖥️ Interface e Ambiente</h3>
+        <p class="text-neutral-400 text-sm">Configure seu ambiente de desenvolvimento com VS Code e Claude Code. Entenda a estrutura de projetos e os modos de operacao.</p>
+      </div>
+
+      <div class="divide-y divide-dark-600">
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+            <span class="text-lg">💻</span>
+            <div>
+              <span class="font-medium">VS Code + Extensao Claude Code</span>
+              <span class="text-neutral-500 text-sm ml-2">- Ambiente integrado</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-teal-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Visual Studio Code com a extensao oficial do Claude Code, permitindo usar o agente diretamente na IDE mais popular do mundo.</p>
+              </div>
+              <div>
+                <span class="text-teal-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">A integracao com VS Code oferece a melhor experiencia de desenvolvimento, com arquivos a esquerda e agente a direita.</p>
+              </div>
+              <div>
+                <span class="text-teal-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Extensao Claude Code, interface lado a lado, login Anthropic, plano Pro ou Max.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+            <span class="text-lg">📁</span>
+            <div>
+              <span class="font-medium">Estrutura de Projetos</span>
+              <span class="text-neutral-500 text-sm ml-2">- Organizacao padrao</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-teal-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Cada projeto Claude Code vive em uma pasta propria com estrutura definida: workflows/, tools/, .tmp/, .env.</p>
+              </div>
+              <div>
+                <span class="text-teal-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Uma estrutura limpa evita confusao e permite que o agente encontre rapidamente o que precisa.</p>
+              </div>
+              <div>
+                <span class="text-teal-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Open folder, workflows/, tools/, .tmp/, .env, credentials.json.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+            <span class="text-lg">🔍</span>
+            <div>
+              <span class="font-medium">Explorer</span>
+              <span class="text-neutral-500 text-sm ml-2">- Navegando arquivos</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-teal-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">O painel esquerdo do VS Code mostra todos os arquivos do projeto. O agente Claude Code fica no painel direito.</p>
+              </div>
+              <div>
+                <span class="text-teal-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Entender a interface permite navegar rapidamente entre workflows, tools e arquivos gerados.</p>
+              </div>
+              <div>
+                <span class="text-teal-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Explorer (esquerda), agente (direita), multiplas abas, arrastar arquivos.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+            <span class="text-lg">⚡</span>
+            <div>
+              <span class="font-medium">Bypass Permissions</span>
+              <span class="text-neutral-500 text-sm ml-2">- Modo autonomo</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-teal-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Modo que permite ao agente executar acoes sem pedir permissao a cada passo, acelerando drasticamente o desenvolvimento.</p>
+              </div>
+              <div>
+                <span class="text-teal-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Sem bypass, voce precisa aprovar cada edicao de arquivo manualmente - muito lento para automacoes complexas.</p>
+              </div>
+              <div>
+                <span class="text-teal-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Settings > allow bypass permissions mode, ask before edits, edit automatically.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+            <span class="text-lg">📋</span>
+            <div>
+              <span class="font-medium">Plan Mode</span>
+              <span class="text-neutral-500 text-sm ml-2">- Planejamento profundo</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-teal-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Modo especial onde Claude pensa mais profundamente, faz pesquisas e faz perguntas antes de executar.</p>
+              </div>
+              <div>
+                <span class="text-teal-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Usar plan mode no inicio de projetos garante que Claude entenda completamente o que voce quer construir.</p>
+              </div>
+              <div>
+                <span class="text-teal-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Plan mode toggle, pesquisa web, perguntas clarificadoras, analise de estrutura.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+            <span class="text-lg">🤖</span>
+            <div>
+              <span class="font-medium">Agente vs Arquivos</span>
+              <span class="text-neutral-500 text-sm ml-2">- Dois mundos conectados</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-teal-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">O agente (lado direito) le, cria e modifica arquivos (lado esquerdo). Essa separacao e fundamental.</p>
+              </div>
+              <div>
+                <span class="text-teal-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Entender essa divisao ajuda a saber o que o agente pode fazer e onde os resultados ficam salvos.</p>
+              </div>
+              <div>
+                <span class="text-teal-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Agente = raciocinador, arquivos = persistencia, workflows guiam, tools executam.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+        <a href="modulo-5-1.html" class="px-4 py-2 text-sm bg-teal-600 hover:bg-teal-500 text-white rounded-lg transition-colors">
+          Ver Modulo Completo
+        </a>
+      </div>
+    </div>
+
+    <!-- MODULO 5.2 -->
+    <div class="bg-dark-800 rounded-xl border border-dark-600 mb-6">
+      <div class="p-6 border-b border-dark-600">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-teal-400 font-bold">5.2</span>
+          <span class="text-xs text-neutral-500">~40 min</span>
+        </div>
+        <h3 class="text-2xl font-bold mb-2">🏗️ Framework WAT</h3>
+        <p class="text-neutral-400 text-sm">Workflows, Agents e Tools - a arquitetura que separa raciocinio probabilistico de execucao deterministica.</p>
+      </div>
+
+      <div class="divide-y divide-dark-600">
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+            <span class="text-lg">📝</span>
+            <div>
+              <span class="font-medium">Workflows (Instrucoes MD)</span>
+              <span class="text-neutral-500 text-sm ml-2">- SOPs em Markdown</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-teal-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Arquivos Markdown que descrevem processos completos: objetivo, inputs, tools a usar, outputs esperados e tratamento de erros.</p>
+              </div>
+              <div>
+                <span class="text-teal-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Workflows sao como briefings para o agente - quanto mais claros, melhores os resultados.</p>
+              </div>
+              <div>
+                <span class="text-teal-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">workflows/, arquivo.md, linguagem natural, objective, inputs, outputs, edge cases.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+            <span class="text-lg">🧠</span>
+            <div>
+              <span class="font-medium">Agents (Decisao)</span>
+              <span class="text-neutral-500 text-sm ml-2">- Raciocinio probabilistico</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-teal-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">O agente Claude Code e o decisor - le workflows, escolhe tools, trata erros e faz perguntas quando necessario.</p>
+              </div>
+              <div>
+                <span class="text-teal-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Separar decisao (IA) de execucao (codigo) e o que torna automacoes confiaveis.</p>
+              </div>
+              <div>
+                <span class="text-teal-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Coordenacao inteligente, sequenciamento de tools, tratamento de falhas, clarificacoes.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+            <span class="text-lg">🔧</span>
+            <div>
+              <span class="font-medium">Tools (Execucao .py)</span>
+              <span class="text-neutral-500 text-sm ml-2">- Codigo deterministico</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-teal-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Scripts Python que executam acoes especificas: API calls, transformacoes de dados, operacoes de arquivo.</p>
+              </div>
+              <div>
+                <span class="text-teal-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Tools sao testaveis, confiaveis e rapidos - diferente de deixar a IA fazer tudo diretamente.</p>
+              </div>
+              <div>
+                <span class="text-teal-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">tools/, scripts .py, API calls, data transformations, file operations, database queries.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+            <span class="text-lg">🔄</span>
+            <div>
+              <span class="font-medium">Self-Improvement Loop</span>
+              <span class="text-neutral-500 text-sm ml-2">- Auto-correcao</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-teal-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Quando algo falha, o agente investiga, corrige o tool, verifica a correcao e atualiza o workflow para evitar o erro no futuro.</p>
+              </div>
+              <div>
+                <span class="text-teal-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Este loop e o que torna o sistema cada vez mais robusto com o tempo - aprende com cada falha.</p>
+              </div>
+              <div>
+                <span class="text-teal-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Identificar erro, corrigir tool, verificar fix, atualizar workflow, documentar aprendizado.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+            <span class="text-lg">📂</span>
+            <div>
+              <span class="font-medium">Estrutura de Pastas</span>
+              <span class="text-neutral-500 text-sm ml-2">- Organizacao WAT</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-teal-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Estrutura padrao: .tmp/ (temporarios), tools/ (scripts), workflows/ (instrucoes), .env (secrets), credentials.json (OAuth).</p>
+              </div>
+              <div>
+                <span class="text-teal-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Seguir a estrutura padrao permite que o agente encontre tudo automaticamente sem configuracao adicional.</p>
+              </div>
+              <div>
+                <span class="text-teal-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">.tmp/ descartavel, tools/ permanente, workflows/ evolui, .env nunca commitado.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+            <span class="text-lg">🔐</span>
+            <div>
+              <span class="font-medium">Sistema .env</span>
+              <span class="text-neutral-500 text-sm ml-2">- Gerenciamento de secrets</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-teal-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Arquivo que armazena API keys e credenciais senssiveis. Nunca deve ser commitado no Git.</p>
+              </div>
+              <div>
+                <span class="text-teal-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Guardar secrets no .env evita exposicao acidental quando o codigo for compartilhado ou publicado.</p>
+              </div>
+              <div>
+                <span class="text-teal-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">.env, .gitignore, API_KEY=valor, nunca no codigo, nunca no workflow.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+        <a href="modulo-5-2.html" class="px-4 py-2 text-sm bg-teal-600 hover:bg-teal-500 text-white rounded-lg transition-colors">
+          Ver Modulo Completo
+        </a>
+      </div>
+    </div>
+
+    <!-- MODULO 5.3 -->
+    <div class="bg-dark-800 rounded-xl border border-dark-600 mb-6">
+      <div class="p-6 border-b border-dark-600">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-teal-400 font-bold">5.3</span>
+          <span class="text-xs text-neutral-500">~35 min</span>
+        </div>
+        <h3 class="text-2xl font-bold mb-2">📋 Planejamento com IA</h3>
+        <p class="text-neutral-400 text-sm">Use claude.md como system prompt, domine o plan mode e aprenda a iterar planos ate a perfeicao.</p>
+      </div>
+
+      <div class="divide-y divide-dark-600">
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+            <span class="text-lg">📄</span>
+            <div>
+              <span class="font-medium">claude.md como System Prompt</span>
+              <span class="text-neutral-500 text-sm ml-2">- Instrucoes do projeto</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-teal-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Arquivo claude.md na raiz do projeto que funciona como system prompt - o agente le automaticamente ao iniciar.</p>
+              </div>
+              <div>
+                <span class="text-teal-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Sem um bom claude.md, o agente e generico. Com ele, entende seu projeto, ferramentas e padroes.</p>
+              </div>
+              <div>
+                <span class="text-teal-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">claude.md, framework WAT, estrutura de pastas, regras do projeto, como operar.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+            <span class="text-lg">🎯</span>
+            <div>
+              <span class="font-medium">Plan Mode Detalhado</span>
+              <span class="text-neutral-500 text-sm ml-2">- Pensamento profundo</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-teal-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Modo onde Claude dedica mais tempo pensando, pesquisando APIs, analisando opcoes antes de propor uma solucao.</p>
+              </div>
+              <div>
+                <span class="text-teal-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Bypass sem planejamento gera codigo ruim. Plan mode primeiro, execucao depois.</p>
+              </div>
+              <div>
+                <span class="text-teal-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Ativar plan mode, descrever objetivo completo, listar features, esperar perguntas.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+            <span class="text-lg">❓</span>
+            <div>
+              <span class="font-medium">Perguntas do Agente</span>
+              <span class="text-neutral-500 text-sm ml-2">- Clarificacoes essenciais</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-teal-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Claude faz perguntas sobre detalhes que voce pode nao ter pensado: frequencia, formato, integracao, tratamento de erros.</p>
+              </div>
+              <div>
+                <span class="text-teal-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Responder bem as perguntas evita retrabalho e garante que a automacao faca exatamente o que voce precisa.</p>
+              </div>
+              <div>
+                <span class="text-teal-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Perguntas clarificadoras, especificacoes, edge cases, preferencias de implementacao.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+            <span class="text-lg">✅</span>
+            <div>
+              <span class="font-medium">Auto-Accept Changes</span>
+              <span class="text-neutral-500 text-sm ml-2">- Aceitando o plano</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-teal-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Apos revisar o plano de Claude, voce pode aceitar automaticamente todas as mudancas propostas de uma vez.</p>
+              </div>
+              <div>
+                <span class="text-teal-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Auto-accept acelera a execucao, mas so deve ser usado apos revisar o plano cuidadosamente.</p>
+              </div>
+              <div>
+                <span class="text-teal-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Revisar plano primeiro, aceitar mudancas, monitorar execucao, intervir se necessario.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+            <span class="text-lg">📊</span>
+            <div>
+              <span class="font-medium">To-Do List Visual</span>
+              <span class="text-neutral-500 text-sm ml-2">- Acompanhando progresso</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-teal-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Claude cria uma lista de tarefas e vai marcando cada item conforme completa, permitindo acompanhar o progresso.</p>
+              </div>
+              <div>
+                <span class="text-teal-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">A lista permite voce trabalhar em outra coisa enquanto a automacao roda, verificando periodicamente.</p>
+              </div>
+              <div>
+                <span class="text-teal-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">To-do list automatico, checkboxes visuais, acompanhamento de progresso, multitasking.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+            <span class="text-lg">🔁</span>
+            <div>
+              <span class="font-medium">Iteracao de Planos</span>
+              <span class="text-neutral-500 text-sm ml-2">- Refinamento continuo</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-teal-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Nao precisa aceitar o primeiro plano. Voce pode pedir ajustes, adicionar requisitos ou mudar abordagem antes de executar.</p>
+              </div>
+              <div>
+                <span class="text-teal-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Iterar no plano e muito mais barato que refazer depois de implementado. Invista tempo aqui.</p>
+              </div>
+              <div>
+                <span class="text-teal-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Feedback no plano, ajustes antes de executar, multiplas iteracoes, plano final aprovado.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+        <a href="modulo-5-3.html" class="px-4 py-2 text-sm bg-teal-600 hover:bg-teal-500 text-white rounded-lg transition-colors">
+          Ver Modulo Completo
+        </a>
+      </div>
+    </div>
+
+    <!-- MODULO 5.4 -->
+    <div class="bg-dark-800 rounded-xl border border-dark-600 mb-6">
+      <div class="p-6 border-b border-dark-600">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-teal-400 font-bold">5.4</span>
+          <span class="text-xs text-neutral-500">~40 min</span>
+        </div>
+        <h3 class="text-2xl font-bold mb-2">🐍 Construindo Tools</h3>
+        <p class="text-neutral-400 text-sm">Crie scripts Python executaveis que fazem o trabalho pesado: APIs, transformacoes, integraces.</p>
+      </div>
+
+      <div class="divide-y divide-dark-600">
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+            <span class="text-lg">🐍</span>
+            <div>
+              <span class="font-medium">Python Scripts Executaveis</span>
+              <span class="text-neutral-500 text-sm ml-2">- Tools atomicos</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-teal-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Cada tool e um script Python que faz uma unica coisa bem feita - scrape_site.py, send_email.py, generate_chart.py.</p>
+              </div>
+              <div>
+                <span class="text-teal-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Tools atomicos sao reutilizaveis, testaveis e faceis de debugar quando algo da errado.</p>
+              </div>
+              <div>
+                <span class="text-teal-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Um script = uma funcao, inputs claros, outputs definidos, erros tratados.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+            <span class="text-lg">🔌</span>
+            <div>
+              <span class="font-medium">API Integrations</span>
+              <span class="text-neutral-500 text-sm ml-2">- Conectando servicos</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-teal-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Tools que chamam APIs externas: YouTube Data API, Gmail API, Google Sheets, OpenAI, Perplexity.</p>
+              </div>
+              <div>
+                <span class="text-teal-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">A maioria das automacoes uteis envolve conectar multiplos servicos via APIs.</p>
+              </div>
+              <div>
+                <span class="text-teal-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">API keys no .env, requests library, rate limits, paginacao, autenticacao OAuth.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+            <span class="text-lg">🔄</span>
+            <div>
+              <span class="font-medium">Data Transformations</span>
+              <span class="text-neutral-500 text-sm ml-2">- Processando dados</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-teal-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Tools que transformam dados: JSON para CSV, agregacoes, calculos, filtragem, formatacao para relatorios.</p>
+              </div>
+              <div>
+                <span class="text-teal-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Dados brutos raramente estao no formato que voce precisa - transformacoes sao essenciais.</p>
+              </div>
+              <div>
+                <span class="text-teal-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">pandas, json parsing, csv handling, data aggregation, format conversion.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+            <span class="text-lg">📦</span>
+            <div>
+              <span class="font-medium">Dependencias e Instalacao</span>
+              <span class="text-neutral-500 text-sm ml-2">- pip install</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-teal-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">O agente instala automaticamente bibliotecas necessarias via pip quando identifica dependencias faltantes.</p>
+              </div>
+              <div>
+                <span class="text-teal-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Entender dependencias ajuda a debugar erros de importacao e garantir reproducibilidade.</p>
+              </div>
+              <div>
+                <span class="text-teal-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">pip install, requirements.txt, virtual environments, dependencias transitivas.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+            <span class="text-lg">🐛</span>
+            <div>
+              <span class="font-medium">Erro e Correcao</span>
+              <span class="text-neutral-500 text-sm ml-2">- Debugging automatico</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-teal-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Quando um tool falha, o agente le o erro, investiga a causa, corrige o codigo e testa novamente automaticamente.</p>
+              </div>
+              <div>
+                <span class="text-teal-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">O loop de auto-correcao e poderoso, mas voce precisa saber quando intervir para evitar loops infinitos.</p>
+              </div>
+              <div>
+                <span class="text-teal-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Ler stack trace, identificar causa raiz, aplicar fix, verificar correcao, atualizar workflow.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+            <span class="text-lg">✅</span>
+            <div>
+              <span class="font-medium">Tool Validation</span>
+              <span class="text-neutral-500 text-sm ml-2">- Testando antes de usar</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-teal-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">O agente testa cada tool apos criar para garantir que funciona antes de integrar no workflow completo.</p>
+              </div>
+              <div>
+                <span class="text-teal-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Validacao precoce evita descobrir bugs no meio de uma execucao complexa de multiplos tools.</p>
+              </div>
+              <div>
+                <span class="text-teal-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Testes unitarios, execucao isolada, verificacao de output, casos de edge.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+        <a href="modulo-5-4.html" class="px-4 py-2 text-sm bg-teal-600 hover:bg-teal-500 text-white rounded-lg transition-colors">
+          Ver Modulo Completo
+        </a>
+      </div>
+    </div>
+
+    <!-- MODULO 5.5 -->
+    <div class="bg-dark-800 rounded-xl border border-dark-600 mb-6">
+      <div class="p-6 border-b border-dark-600">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-teal-400 font-bold">5.5</span>
+          <span class="text-xs text-neutral-500">~35 min</span>
+        </div>
+        <h3 class="text-2xl font-bold mb-2">🔗 MCP Servers Avancados</h3>
+        <p class="text-neutral-400 text-sm">Conecte-se a servicos externos via MCP: Exa para pesquisa, Playwright para browser, e muito mais.</p>
+      </div>
+
+      <div class="divide-y divide-dark-600">
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+            <span class="text-lg">🔍</span>
+            <div>
+              <span class="font-medium">Exa para Pesquisa Web</span>
+              <span class="text-neutral-500 text-sm ml-2">- Busca inteligente</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-teal-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">MCP server que permite ao agente fazer pesquisas web semanticas, encontrando informacoes relevantes automaticamente.</p>
+              </div>
+              <div>
+                <span class="text-teal-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Exa expande as capacidades do agente para alem de arquivos locais - pode pesquisar documentacao, noticias, dados.</p>
+              </div>
+              <div>
+                <span class="text-teal-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">MCP server Exa, pesquisa semantica, web search, content extraction.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+            <span class="text-lg">🎭</span>
+            <div>
+              <span class="font-medium">Playwright (Microsoft)</span>
+              <span class="text-neutral-500 text-sm ml-2">- Automacao de browser</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-teal-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">MCP server que permite controlar um browser real - navegar, clicar, preencher formularios, extrair dados de paginas dinamicas.</p>
+              </div>
+              <div>
+                <span class="text-teal-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Muitos sites nao tem API - Playwright permite automatizar qualquer coisa que um humano faria no browser.</p>
+              </div>
+              <div>
+                <span class="text-teal-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Browser automation, headless mode, selectors, wait for elements, screenshots.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+            <span class="text-lg">⚙️</span>
+            <div>
+              <span class="font-medium">Instalacao via CLI</span>
+              <span class="text-neutral-500 text-sm ml-2">- Configurando MCPs</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-teal-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">MCPs sao instalados via comandos CLI que o agente pode executar, configurando automaticamente as integracoes.</p>
+              </div>
+              <div>
+                <span class="text-teal-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Saber instalar MCPs permite expandir as capacidades do agente conforme suas necessidades.</p>
+              </div>
+              <div>
+                <span class="text-teal-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">npx install MCP, configuracao automatica, verificacao de instalacao.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+            <span class="text-lg">🧪</span>
+            <div>
+              <span class="font-medium">Testes de Conexao</span>
+              <span class="text-neutral-500 text-sm ml-2">- Verificando MCPs</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-teal-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Apos instalar um MCP, testar se a conexao funciona antes de usar em automacoes de producao.</p>
+              </div>
+              <div>
+                <span class="text-teal-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Testar MCPs isoladamente evita debugar problemas de conexao no meio de workflows complexos.</p>
+              </div>
+              <div>
+                <span class="text-teal-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Health check, teste de endpoint, verificacao de credenciais, logs de conexao.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+            <span class="text-lg">🔀</span>
+            <div>
+              <span class="font-medium">Combinando MCPs</span>
+              <span class="text-neutral-500 text-sm ml-2">- Integracao multipla</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-teal-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Usar multiplos MCPs juntos em um unico workflow - Exa para pesquisar, Playwright para extrair, Gmail para enviar.</p>
+              </div>
+              <div>
+                <span class="text-teal-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">O verdadeiro poder esta em combinar capacidades - cada MCP adiciona uma nova "habilidade" ao agente.</p>
+              </div>
+              <div>
+                <span class="text-teal-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Orquestracao de MCPs, passagem de dados, sequenciamento, tratamento de erros cruzados.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+            <span class="text-lg">🔒</span>
+            <div>
+              <span class="font-medium">Seguranca de MCPs</span>
+              <span class="text-neutral-500 text-sm ml-2">- Permissoes e riscos</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-teal-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">MCPs tem acesso a servicos externos - entender as permissoes e riscos de cada um e crucial.</p>
+              </div>
+              <div>
+                <span class="text-teal-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Um MCP mal configurado pode expor dados ou executar acoes nao autorizadas em seus servicos.</p>
+              </div>
+              <div>
+                <span class="text-teal-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Principio do menor privilegio, scopes de API, revisao de permissoes, audit logs.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+        <a href="modulo-5-5.html" class="px-4 py-2 text-sm bg-teal-600 hover:bg-teal-500 text-white rounded-lg transition-colors">
+          Ver Modulo Completo
+        </a>
+      </div>
+    </div>
+
+    <!-- MODULO 5.6 -->
+    <div class="bg-dark-800 rounded-xl border border-dark-600 mb-6">
+      <div class="p-6 border-b border-dark-600">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-teal-400 font-bold">5.6</span>
+          <span class="text-xs text-neutral-500">~35 min</span>
+        </div>
+        <h3 class="text-2xl font-bold mb-2">✨ Skills Personalizados</h3>
+        <p class="text-neutral-400 text-sm">Crie e instale skills que dao conhecimento especializado ao agente - de design a automacoes especificas.</p>
+      </div>
+
+      <div class="divide-y divide-dark-600">
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+            <span class="text-lg">🆚</span>
+            <div>
+              <span class="font-medium">Diferenca Skills vs MCP</span>
+              <span class="text-neutral-500 text-sm ml-2">- Conhecimento vs Acao</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-teal-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">MCPs dao capacidade de ACAO (conectar a servicos). Skills dao CONHECIMENTO (como fazer algo bem).</p>
+              </div>
+              <div>
+                <span class="text-teal-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Entender a diferenca ajuda a decidir quando criar um skill vs quando usar/criar um MCP.</p>
+              </div>
+              <div>
+                <span class="text-teal-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">MCP = API/integracao, Skill = prompt/instrucoes, complementares nao substitutos.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+            <span class="text-lg">🌐</span>
+            <div>
+              <span class="font-medium">Skills Globais vs Projeto</span>
+              <span class="text-neutral-500 text-sm ml-2">- Escopo de instalacao</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-teal-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Skills globais ficam disponiveis em todos os projetos. Skills de projeto so existem naquela pasta especifica.</p>
+              </div>
+              <div>
+                <span class="text-teal-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Skills de design ou escrita geralmente sao globais. Skills especificos de um cliente sao por projeto.</p>
+              </div>
+              <div>
+                <span class="text-teal-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">~/.claude/skills/ (global), ./claude/skills/ (projeto), quando usar cada um.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+            <span class="text-lg">🎨</span>
+            <div>
+              <span class="font-medium">Canvas Design Skill</span>
+              <span class="text-neutral-500 text-sm ml-2">- Exemplo pratico</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-teal-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Skill que ensina o agente a criar PDFs e documentos visuais bonitos, com filosofia de design e fontes.</p>
+              </div>
+              <div>
+                <span class="text-teal-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Sem o skill, PDFs gerados sao feios. Com ele, o agente aplica principios de design automaticamente.</p>
+              </div>
+              <div>
+                <span class="text-teal-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Canvas design skill, skill.md, fontes incluidas, filosofia visual.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+            <span class="text-lg">📥</span>
+            <div>
+              <span class="font-medium">Instalacao de Skills</span>
+              <span class="text-neutral-500 text-sm ml-2">- Adicionando capacidades</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-teal-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Skills sao instalados copiando codigo para o terminal ou arrastando arquivos - o agente configura automaticamente.</p>
+              </div>
+              <div>
+                <span class="text-teal-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">A comunidade compartilha skills uteis - saber instalar permite aproveitar o trabalho de outros.</p>
+              </div>
+              <div>
+                <span class="text-teal-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Copiar comando, colar no terminal, verificar instalacao, testar skill.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+            <span class="text-lg">🛠️</span>
+            <div>
+              <span class="font-medium">Criando Skills Proprios</span>
+              <span class="text-neutral-500 text-sm ml-2">- Seus prompts reutilizaveis</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-teal-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Se voce repete instrucoes frequentemente, transforme-as em um skill - um arquivo markdown com suas instrucoes.</p>
+              </div>
+              <div>
+                <span class="text-teal-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Skills proprios economizam tempo e garantem consistencia nas respostas do agente.</p>
+              </div>
+              <div>
+                <span class="text-teal-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Criar arquivo .md, estrutura de skill, instrucoes claras, exemplos incluidos.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+            <span class="text-lg">📚</span>
+            <div>
+              <span class="font-medium">cloudcode-templates</span>
+              <span class="text-neutral-500 text-sm ml-2">- Repositorio da comunidade</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-teal-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Site com colecao de agents, commands, MCP servers, skills e hooks compartilhados pela comunidade.</p>
+              </div>
+              <div>
+                <span class="text-teal-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Nao precisa reinventar a roda - provavelmente alguem ja criou o skill que voce precisa.</p>
+              </div>
+              <div>
+                <span class="text-teal-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">cloudcode-templates, buscar por categoria, view details, copiar instalacao.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+        <a href="modulo-5-6.html" class="px-4 py-2 text-sm bg-teal-600 hover:bg-teal-500 text-white rounded-lg transition-colors">
+          Ver Modulo Completo
+        </a>
+      </div>
+    </div>
+
+    <!-- MODULO 5.7 -->
+    <div class="bg-dark-800 rounded-xl border border-dark-600 mb-6">
+      <div class="p-6 border-b border-dark-600">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-teal-400 font-bold">5.7</span>
+          <span class="text-xs text-neutral-500">~40 min</span>
+        </div>
+        <h3 class="text-2xl font-bold mb-2">🚀 Deploy no Modal</h3>
+        <p class="text-neutral-400 text-sm">Coloque suas automacoes em producao com Modal.com - cron triggers, webhooks e monitoramento.</p>
+      </div>
+
+      <div class="divide-y divide-dark-600">
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+            <span class="text-lg">☁️</span>
+            <div>
+              <span class="font-medium">Modal.com Infraestrutura</span>
+              <span class="text-neutral-500 text-sm ml-2">- Computacao serverless</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-teal-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Plataforma que permite rodar suas automacoes na nuvem - voce so paga quando elas executam.</p>
+              </div>
+              <div>
+                <span class="text-teal-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Sem deploy, suas automacoes so rodam quando voce abre o VS Code. Com Modal, rodam automaticamente.</p>
+              </div>
+              <div>
+                <span class="text-teal-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Serverless, pay-per-use, $5 gratis, $30 com cartao, duracao ilimitada por execucao.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+            <span class="text-lg">⏰</span>
+            <div>
+              <span class="font-medium">Cron Triggers</span>
+              <span class="text-neutral-500 text-sm ml-2">- Agendamento</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-teal-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Trigger que executa sua automacao em horarios definidos - toda segunda as 6h, todo dia as 9h, etc.</p>
+              </div>
+              <div>
+                <span class="text-teal-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Relatorios semanais, coleta de dados diaria, backups - qualquer tarefa recorrente usa cron.</p>
+              </div>
+              <div>
+                <span class="text-teal-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Cron expression, timezone, frequencia, proxima execucao, historico de runs.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+            <span class="text-lg">🔔</span>
+            <div>
+              <span class="font-medium">Webhook Triggers</span>
+              <span class="text-neutral-500 text-sm ml-2">- Eventos externos</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-teal-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">URL que dispara sua automacao quando recebe uma requisicao - formulario enviado, lead criado, pagamento feito.</p>
+              </div>
+              <div>
+                <span class="text-teal-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Webhooks permitem reagir a eventos em tempo real, nao apenas em horarios fixos.</p>
+              </div>
+              <div>
+                <span class="text-teal-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Webhook URL, payload JSON, integracao com servicos, Postman para testes.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+            <span class="text-lg">🔑</span>
+            <div>
+              <span class="font-medium">Secrets Management</span>
+              <span class="text-neutral-500 text-sm ml-2">- Credenciais seguras</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-teal-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Modal Secrets armazena suas API keys de forma segura - nunca vao para o codigo ou repositorio.</p>
+              </div>
+              <div>
+                <span class="text-teal-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Secrets expostos sao o erro #1 de seguranca. Modal resolve isso de forma elegante.</p>
+              </div>
+              <div>
+                <span class="text-teal-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Modal secrets, environment variables, nunca no codigo, audit trail.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+            <span class="text-lg">🛡️</span>
+            <div>
+              <span class="font-medium">Security Review</span>
+              <span class="text-neutral-500 text-sm ml-2">- Antes do deploy</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-teal-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Pedir ao agente para revisar o codigo antes do deploy - verificar API keys expostas, webhooks inseguros, vulnerabilidades.</p>
+              </div>
+              <div>
+                <span class="text-teal-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Uma revisao de seguranca pode evitar problemas serios quando a automacao estiver publica na internet.</p>
+              </div>
+              <div>
+                <span class="text-teal-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">"Run security review", verificar .env, checar webhooks, validar permissoes.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+            <span class="text-lg">📊</span>
+            <div>
+              <span class="font-medium">Logs e Monitoramento</span>
+              <span class="text-neutral-500 text-sm ml-2">- Acompanhando execucoes</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-teal-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Dashboard do Modal mostra historico de execucoes, logs, erros e tempo de execucao de cada run.</p>
+              </div>
+              <div>
+                <span class="text-teal-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Quando algo falha em producao, os logs sao sua unica forma de descobrir o que aconteceu.</p>
+              </div>
+              <div>
+                <span class="text-teal-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Dashboard Modal, logs por execucao, status (success/failed), debugging remoto.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+        <a href="modulo-5-7.html" class="px-4 py-2 text-sm bg-teal-600 hover:bg-teal-500 text-white rounded-lg transition-colors">
+          Ver Modulo Completo
+        </a>
+      </div>
+    </div>
+
+    <!-- MODULO 5.8 -->
+    <div class="bg-dark-800 rounded-xl border border-dark-600 mb-6">
+      <div class="p-6 border-b border-dark-600">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-teal-400 font-bold">5.8</span>
+          <span class="text-xs text-neutral-500">~45 min</span>
+        </div>
+        <h3 class="text-2xl font-bold mb-2">🎬 Workflow Completo</h3>
+        <p class="text-neutral-400 text-sm">Construa um sistema completo de YouTube Analytics: scraping, analise, slides, email e Google Sheets.</p>
+      </div>
+
+      <div class="divide-y divide-dark-600">
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+            <span class="text-lg">📺</span>
+            <div>
+              <span class="font-medium">YouTube Analytics Exemplo</span>
+              <span class="text-neutral-500 text-sm ml-2">- Caso de uso real</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-teal-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Automacao que analisa canais de YouTube no seu nicho, identifica videos em alta e gera relatorios semanais.</p>
+              </div>
+              <div>
+                <span class="text-teal-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Este exemplo integra todos os conceitos da trilha em um projeto pratico e util.</p>
+              </div>
+              <div>
+                <span class="text-teal-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">YouTube Data API, analise de tendencias, descoberta de canais, metricas de engajamento.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+            <span class="text-lg">🔎</span>
+            <div>
+              <span class="font-medium">Scraping + Analise + Slides</span>
+              <span class="text-neutral-500 text-sm ml-2">- Pipeline completo</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-teal-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Sequencia de tools: buscar dados (YouTube API), processar metricas, gerar graficos, criar apresentacao.</p>
+              </div>
+              <div>
+                <span class="text-teal-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Entender o pipeline ajuda a decompor qualquer automacao complexa em steps gerenciaveis.</p>
+              </div>
+              <div>
+                <span class="text-teal-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">fetch_youtube_data.py, analyze_data.py, generate_charts.py, generate_slides.py.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+            <span class="text-lg">📄</span>
+            <div>
+              <span class="font-medium">PDF Geracao</span>
+              <span class="text-neutral-500 text-sm ml-2">- Relatorios profissionais</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-teal-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Usar o canvas design skill para gerar PDFs bonitos com graficos, logo e formatacao profissional.</p>
+              </div>
+              <div>
+                <span class="text-teal-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">PDFs bem formatados impressionam clientes e stakeholders - vale o esforco extra.</p>
+              </div>
+              <div>
+                <span class="text-teal-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Canvas design skill, branding (logo), charts embedded, formatacao consistente.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+            <span class="text-lg">📧</span>
+            <div>
+              <span class="font-medium">Email Sending</span>
+              <span class="text-neutral-500 text-sm ml-2">- Entrega automatica</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-teal-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Tool que envia o relatorio por email via Gmail API, com corpo formatado e PDF anexado.</p>
+              </div>
+              <div>
+                <span class="text-teal-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Email e a forma mais comum de entregar resultados de automacoes - essencial dominar.</p>
+              </div>
+              <div>
+                <span class="text-teal-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Gmail API, OAuth credentials, MIME multipart, attachments, HTML body.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+            <span class="text-lg">📊</span>
+            <div>
+              <span class="font-medium">Google Sheets Export</span>
+              <span class="text-neutral-500 text-sm ml-2">- Dados acessiveis</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-teal-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Exportar todos os dados coletados para Google Sheets, permitindo analises adicionais e historico.</p>
+              </div>
+              <div>
+                <span class="text-teal-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Sheets permite compartilhar dados com equipe e criar dashboards sem codigo adicional.</p>
+              </div>
+              <div>
+                <span class="text-teal-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Google Sheets API, multiplas abas, append vs overwrite, formatacao automatica.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+            <span class="text-lg">🏭</span>
+            <div>
+              <span class="font-medium">Producao Automatizada</span>
+              <span class="text-neutral-500 text-sm ml-2">- Funcionando sozinho</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-teal-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Deploy do workflow completo no Modal com cron trigger semanal - roda automaticamente sem intervencao.</p>
+              </div>
+              <div>
+                <span class="text-teal-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Este e o objetivo final: automacoes que trabalham para voce enquanto voce faz outras coisas.</p>
+              </div>
+              <div>
+                <span class="text-teal-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Deploy Modal, cron semanal, monitoramento, alertas de falha, iteracao continua.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+        <a href="modulo-5-8.html" class="px-4 py-2 text-sm bg-teal-600 hover:bg-teal-500 text-white rounded-lg transition-colors">
+          Ver Modulo Completo
+        </a>
+      </div>
+    </div>
+
+    <!-- Navegacao -->
+    <div class="flex flex-col sm:flex-row gap-4 mt-12">
+      <a href="../trilha4/index.html" class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors">
+        ← Trilha 4: Producao
+      </a>
+      <a href="../trilha6/index.html" class="flex-1 text-center px-6 py-3 bg-teal-600 text-white rounded-lg font-semibold hover:bg-teal-500 transition-colors">
+        Trilha 6: Projetos →
+      </a>
+    </div>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-dark-600 py-8 mt-16">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+      <p>Claude Code 2026 - Curso criado por <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300">INEMA.CLUB</a></p>
+    </div>
+  </footer>
+
+  <!-- SCRIPTS -->
+  <script>
+    function toggleTopic(button) {
+      const topicItem = button.closest('.topic-item');
+      const explanation = topicItem.querySelector('.topic-explanation');
+      const moduleCard = button.closest('.bg-dark-800');
+
+      moduleCard.querySelectorAll('.topic-explanation.active').forEach(exp => {
+        if (exp !== explanation) {
+          exp.classList.remove('active');
+        }
+      });
+
+      explanation.classList.toggle('active');
+    }
+
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    const html = document.documentElement;
+
+    if (localStorage.getItem('theme') === 'light' || (!localStorage.getItem('theme') && !html.classList.contains('dark'))) {
+      themeToggleDarkIcon.classList.remove('hidden');
+      html.classList.remove('dark');
+    } else {
+      themeToggleLightIcon.classList.remove('hidden');
+    }
+
+    themeToggle.addEventListener('click', () => {
+      themeToggleDarkIcon.classList.toggle('hidden');
+      themeToggleLightIcon.classList.toggle('hidden');
+      html.classList.toggle('dark');
+      localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+    });
+  </script>
+
+</body>
+</html>

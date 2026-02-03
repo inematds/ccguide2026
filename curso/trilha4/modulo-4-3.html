@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Modulo 4.3: Primeiro Contato e Projeto | Claude Code 2026</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: '#FACC15',
+            dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' }
+          }
+        }
+      }
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+    html:not(.dark) body { background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 50%, #f1f5f9 100%); }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+  </style>
+</head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen">
+
+  <!-- NAVIGATION -->
+  <nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-14">
+        <div class="flex items-center space-x-4">
+          <a href="../../index.html" class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300">
+            <span class="text-2xl">🤖</span>
+            <span class="font-bold text-lg hidden sm:inline">Claude Code 2026</span>
+          </a>
+          <span class="text-neutral-600">|</span>
+          <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300 text-sm font-medium">INEMA.CLUB</a>
+        </div>
+        <div class="flex items-center space-x-1 sm:space-x-2">
+          <a href="../trilha1/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors"><span class="sm:hidden">T1</span><span class="hidden sm:inline">Fundamentos</span></a>
+          <a href="../trilha2/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors"><span class="sm:hidden">T2</span><span class="hidden sm:inline">Comandos</span></a>
+          <a href="../trilha3/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors"><span class="sm:hidden">T3</span><span class="hidden sm:inline">Avancado</span></a>
+          <a href="index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-amber-400 bg-amber-500/10"><span class="sm:hidden">T4</span><span class="hidden sm:inline">MiniCurso18</span></a>
+          <a href="../trilha5/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-teal-400 hover:bg-teal-500/10 transition-colors"><span class="sm:hidden">T5</span><span class="hidden sm:inline">Projetos</span></a>
+          <a href="../trilha6/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-rose-400 hover:bg-rose-500/10 transition-colors"><span class="sm:hidden">T6</span><span class="hidden sm:inline">Expert</span></a>
+          <button id="theme-toggle" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2">
+            <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+            <svg id="theme-toggle-light-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- BREADCRUMB -->
+  <nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+    <div class="flex items-center space-x-2 text-sm text-neutral-400">
+      <a href="../../index.html" class="hover:text-amber-400">Inicio</a>
+      <span>/</span>
+      <a href="index.html" class="hover:text-amber-400">Trilha 4</a>
+      <span>/</span>
+      <span class="text-amber-400">Modulo 4.3</span>
+    </div>
+  </nav>
+
+  <!-- HEADER -->
+  <header class="bg-gradient-to-br from-amber-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <span class="inline-block px-3 py-1 bg-amber-500/20 text-amber-400 text-xs font-semibold rounded-full mb-4">MODULO 4.3</span>
+      <h1 class="text-3xl sm:text-4xl font-bold mb-4">💻 Primeiro Contato e Projeto</h1>
+      <p class="text-lg text-neutral-400 max-w-3xl">Aprenda a usar o terminal com Claude Code, domine os comandos basicos, entenda o modo dangerously e crie seu primeiro projeto funcional.</p>
+      <div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-amber-400">6</div><div class="text-xs text-neutral-400">Topicos</div></div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-amber-400">55</div><div class="text-xs text-neutral-400">Minutos</div></div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-amber-400">Interm.</div><div class="text-xs text-neutral-400">Nivel</div></div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-amber-400">Pratico</div><div class="text-xs text-neutral-400">Tipo</div></div>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN CONTENT -->
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+    <!-- TOPICO 1 -->
+    <section id="topico-1" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">1</span>
+        <h2 class="text-2xl font-bold">🖥️ Terminal vs Warp vs Claudia</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">O terminal pode parecer intimidante, mas existem <strong class="text-amber-400">alternativas visuais</strong> para usuarios menos tecnicos. Cada opcao oferece diferentes niveis de controle e facilidade de uso.</p>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+        <div class="bg-dark-700 rounded-xl p-5 border border-dark-600">
+          <h4 class="font-bold text-white mb-3">Terminal Tradicional</h4>
+          <p class="text-neutral-400 text-sm mb-3">Controle total, eficiencia maxima. Para usuarios tecnicos.</p>
+          <span class="inline-block px-2 py-1 bg-emerald-500/20 text-emerald-400 text-xs rounded">Avancado</span>
+        </div>
+        <div class="bg-dark-700 rounded-xl p-5 border border-dark-600">
+          <h4 class="font-bold text-white mb-3">Warp</h4>
+          <p class="text-neutral-400 text-sm mb-3">Terminal moderno com interface visual, autocomplete inteligente.</p>
+          <span class="inline-block px-2 py-1 bg-amber-500/20 text-amber-400 text-xs rounded">Intermediario</span>
+        </div>
+        <div class="bg-dark-700 rounded-xl p-5 border border-dark-600">
+          <h4 class="font-bold text-white mb-3">Claudia</h4>
+          <p class="text-neutral-400 text-sm mb-3">Interface grafica similar a chat. Nao requer comandos de terminal.</p>
+          <span class="inline-block px-2 py-1 bg-blue-500/20 text-blue-400 text-xs rounded">Iniciante</span>
+        </div>
+      </div>
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> Dica</h3>
+        <p class="text-neutral-300">Claudia e um wrapper visual criado pela comunidade open source que permite interagir com Claude Code como se fosse um aplicativo de chat.</p>
+      </div>
+    </section>
+
+    <!-- TOPICO 2 -->
+    <section id="topico-2" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">2</span>
+        <h2 class="text-2xl font-bold">⌨️ Comandos Basicos</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">O comando mais basico e simplesmente <strong class="text-amber-400">claude</strong> seguido de sua solicitacao em linguagem natural. O Claude Code entende o que voce precisa e executa.</p>
+      <div class="bg-gradient-to-br from-amber-900/30 to-dark-800 rounded-xl border border-amber-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-amber-400 mb-4">Exemplos Praticos</h3>
+        <div class="space-y-4 font-mono text-sm">
+          <div class="bg-dark-900 rounded-lg p-4">
+            <p class="text-emerald-400"># Comando simples</p>
+            <p class="text-white">claude "Crie um site simples sobre receitas de culinaria"</p>
+          </div>
+          <div class="bg-dark-900 rounded-lg p-4">
+            <p class="text-emerald-400"># Verificar ajuda</p>
+            <p class="text-white">claude --help</p>
+          </div>
+          <div class="bg-dark-900 rounded-lg p-4">
+            <p class="text-emerald-400"># Retomar sessao anterior</p>
+            <p class="text-white">claude --resume</p>
+          </div>
+        </div>
+      </div>
+      <div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6">
+        <h3 class="text-lg font-semibold text-blue-400 mb-4">O que Acontece</h3>
+        <ol class="space-y-2 text-neutral-300">
+          <li><strong class="text-white">1.</strong> Claude analisa sua solicitacao</li>
+          <li><strong class="text-white">2.</strong> Faz perguntas de esclarecimento se necessario</li>
+          <li><strong class="text-white">3.</strong> Cria um plano de desenvolvimento</li>
+          <li><strong class="text-white">4.</strong> Implementa passo a passo com aprovacao</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- TOPICO 3 -->
+    <section id="topico-3" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">3</span>
+        <h2 class="text-2xl font-bold">⚡ Modo Dangerously</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">Por padrao, Claude Code opera em <strong class="text-amber-400">modo seguro</strong>, pedindo confirmacao antes de cada acao. O modo "dangerously" permite execucao automatica sem confirmacoes.</p>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+          <h4 class="font-bold text-emerald-400 mb-4">Modo Seguro (Padrao)</h4>
+          <ul class="space-y-2 text-neutral-300 text-sm">
+            <li>• Mostra comandos antes de executar</li>
+            <li>• Pede confirmacao para cada acao</li>
+            <li>• Explica o proposito de cada passo</li>
+            <li>• Permite revisar e aprovar</li>
+          </ul>
+        </div>
+        <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+          <h4 class="font-bold text-red-400 mb-4">Modo Dangerously</h4>
+          <ul class="space-y-2 text-neutral-300 text-sm">
+            <li>• Execucao automatica sem confirmacoes</li>
+            <li>• Mais rapido para tarefas confiaveis</li>
+            <li>• Use apenas em ambientes de teste</li>
+            <li>• Tenha backups adequados</li>
+          </ul>
+        </div>
+      </div>
+      <div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
+        <h3 class="text-lg font-semibold text-white mb-4">Exemplo de Uso</h3>
+        <div class="bg-dark-900 rounded-lg p-4 font-mono text-sm">
+          <p class="text-white">claude run dangerously "Configure um servidor Express.js completo"</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TOPICO 4 -->
+    <section id="topico-4" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">4</span>
+        <h2 class="text-2xl font-bold">📁 Estrutura HTML/CSS/JS</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">Quando voce solicita um projeto, Claude Code automaticamente cria uma <strong class="text-amber-400">estrutura de diretorios organizada</strong> com todos os arquivos necessarios.</p>
+      <div class="bg-gradient-to-br from-amber-900/30 to-dark-800 rounded-xl border border-amber-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-amber-400 mb-4">Estrutura Tipica</h3>
+        <div class="bg-dark-900 rounded-lg p-4 font-mono text-sm">
+          <pre class="text-neutral-300">meu-projeto/
+├── index.html
+├── styles/
+│   ├── main.css
+│   └── responsive.css
+├── scripts/
+│   ├── app.js
+│   └── utils.js
+├── images/
+│   └── placeholder.jpg
+├── data/
+│   └── dados.json
+└── README.md</pre>
+        </div>
+      </div>
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6">
+        <h3 class="text-lg font-semibold text-primary mb-3">Gerado Automaticamente</h3>
+        <p class="text-neutral-300">O Claude Code gera arquivos com conteudo inicial, configura dependencias e estabelece convencoes de nomenclatura consistentes.</p>
+      </div>
+    </section>
+
+    <!-- TOPICO 5 -->
+    <section id="topico-5" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">5</span>
+        <h2 class="text-2xl font-bold">🔄 Feedback em Tempo Real</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">Claude Code <strong class="text-amber-400">comunica de forma inteligente</strong> sobre o que esta fazendo, por que esta fazendo e quais sao os proximos passos recomendados.</p>
+      <div class="bg-gradient-to-br from-amber-900/30 to-dark-800 rounded-xl border border-amber-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-amber-400 mb-4">Estrutura das Respostas</h3>
+        <ul class="space-y-3 text-neutral-300">
+          <li class="flex items-start space-x-2"><span class="text-amber-400 mt-1">1.</span><div><strong class="text-white">Analise:</strong> Confirmacao do que foi entendido</div></li>
+          <li class="flex items-start space-x-2"><span class="text-amber-400 mt-1">2.</span><div><strong class="text-white">Plano:</strong> Passos que serao executados</div></li>
+          <li class="flex items-start space-x-2"><span class="text-amber-400 mt-1">3.</span><div><strong class="text-white">Implementacao:</strong> Codigo ou acoes especificas</div></li>
+          <li class="flex items-start space-x-2"><span class="text-amber-400 mt-1">4.</span><div><strong class="text-white">Explicacao:</strong> Justificativa das decisoes</div></li>
+          <li class="flex items-start space-x-2"><span class="text-amber-400 mt-1">5.</span><div><strong class="text-white">Proximos Passos:</strong> Sugestoes para continuar</div></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- TOPICO 6 -->
+    <section id="topico-6" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">6</span>
+        <h2 class="text-2xl font-bold">🔁 Iteracoes</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">O desenvolvimento com Claude Code e <strong class="text-amber-400">iterativo</strong>. Voce descreve uma mudanca, Claude implementa, voce avalia e solicita ajustes ate o resultado perfeito.</p>
+      <div class="bg-gradient-to-br from-amber-900/30 to-dark-800 rounded-xl border border-amber-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-amber-400 mb-4">Ciclo de Iteracao</h3>
+        <div class="space-y-4">
+          <div class="flex items-center space-x-4">
+            <div class="w-10 h-10 rounded-full bg-amber-500/20 flex items-center justify-center"><span class="text-amber-400 font-bold">1</span></div>
+            <p class="text-neutral-300">Descreva a mudanca: "Adicione filtro por data"</p>
+          </div>
+          <div class="flex items-center space-x-4">
+            <div class="w-10 h-10 rounded-full bg-amber-500/20 flex items-center justify-center"><span class="text-amber-400 font-bold">2</span></div>
+            <p class="text-neutral-300">Claude implementa a funcionalidade</p>
+          </div>
+          <div class="flex items-center space-x-4">
+            <div class="w-10 h-10 rounded-full bg-amber-500/20 flex items-center justify-center"><span class="text-amber-400 font-bold">3</span></div>
+            <p class="text-neutral-300">Teste e avalie o resultado</p>
+          </div>
+          <div class="flex items-center space-x-4">
+            <div class="w-10 h-10 rounded-full bg-amber-500/20 flex items-center justify-center"><span class="text-amber-400 font-bold">4</span></div>
+            <p class="text-neutral-300">Solicite ajustes se necessario</p>
+          </div>
+        </div>
+      </div>
+      <div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6">
+        <h3 class="text-lg font-semibold text-blue-400 mb-4">Exemplo de Iteracao</h3>
+        <div class="bg-dark-900 rounded-lg p-4 font-mono text-sm space-y-2">
+          <p class="text-emerald-400"># Iteracao 1</p>
+          <p class="text-white">claude "Os cards estao muito apertados no mobile"</p>
+          <p class="text-emerald-400 mt-3"># Iteracao 2</p>
+          <p class="text-white">claude "Agora empilhe verticalmente em telas pequenas"</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- RESUMO -->
+    <section class="mb-12">
+      <div class="bg-gradient-to-br from-amber-900/40 via-dark-800 to-dark-800 rounded-xl border border-amber-500/30 p-8">
+        <h2 class="text-2xl font-bold mb-6 flex items-center"><span class="mr-3">📚</span> Resumo do Modulo</h2>
+        <div class="space-y-4 mb-8">
+          <div class="flex items-start space-x-3"><span class="text-amber-400 mt-1">✓</span><div><strong class="text-white">Opcoes de interface</strong><span class="text-neutral-400"> - Terminal, Warp ou Claudia para cada perfil</span></div></div>
+          <div class="flex items-start space-x-3"><span class="text-amber-400 mt-1">✓</span><div><strong class="text-white">Comandos basicos</strong><span class="text-neutral-400"> - claude + linguagem natural</span></div></div>
+          <div class="flex items-start space-x-3"><span class="text-amber-400 mt-1">✓</span><div><strong class="text-white">Modo dangerously</strong><span class="text-neutral-400"> - Execucao automatica (use com cuidado)</span></div></div>
+          <div class="flex items-start space-x-3"><span class="text-amber-400 mt-1">✓</span><div><strong class="text-white">Estrutura automatica</strong><span class="text-neutral-400"> - Projetos organizados desde o inicio</span></div></div>
+          <div class="flex items-start space-x-3"><span class="text-amber-400 mt-1">✓</span><div><strong class="text-white">Feedback inteligente</strong><span class="text-neutral-400"> - Comunicacao clara em cada etapa</span></div></div>
+          <div class="flex items-start space-x-3"><span class="text-amber-400 mt-1">✓</span><div><strong class="text-white">Desenvolvimento iterativo</strong><span class="text-neutral-400"> - Refine ate a perfeicao</span></div></div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+          <h3 class="font-semibold text-amber-400 mb-2">Proximo Modulo:</h3>
+          <p class="text-neutral-300">4.4 - PRDs e Agentes: Modo Planning, PRDs automaticos e orquestracao paralela</p>
+        </div>
+        <div class="flex flex-col sm:flex-row gap-4">
+          <a href="modulo-4-2.html" class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors">← Modulo Anterior</a>
+          <a href="modulo-4-4.html" class="flex-1 text-center px-6 py-3 bg-amber-600 text-white rounded-lg font-semibold hover:bg-amber-500 transition-colors">Proximo Modulo →</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-dark-600 py-8 mt-16">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+      <p>Claude Code 2026 - Todos os direitos reservados</p>
+    </div>
+  </footer>
+
+  <script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    const html = document.documentElement;
+    if (localStorage.getItem('theme') === 'light' || (!localStorage.getItem('theme') && !html.classList.contains('dark'))) {
+      themeToggleDarkIcon.classList.remove('hidden');
+      html.classList.remove('dark');
+    } else {
+      themeToggleLightIcon.classList.remove('hidden');
+    }
+    themeToggle.addEventListener('click', () => {
+      themeToggleDarkIcon.classList.toggle('hidden');
+      themeToggleLightIcon.classList.toggle('hidden');
+      html.classList.toggle('dark');
+      localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+    });
+  </script>
+</body>
+</html>
